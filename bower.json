@@ -1,0 +1,29 @@
+{
+  "name": "retext-inspect",
+  "main": "index.js",
+  "description": "Retext node inspector",
+  "license": "MIT",
+  "keywords": [
+    "retext",
+    "inspect"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wooorm/retext-inspect.git"
+  },
+  "authors": [
+    "Titus Wormer <tituswormer@gmail.com>"
+  ],
+  "ignore": [
+    ".*",
+    "*.log",
+    "*.md",
+    "components",
+    "build",
+    "component.json",
+    "package.json",
+    "coverage",
+    "node_modules",
+    "spec"
+  ]
+}

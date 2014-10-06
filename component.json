@@ -1,0 +1,14 @@
+{
+  "name": "retext-inspect",
+  "version": "0.0.1",
+  "description": "Retext node inspector",
+  "license": "MIT",
+  "keywords": [
+    "retext",
+    "inspect"
+  ],
+  "repository": "wooorm/retext-inspect",
+  "scripts" : [
+    "index.js"
+  ]
+}
