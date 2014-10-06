@@ -32,9 +32,18 @@ inspect = require('retext-inspect');
 retext = new Retext().use(inspect);
 
 retext.parse('Some simple text.', function (err, tree) {
-    console.log(tree.inspect());
+    console.log(tree.head.head.tail.inspect());
     /**
      * Logs:
+     *
+     * PunctuationNode[1]
+     * └─ TextNode: '.'
+     */
+
+    console.log(tree);
+    /**
+     * More importantly, when in Node.js, all nodes will
+     * be formatted without the need to call `inspect`:
      *
      * RootNode[1]
      * └─ ParagraphNode[1]
@@ -52,19 +61,18 @@ retext.parse('Some simple text.', function (err, tree) {
      *       └─ PunctuationNode[1]
      *          └─ TextNode: '.'
      */
-
-     console.log(tree.head.head.tail.inspect());
-    /**
-     * Logs:
-     *
-     * PunctuationNode[1]
-     * └─ TextNode: '.'
-     */
 });
 ```
 
 ## API
 
+There's no need to call `Node#inspect()` when in Node.js (unless you'd want to pass options). In Node.js, `console.log` and `util.inspect` all [show the tree diagram](http://nodejs.org/api/util.html#util_util_inspect_object_options) as seen above and below. To log the nodes as normal objects, pass `customInspect: false` in `util.inspect`s options object:
+
+```js
+console.log(util.inspect(tree, {
+    'customInspect' : false
+}))
+```
 ### Node#inspect(options?)
 
 If used, options can contain `formatNesting` and `formatNode` methods

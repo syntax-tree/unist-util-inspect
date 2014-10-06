@@ -80,7 +80,7 @@ function inspect(options, pad) {
         return (options.formatNode || formatNode)(self);
     }
 
-    if (!pad) {
+    if (!pad || typeof pad === 'number') {
         pad = '';
     }
 

@@ -4,6 +4,7 @@ var inspect,
     chalk,
     Retext,
     assert,
+    util,
     retext,
     TextOM,
     paragraph;
@@ -16,6 +17,26 @@ inspect = require('..');
 Retext = require('retext');
 chalk = require('chalk');
 assert = require('assert');
+util = require('util');
+
+/**
+ * Intercept stdout.
+ *
+ * @param {function(string)} callback
+ * @return {Function} A method to stop intercepting.
+ */
+
+function intercept(callback) {
+    var write;
+
+    write = process.stdout.write;
+
+    process.stdout.write = callback;
+
+    return function () {
+        process.stdout.write = write;
+    };
+}
 
 /**
  * Format nesting.
@@ -223,5 +244,108 @@ describe('inspect({formatNode: function(node)})', function () {
         assert(sentence.inspect({
             'formatNode' : formatNode
         }) === fixture);
+    });
+});
+
+/**
+ * Unit tests for Node.js integration.
+ */
+
+describe('`util.inspect` and `console.log` integration', function () {
+    var tree;
+
+    before(function (done) {
+        retext.parse(paragraph, function (err, node) {
+            tree = node;
+
+            done(err);
+        });
+    });
+
+    it('should work with `util.inspect`', function () {
+        var fixture;
+
+        fixture = [
+            'RootNode[1]',
+            '└─ ParagraphNode[3]',
+            '   ├─ SentenceNode[6]',
+            '   │  ├─ WordNode[1]',
+            '   │  │  └─ TextNode: \'Some\'',
+            '   │  ├─ WhiteSpaceNode[1]',
+            '   │  │  └─ TextNode: \' \'',
+            '   │  ├─ WordNode[1]',
+            '   │  │  └─ TextNode: \'simple\'',
+            '   │  ├─ WhiteSpaceNode[1]',
+            '   │  │  └─ TextNode: \' \'',
+            '   │  ├─ WordNode[1]',
+            '   │  │  └─ TextNode: \'text\'',
+            '   │  └─ PunctuationNode[1]',
+            '   │     └─ TextNode: \'.\'',
+            '   ├─ WhiteSpaceNode[1]',
+            '   │  └─ TextNode: \' \'',
+            '   └─ SentenceNode[6]',
+            '      ├─ WordNode[1]',
+            '      │  └─ TextNode: \'Other\'',
+            '      ├─ WhiteSpaceNode[1]',
+            '      │  └─ TextNode: \' \'',
+            '      ├─ PunctuationNode[1]',
+            '      │  └─ TextNode: \'“\'',
+            '      ├─ WordNode[1]',
+            '      │  └─ TextNode: \'sentence\'',
+            '      ├─ PunctuationNode[1]',
+            '      │  └─ TextNode: \'”\'',
+            '      └─ PunctuationNode[1]',
+            '         └─ TextNode: \'.\''
+        ].join('\n');
+
+        assert(util.inspect(tree) === fixture);
+    });
+
+    it('should work with `console.log`', function (done) {
+        var fixture,
+            stop;
+
+        fixture = [
+            'RootNode[1]',
+            '└─ ParagraphNode[3]',
+            '   ├─ SentenceNode[6]',
+            '   │  ├─ WordNode[1]',
+            '   │  │  └─ TextNode: \'Some\'',
+            '   │  ├─ WhiteSpaceNode[1]',
+            '   │  │  └─ TextNode: \' \'',
+            '   │  ├─ WordNode[1]',
+            '   │  │  └─ TextNode: \'simple\'',
+            '   │  ├─ WhiteSpaceNode[1]',
+            '   │  │  └─ TextNode: \' \'',
+            '   │  ├─ WordNode[1]',
+            '   │  │  └─ TextNode: \'text\'',
+            '   │  └─ PunctuationNode[1]',
+            '   │     └─ TextNode: \'.\'',
+            '   ├─ WhiteSpaceNode[1]',
+            '   │  └─ TextNode: \' \'',
+            '   └─ SentenceNode[6]',
+            '      ├─ WordNode[1]',
+            '      │  └─ TextNode: \'Other\'',
+            '      ├─ WhiteSpaceNode[1]',
+            '      │  └─ TextNode: \' \'',
+            '      ├─ PunctuationNode[1]',
+            '      │  └─ TextNode: \'“\'',
+            '      ├─ WordNode[1]',
+            '      │  └─ TextNode: \'sentence\'',
+            '      ├─ PunctuationNode[1]',
+            '      │  └─ TextNode: \'”\'',
+            '      └─ PunctuationNode[1]',
+            '         └─ TextNode: \'.\''
+        ].join('\n');
+
+        stop = intercept(function (value) {
+            stop();
+
+            assert(value === fixture + '\n');
+
+            done();
+        });
+
+        console.log(tree);
     });
 });
