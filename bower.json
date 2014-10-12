@@ -18,12 +18,12 @@
     ".*",
     "*.log",
     "*.md",
-    "components",
-    "build",
+    "build/",
+    "components/",
+    "coverage/",
+    "node_modules/",
     "component.json",
     "package.json",
-    "coverage",
-    "node_modules",
-    "spec"
+    "test.js"
   ]
 }
