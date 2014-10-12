@@ -13,7 +13,7 @@ var inspect,
  * Module dependencies.
  */
 
-inspect = require('..');
+inspect = require('./');
 Retext = require('retext');
 chalk = require('chalk');
 assert = require('assert');
