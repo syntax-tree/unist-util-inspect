@@ -7,6 +7,39 @@
 function plugin() {}
 
 /**
+ * Detect if the client has a native `util.inspect`.
+ * If so, turn `color` on.
+ */
+
+plugin.color = false;
+
+try {
+    plugin.color = 'inspect' in require('util');
+} catch (exception) {}
+
+/**
+ * Define ANSII color functions.
+ */
+
+var dim,
+    yellow,
+    green;
+
+function color(open, close) {
+    return function (value) {
+        if (!plugin.color) {
+            return value;
+        }
+
+        return '\u001b[' + open + 'm' + value + '\u001b[' + close + 'm';
+    };
+}
+
+dim = color(2, 22);
+yellow = color(33, 39);
+green = color(32, 39);
+
+/**
  * Define characters.
  */
 
@@ -33,7 +66,7 @@ STOP = CHAR_SPLIT + CHAR_HORIZONTAL_LINE + ' ';
  */
 
 function formatNesting(before) {
-    return before;
+    return dim(before);
 }
 
 /**
@@ -45,39 +78,30 @@ function formatNesting(before) {
 
 function formatNode(node) {
     if ('length' in node) {
-        return node.type + '[' + node.length + ']';
+        return node.type + dim('[') + yellow(node.length) + dim(']');
     }
 
-    return node.type + ': \'' + node.toString() + '\'';
+    return node.type + dim(': \'') + green(node.toString()) + dim('\'');
 }
 
 /**
  * Inspects a node.
  *
- * @param {Object?} options
- * @param {function(Node): string?} options.formatNode
- * @param {function(string): string?} options.formatNesting
  * @return {string}
- * @this {Node} Context to search in.
+ * @this {Node}
  */
 
-function inspect(options, pad) {
+function inspect(pad) {
     var self,
         node,
         result,
         index,
-        length,
-        nesting;
-
-    if (typeof options !== 'object') {
-        pad = options;
-        options = {};
-    }
+        length;
 
     self = this;
 
     if (!('length' in self)) {
-        return (options.formatNode || formatNode)(self);
+        return formatNode(self);
     }
 
     if (!pad || typeof pad === 'number') {
@@ -86,9 +110,7 @@ function inspect(options, pad) {
 
     result = [];
 
-    nesting = options.formatNesting || formatNesting;
-
-    result.push((options.formatNode || formatNode)(self));
+    result.push(formatNode(self));
 
     index = -1;
     length = self.length;
@@ -98,12 +120,12 @@ function inspect(options, pad) {
 
         if (index === length - 1) {
             result.push(
-                nesting(pad + STOP) + node.inspect(options, pad + '   ')
+                formatNesting(pad + STOP) + node.inspect(pad + '   ')
             );
         } else {
             result.push(
-                nesting(pad + CONTINUE) +
-                    node.inspect(options, pad + CHAR_VERTICAL_LINE + '  ')
+                formatNesting(pad + CONTINUE) +
+                    node.inspect(pad + CHAR_VERTICAL_LINE + '  ')
             );
         }
     }

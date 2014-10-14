@@ -14,8 +14,8 @@ var inspect,
  */
 
 inspect = require('./');
-Retext = require('retext');
 chalk = require('chalk');
+Retext = require('retext');
 assert = require('assert');
 util = require('util');
 
@@ -36,32 +36,6 @@ function intercept(callback) {
     return function () {
         process.stdout.write = write;
     };
-}
-
-/**
- * Format nesting.
- *
- * @param {string} nesting
- * @return {string}
- */
-
-function formatNesting(nesting) {
-    return chalk.dim(nesting);
-}
-
-/**
- * Format node.
- *
- * @param {Node} node
- * @return {string}
- */
-
-function formatNode(node) {
-    if ('length' in node) {
-        return node.type + '[' + chalk.yellow(node.length) + ']';
-    }
-
-    return node.type + ': ' + chalk.green('\'' + node.toString() + '\'');
 }
 
 /**
@@ -149,7 +123,7 @@ describe('inspect()', function () {
             '         └─ TextNode: \'.\''
         ].join('\n');
 
-        assert(tree.inspect() === fixture);
+        assert(chalk.stripColor(tree.inspect()) === fixture);
     });
 
     it('should work on `SentenceNode`', function () {
@@ -171,14 +145,22 @@ describe('inspect()', function () {
             '   └─ TextNode: \'.\''
         ].join('\n');
 
-        assert(tree.head.head.inspect() === fixture);
+        assert(chalk.stripColor(tree.head.head.inspect()) === fixture);
     });
 });
 
-describe('inspect({formatNesting: function(nesting)})', function () {
+describe('inspect.color', function () {
+    it('should be `true`', function () {
+        assert(inspect.color === true);
+    });
+});
+
+describe('inspect.color = false', function () {
     var sentence;
 
     before(function (done) {
+        inspect.color = false;
+
         retext.parse(paragraph, function (err, tree) {
             sentence = tree.head.head;
 
@@ -191,27 +173,29 @@ describe('inspect({formatNesting: function(nesting)})', function () {
 
         fixture = [
             'SentenceNode[6]',
-            chalk.dim('├─ ') + 'WordNode[1]',
-            chalk.dim('│  └─ ') + 'TextNode: \'Some\'',
-            chalk.dim('├─ ') + 'WhiteSpaceNode[1]',
-            chalk.dim('│  └─ ') + 'TextNode: \' \'',
-            chalk.dim('├─ ') + 'WordNode[1]',
-            chalk.dim('│  └─ ') + 'TextNode: \'simple\'',
-            chalk.dim('├─ ') + 'WhiteSpaceNode[1]',
-            chalk.dim('│  └─ ') + 'TextNode: \' \'',
-            chalk.dim('├─ ') + 'WordNode[1]',
-            chalk.dim('│  └─ ') + 'TextNode: \'text\'',
-            chalk.dim('└─ ') + 'PunctuationNode[1]',
-            chalk.dim('   └─ ') + 'TextNode: \'.\''
+            '├─ WordNode[1]',
+            '│  └─ TextNode: \'Some\'',
+            '├─ WhiteSpaceNode[1]',
+            '│  └─ TextNode: \' \'',
+            '├─ WordNode[1]',
+            '│  └─ TextNode: \'simple\'',
+            '├─ WhiteSpaceNode[1]',
+            '│  └─ TextNode: \' \'',
+            '├─ WordNode[1]',
+            '│  └─ TextNode: \'text\'',
+            '└─ PunctuationNode[1]',
+            '   └─ TextNode: \'.\''
         ].join('\n');
 
-        assert(sentence.inspect({
-            'formatNesting' : formatNesting
-        }) === fixture);
+        assert(sentence.inspect() === fixture);
+    });
+
+    after(function () {
+        inspect.color = true;
     });
 });
 
-describe('inspect({formatNode: function(node)})', function () {
+describe('inspect.color = true', function () {
     var sentence;
 
     before(function (done) {
@@ -226,24 +210,35 @@ describe('inspect({formatNode: function(node)})', function () {
         var fixture;
 
         fixture = [
-            'SentenceNode[' + chalk.yellow(6) + ']',
-            '├─ WordNode[' + chalk.yellow(1) + ']',
-            '│  └─ TextNode: ' + chalk.green('\'Some\''),
-            '├─ WhiteSpaceNode[' + chalk.yellow(1) + ']',
-            '│  └─ TextNode: ' + chalk.green('\' \''),
-            '├─ WordNode[' + chalk.yellow(1) + ']',
-            '│  └─ TextNode: ' + chalk.green('\'simple\''),
-            '├─ WhiteSpaceNode[' + chalk.yellow(1) + ']',
-            '│  └─ TextNode: ' + chalk.green('\' \''),
-            '├─ WordNode[' + chalk.yellow(1) + ']',
-            '│  └─ TextNode: ' + chalk.green('\'text\''),
-            '└─ PunctuationNode[' + chalk.yellow(1) + ']',
-            '   └─ TextNode: ' + chalk.green('\'.\'')
+            'SentenceNode' +
+                chalk.dim('[') + chalk.yellow('6') + chalk.dim(']'),
+            chalk.dim('├─ ') + 'WordNode' +
+                chalk.dim('[') + chalk.yellow('1') + chalk.dim(']'),
+            chalk.dim('│  └─ ') + 'TextNode' +
+                chalk.dim(': \'') + chalk.green('Some') + chalk.dim('\''),
+            chalk.dim('├─ ') + 'WhiteSpaceNode' +
+                chalk.dim('[') + chalk.yellow('1') + chalk.dim(']'),
+            chalk.dim('│  └─ ') + 'TextNode' +
+                chalk.dim(': \'') + chalk.green(' ') + chalk.dim('\''),
+            chalk.dim('├─ ') + 'WordNode' +
+                chalk.dim('[') + chalk.yellow('1') + chalk.dim(']'),
+            chalk.dim('│  └─ ') + 'TextNode' +
+                chalk.dim(': \'') + chalk.green('simple') + chalk.dim('\''),
+            chalk.dim('├─ ') + 'WhiteSpaceNode' +
+                chalk.dim('[') + chalk.yellow('1') + chalk.dim(']'),
+            chalk.dim('│  └─ ') + 'TextNode' +
+                chalk.dim(': \'') + chalk.green(' ') + chalk.dim('\''),
+            chalk.dim('├─ ') + 'WordNode' +
+                chalk.dim('[') + chalk.yellow('1') + chalk.dim(']'),
+            chalk.dim('│  └─ ') + 'TextNode' +
+                chalk.dim(': \'') + chalk.green('text') + chalk.dim('\''),
+            chalk.dim('└─ ') + 'PunctuationNode' +
+                chalk.dim('[') + chalk.yellow('1') + chalk.dim(']'),
+            chalk.dim('   └─ ') + 'TextNode' +
+                chalk.dim(': \'') + chalk.green('.') + chalk.dim('\'')
         ].join('\n');
 
-        assert(sentence.inspect({
-            'formatNode' : formatNode
-        }) === fixture);
+        assert(sentence.inspect() === fixture);
     });
 });
 
@@ -298,7 +293,7 @@ describe('`util.inspect` and `console.log` integration', function () {
             '         └─ TextNode: \'.\''
         ].join('\n');
 
-        assert(util.inspect(tree) === fixture);
+        assert(chalk.stripColor(util.inspect(tree)) === fixture);
     });
 
     it('should work with `console.log`', function (done) {
@@ -341,7 +336,7 @@ describe('`util.inspect` and `console.log` integration', function () {
         stop = intercept(function (value) {
             stop();
 
-            assert(value === fixture + '\n');
+            assert(chalk.stripColor(value) === fixture + '\n');
 
             done();
         });
