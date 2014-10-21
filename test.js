@@ -4,10 +4,7 @@ var inspect,
     chalk,
     Retext,
     assert,
-    util,
-    retext,
-    TextOM,
-    paragraph;
+    util;
 
 /**
  * Module dependencies.
@@ -39,16 +36,26 @@ function intercept(callback) {
 }
 
 /**
- * Constants.
+ * Fixtures.
  */
+
+var paragraph;
 
 paragraph = 'Some simple text. Other “sentence”.';
 
+/**
+ * Retext.
+ */
+
+var retext,
+    TextOM;
+
 retext = new Retext().use(inspect);
+
 TextOM = retext.TextOM;
 
 /**
- * Unit tests.
+ * Tests.
  */
 
 describe('retext-inspect()', function () {
