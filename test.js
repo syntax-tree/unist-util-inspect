@@ -65,8 +65,9 @@ describe('retext-inspect()', function () {
         assert(typeof (new TextOM.ParagraphNode()).inspect === 'function');
         assert(typeof (new TextOM.SentenceNode()).inspect === 'function');
         assert(typeof (new TextOM.WordNode()).inspect === 'function');
-        assert(typeof (new TextOM.WhiteSpaceNode()).inspect === 'function');
+        assert(typeof (new TextOM.SymbolNode()).inspect === 'function');
         assert(typeof (new TextOM.PunctuationNode()).inspect === 'function');
+        assert(typeof (new TextOM.WhiteSpaceNode()).inspect === 'function');
         assert(typeof (new TextOM.TextNode()).inspect === 'function');
         assert(typeof (new TextOM.SourceNode()).inspect === 'function');
     });
@@ -96,31 +97,23 @@ describe('inspect()', function () {
             '   ├─ SentenceNode[6]',
             '   │  ├─ WordNode[1]',
             '   │  │  └─ TextNode: \'Some\'',
-            '   │  ├─ WhiteSpaceNode[1]',
-            '   │  │  └─ TextNode: \' \'',
+            '   │  ├─ WhiteSpaceNode: \' \'',
             '   │  ├─ WordNode[1]',
             '   │  │  └─ TextNode: \'simple\'',
-            '   │  ├─ WhiteSpaceNode[1]',
-            '   │  │  └─ TextNode: \' \'',
+            '   │  ├─ WhiteSpaceNode: \' \'',
             '   │  ├─ WordNode[1]',
             '   │  │  └─ TextNode: \'text\'',
-            '   │  └─ PunctuationNode[1]',
-            '   │     └─ TextNode: \'.\'',
-            '   ├─ WhiteSpaceNode[1]',
-            '   │  └─ TextNode: \' \'',
+            '   │  └─ PunctuationNode: \'.\'',
+            '   ├─ WhiteSpaceNode: \' \'',
             '   └─ SentenceNode[6]',
             '      ├─ WordNode[1]',
             '      │  └─ TextNode: \'Other\'',
-            '      ├─ WhiteSpaceNode[1]',
-            '      │  └─ TextNode: \' \'',
-            '      ├─ PunctuationNode[1]',
-            '      │  └─ TextNode: \'“\'',
+            '      ├─ WhiteSpaceNode: \' \'',
+            '      ├─ PunctuationNode: \'“\'',
             '      ├─ WordNode[1]',
             '      │  └─ TextNode: \'sentence\'',
-            '      ├─ PunctuationNode[1]',
-            '      │  └─ TextNode: \'”\'',
-            '      └─ PunctuationNode[1]',
-            '         └─ TextNode: \'.\''
+            '      ├─ PunctuationNode: \'”\'',
+            '      └─ PunctuationNode: \'.\''
         ].join('\n');
 
         assert(chalk.stripColor(tree.inspect()) === fixture);
@@ -133,16 +126,13 @@ describe('inspect()', function () {
             'SentenceNode[6]',
             '├─ WordNode[1]',
             '│  └─ TextNode: \'Some\'',
-            '├─ WhiteSpaceNode[1]',
-            '│  └─ TextNode: \' \'',
+            '├─ WhiteSpaceNode: \' \'',
             '├─ WordNode[1]',
             '│  └─ TextNode: \'simple\'',
-            '├─ WhiteSpaceNode[1]',
-            '│  └─ TextNode: \' \'',
+            '├─ WhiteSpaceNode: \' \'',
             '├─ WordNode[1]',
             '│  └─ TextNode: \'text\'',
-            '└─ PunctuationNode[1]',
-            '   └─ TextNode: \'.\''
+            '└─ PunctuationNode: \'.\''
         ].join('\n');
 
         assert(chalk.stripColor(tree.head.head.inspect()) === fixture);
@@ -175,16 +165,13 @@ describe('inspect.color = false', function () {
             'SentenceNode[6]',
             '├─ WordNode[1]',
             '│  └─ TextNode: \'Some\'',
-            '├─ WhiteSpaceNode[1]',
-            '│  └─ TextNode: \' \'',
+            '├─ WhiteSpaceNode: \' \'',
             '├─ WordNode[1]',
             '│  └─ TextNode: \'simple\'',
-            '├─ WhiteSpaceNode[1]',
-            '│  └─ TextNode: \' \'',
+            '├─ WhiteSpaceNode: \' \'',
             '├─ WordNode[1]',
             '│  └─ TextNode: \'text\'',
-            '└─ PunctuationNode[1]',
-            '   └─ TextNode: \'.\''
+            '└─ PunctuationNode: \'.\''
         ].join('\n');
 
         assert(sentence.inspect() === fixture);
@@ -217,24 +204,18 @@ describe('inspect.color = true', function () {
             chalk.dim('│  └─ ') + 'TextNode' +
                 chalk.dim(': \'') + chalk.green('Some') + chalk.dim('\''),
             chalk.dim('├─ ') + 'WhiteSpaceNode' +
-                chalk.dim('[') + chalk.yellow('1') + chalk.dim(']'),
-            chalk.dim('│  └─ ') + 'TextNode' +
                 chalk.dim(': \'') + chalk.green(' ') + chalk.dim('\''),
             chalk.dim('├─ ') + 'WordNode' +
                 chalk.dim('[') + chalk.yellow('1') + chalk.dim(']'),
             chalk.dim('│  └─ ') + 'TextNode' +
                 chalk.dim(': \'') + chalk.green('simple') + chalk.dim('\''),
             chalk.dim('├─ ') + 'WhiteSpaceNode' +
-                chalk.dim('[') + chalk.yellow('1') + chalk.dim(']'),
-            chalk.dim('│  └─ ') + 'TextNode' +
                 chalk.dim(': \'') + chalk.green(' ') + chalk.dim('\''),
             chalk.dim('├─ ') + 'WordNode' +
                 chalk.dim('[') + chalk.yellow('1') + chalk.dim(']'),
             chalk.dim('│  └─ ') + 'TextNode' +
                 chalk.dim(': \'') + chalk.green('text') + chalk.dim('\''),
             chalk.dim('└─ ') + 'PunctuationNode' +
-                chalk.dim('[') + chalk.yellow('1') + chalk.dim(']'),
-            chalk.dim('   └─ ') + 'TextNode' +
                 chalk.dim(': \'') + chalk.green('.') + chalk.dim('\'')
         ].join('\n');
 
@@ -266,31 +247,23 @@ describe('`util.inspect` and `console.log` integration', function () {
             '   ├─ SentenceNode[6]',
             '   │  ├─ WordNode[1]',
             '   │  │  └─ TextNode: \'Some\'',
-            '   │  ├─ WhiteSpaceNode[1]',
-            '   │  │  └─ TextNode: \' \'',
+            '   │  ├─ WhiteSpaceNode: \' \'',
             '   │  ├─ WordNode[1]',
             '   │  │  └─ TextNode: \'simple\'',
-            '   │  ├─ WhiteSpaceNode[1]',
-            '   │  │  └─ TextNode: \' \'',
+            '   │  ├─ WhiteSpaceNode: \' \'',
             '   │  ├─ WordNode[1]',
             '   │  │  └─ TextNode: \'text\'',
-            '   │  └─ PunctuationNode[1]',
-            '   │     └─ TextNode: \'.\'',
-            '   ├─ WhiteSpaceNode[1]',
-            '   │  └─ TextNode: \' \'',
+            '   │  └─ PunctuationNode: \'.\'',
+            '   ├─ WhiteSpaceNode: \' \'',
             '   └─ SentenceNode[6]',
             '      ├─ WordNode[1]',
             '      │  └─ TextNode: \'Other\'',
-            '      ├─ WhiteSpaceNode[1]',
-            '      │  └─ TextNode: \' \'',
-            '      ├─ PunctuationNode[1]',
-            '      │  └─ TextNode: \'“\'',
+            '      ├─ WhiteSpaceNode: \' \'',
+            '      ├─ PunctuationNode: \'“\'',
             '      ├─ WordNode[1]',
             '      │  └─ TextNode: \'sentence\'',
-            '      ├─ PunctuationNode[1]',
-            '      │  └─ TextNode: \'”\'',
-            '      └─ PunctuationNode[1]',
-            '         └─ TextNode: \'.\''
+            '      ├─ PunctuationNode: \'”\'',
+            '      └─ PunctuationNode: \'.\''
         ].join('\n');
 
         assert(chalk.stripColor(util.inspect(tree)) === fixture);
@@ -306,31 +279,23 @@ describe('`util.inspect` and `console.log` integration', function () {
             '   ├─ SentenceNode[6]',
             '   │  ├─ WordNode[1]',
             '   │  │  └─ TextNode: \'Some\'',
-            '   │  ├─ WhiteSpaceNode[1]',
-            '   │  │  └─ TextNode: \' \'',
+            '   │  ├─ WhiteSpaceNode: \' \'',
             '   │  ├─ WordNode[1]',
             '   │  │  └─ TextNode: \'simple\'',
-            '   │  ├─ WhiteSpaceNode[1]',
-            '   │  │  └─ TextNode: \' \'',
+            '   │  ├─ WhiteSpaceNode: \' \'',
             '   │  ├─ WordNode[1]',
             '   │  │  └─ TextNode: \'text\'',
-            '   │  └─ PunctuationNode[1]',
-            '   │     └─ TextNode: \'.\'',
-            '   ├─ WhiteSpaceNode[1]',
-            '   │  └─ TextNode: \' \'',
+            '   │  └─ PunctuationNode: \'.\'',
+            '   ├─ WhiteSpaceNode: \' \'',
             '   └─ SentenceNode[6]',
             '      ├─ WordNode[1]',
             '      │  └─ TextNode: \'Other\'',
-            '      ├─ WhiteSpaceNode[1]',
-            '      │  └─ TextNode: \' \'',
-            '      ├─ PunctuationNode[1]',
-            '      │  └─ TextNode: \'“\'',
+            '      ├─ WhiteSpaceNode: \' \'',
+            '      ├─ PunctuationNode: \'“\'',
             '      ├─ WordNode[1]',
             '      │  └─ TextNode: \'sentence\'',
-            '      ├─ PunctuationNode[1]',
-            '      │  └─ TextNode: \'”\'',
-            '      └─ PunctuationNode[1]',
-            '         └─ TextNode: \'.\''
+            '      ├─ PunctuationNode: \'”\'',
+            '      └─ PunctuationNode: \'.\''
         ].join('\n');
 
         stop = intercept(function (value) {
