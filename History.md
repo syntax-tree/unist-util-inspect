@@ -1,4 +1,11 @@
 
+n.n.n / 2014-10-21
+==================
+
+ * Refactor test
+ * Refactor test for changes in retext
+ * Update retext
+
 0.2.0 / 2014-10-14
 ==================
 
