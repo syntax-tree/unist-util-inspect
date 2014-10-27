@@ -1,49 +1,15 @@
 'use strict';
 
 /**
- * Define `plugin`.
- */
-
-function plugin() {}
-
-/**
- * Detect if the client has a native `util.inspect`.
- * If so, turn `color` on.
- */
-
-plugin.color = false;
-
-try {
-    plugin.color = 'inspect' in require('util');
-} catch (exception) {}
-
-/**
- * Define ANSII color functions.
+ * Define ANSII color functions and characters.
+ *
+ * The ANSII function are be defined below.
  */
 
 var dim,
     yellow,
-    green;
-
-function color(open, close) {
-    return function (value) {
-        if (!plugin.color) {
-            return value;
-        }
-
-        return '\u001b[' + open + 'm' + value + '\u001b[' + close + 'm';
-    };
-}
-
-dim = color(2, 22);
-yellow = color(33, 39);
-green = color(32, 39);
-
-/**
- * Define characters.
- */
-
-var CHAR_VERTICAL_LINE,
+    green,
+    CHAR_VERTICAL_LINE,
     CHAR_HORIZONTAL_LINE,
     CHAR_SPLIT,
     CHAR_CONTINUE_AND_SPLIT,
@@ -134,12 +100,12 @@ function inspect(pad) {
 }
 
 /**
- * Define `attach`.
+ * Define `plugin`.
  *
  * @param {Retext} retext
  */
 
-function attach(retext) {
+function plugin(retext) {
     /**
      * Expose `inspect` on `Node`s.
      */
@@ -148,10 +114,29 @@ function attach(retext) {
 }
 
 /**
- * Expose `attach`.
+ * Detect if the client has a native `util.inspect`.
+ * If so, turn `color` on.
  */
 
-plugin.attach = attach;
+plugin.color = false;
+
+try {
+    plugin.color = 'inspect' in require('util');
+} catch (exception) {}
+
+function color(open, close) {
+    return function (value) {
+        if (!plugin.color) {
+            return value;
+        }
+
+        return '\u001b[' + open + 'm' + value + '\u001b[' + close + 'm';
+    };
+}
+
+dim = color(2, 22);
+yellow = color(33, 39);
+green = color(32, 39);
 
 /**
  * Expose `plugin`.
