@@ -47,12 +47,16 @@ paragraph = 'Some simple text. Other “sentence”.';
  * Retext.
  */
 
-var retext,
+var retextWithColor,
+    retextWithoutColor,
     TextOM;
 
-retext = new Retext().use(inspect);
+retextWithColor = new Retext().use(inspect);
+retextWithoutColor = new Retext().use(inspect, {
+    'color': false
+});
 
-TextOM = retext.TextOM;
+TextOM = retextWithColor.TextOM;
 
 /**
  * Tests.
@@ -88,7 +92,7 @@ describe('inspect()', function () {
     var tree;
 
     before(function (done) {
-        retext.parse(paragraph, function (err, node) {
+        retextWithColor.parse(paragraph, function (err, node) {
             tree = node;
 
             done(err);
@@ -146,19 +150,11 @@ describe('inspect()', function () {
     });
 });
 
-describe('inspect.color', function () {
-    it('should be `true`', function () {
-        assert(inspect.color === true);
-    });
-});
-
-describe('inspect.color = false', function () {
+describe('use(inspect, {color: false})', function () {
     var sentence;
 
     before(function (done) {
-        inspect.color = false;
-
-        retext.parse(paragraph, function (err, tree) {
+        retextWithoutColor.parse(paragraph, function (err, tree) {
             sentence = tree.head.head;
 
             done(err);
@@ -183,17 +179,13 @@ describe('inspect.color = false', function () {
 
         assert(sentence.inspect() === fixture);
     });
-
-    after(function () {
-        inspect.color = true;
-    });
 });
 
-describe('inspect.color = true', function () {
+describe('use(inspect, {color: true})', function () {
     var sentence;
 
     before(function (done) {
-        retext.parse(paragraph, function (err, tree) {
+        retextWithColor.parse(paragraph, function (err, tree) {
             sentence = tree.head.head;
 
             done(err);
@@ -238,7 +230,7 @@ describe('`util.inspect` and `console.log` integration', function () {
     var tree;
 
     before(function (done) {
-        retext.parse(paragraph, function (err, node) {
+        retextWithColor.parse(paragraph, function (err, node) {
             tree = node;
 
             done(err);

@@ -1,15 +1,50 @@
 'use strict';
 
 /**
- * Define ANSII color functions and characters.
- *
- * The ANSII function are be defined below.
+ * Define ANSII color functions.
  */
 
 var dim,
     yellow,
-    green,
-    CHAR_VERTICAL_LINE,
+    green;
+
+function ansiiColor(open, close) {
+    return function (value) {
+        return '\u001b[' + open + 'm' + value + '\u001b[' + close + 'm';
+    };
+}
+
+dim = ansiiColor(2, 22);
+yellow = ansiiColor(33, 39);
+green = ansiiColor(32, 39);
+
+/**
+ * Define ANSII color removal functionality.
+ */
+
+var COLOR_EXPRESSION;
+
+COLOR_EXPRESSION = new RegExp(
+    '(?:' +
+        '(?:\\u001b\\[)|' +
+        '\\u009b' +
+    ')' +
+    '(?:' +
+        '(?:[0-9]{1,3})?(?:(?:;[0-9]{0,3})*)?[A-M|f-m]' +
+    ')|' +
+    '\\u001b[A-M]',
+    'g'
+);
+
+function stripColor(value) {
+    return value.replace(COLOR_EXPRESSION, '');
+}
+
+/**
+ * Define constants characters.
+ */
+
+var CHAR_VERTICAL_LINE,
     CHAR_HORIZONTAL_LINE,
     CHAR_SPLIT,
     CHAR_CONTINUE_AND_SPLIT,
@@ -25,9 +60,9 @@ CONTINUE = CHAR_CONTINUE_AND_SPLIT + CHAR_HORIZONTAL_LINE + ' ';
 STOP = CHAR_SPLIT + CHAR_HORIZONTAL_LINE + ' ';
 
 /**
- * Default nesting formatter.
+ * Colored nesting formatter.
  *
- * @param {string} before
+ * @param {Node} node
  * @return {string}
  */
 
@@ -36,7 +71,7 @@ function formatNesting(before) {
 }
 
 /**
- * Default node formatter.
+ * Colored node formatter.
  *
  * @param {Node} node
  * @return {string}
@@ -100,43 +135,48 @@ function inspect(pad) {
 }
 
 /**
+ * Inspects a node, without using color.
+ *
+ * @return {string}
+ * @this {Node}
+ */
+
+function inspectWithoutColor(pad) {
+    return stripColor(inspect.call(this, pad));
+}
+
+/**
  * Define `plugin`.
  *
  * @param {Retext} retext
  */
 
-function plugin(retext) {
+function plugin(retext, options) {
+    var color;
+
+    color = options.color;
+
+    if (typeof color !== 'boolean') {
+        /**
+         * Detect if the client has a native `util.inspect`.
+         * If so, turn `color` on.
+         */
+
+        try {
+            color = 'inspect' in require('util');
+        } catch (exception) {
+            /* istanbul ignore next */
+            color = false;
+        }
+    }
+
     /**
      * Expose `inspect` on `Node`s.
      */
 
-    retext.TextOM.Node.prototype.inspect = inspect;
+    retext.TextOM.Node.prototype.inspect = color ?
+        inspect : inspectWithoutColor;
 }
-
-/**
- * Detect if the client has a native `util.inspect`.
- * If so, turn `color` on.
- */
-
-plugin.color = false;
-
-try {
-    plugin.color = 'inspect' in require('util');
-} catch (exception) {}
-
-function color(open, close) {
-    return function (value) {
-        if (!plugin.color) {
-            return value;
-        }
-
-        return '\u001b[' + open + 'm' + value + '\u001b[' + close + 'm';
-    };
-}
-
-dim = color(2, 22);
-yellow = color(33, 39);
-green = color(32, 39);
 
 /**
  * Expose `plugin`.

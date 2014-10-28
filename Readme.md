@@ -67,14 +67,14 @@ retext.parse('Some simple text.', function (err, tree) {
 
 ## API
 
-### inspect.color
+### Retext#use(inspect, options?)
 
-The diagram uses color to make things more awesome. Support is detected by checking if a `util.inspect` exists (it does in Node.js). To overwrite this, set `color` to `false`:
+The diagram returned by `inspect` uses color to make things more awesome. Support is detected by checking if a `util.inspect` exists (it does in Node.js). To overwrite this, pass an `options` object as a second argument to `Retext#use`, with a `color` property set to `false`:
 
 ```js
-var inspect = require('retext-inspect');
-
-inspect.color = false;
+retext = new Retext().use(inspect, {
+    'color': false
+});
 ```
 
 ### Node#inspect()
@@ -87,7 +87,7 @@ To log the nodes as normal objects, pass `customInspect: false` to `util.inspect
 
 ```js
 console.log(util.inspect(tree, {
-    'customInspect' : false
+    'customInspect': false
 }))
 ```
 
