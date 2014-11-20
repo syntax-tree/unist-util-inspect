@@ -1,4 +1,4 @@
-# retext-inspect [![Build Status](https://travis-ci.org/wooorm/retext-inspect.svg?branch=master)](https://travis-ci.org/wooorm/retext-inspect) [![Coverage Status](https://img.shields.io/coveralls/wooorm/retext-inspect.svg)](https://coveralls.io/r/wooorm/retext-inspect?branch=master)
+# retext-inspect [![Build Status](https://img.shields.io/travis/wooorm/retext-inspect.svg?style=flat)](https://travis-ci.org/wooorm/retext-inspect) [![Coverage Status](https://img.shields.io/coveralls/wooorm/retext-inspect.svg?style=flat)](https://coveralls.io/r/wooorm/retext-inspect?branch=master)
 
 **[retext](https://github.com/wooorm/retext "Retext")** node inspector.
 
