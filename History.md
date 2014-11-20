@@ -1,5 +1,5 @@
 
-n.n.n / 2014-11-20
+0.4.0 / 2014-11-20
 ==================
 
  * Add support for data attributes
