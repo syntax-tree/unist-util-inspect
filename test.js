@@ -148,6 +148,19 @@ describe('inspect()', function () {
 
         assert(chalk.stripColor(tree.head.head.inspect()) === fixture);
     });
+
+    it('should work with data attributes', function () {
+        var text,
+            fixture;
+
+        text = new TextOM.SymbolNode('$');
+
+        text.data.test = true;
+
+        fixture = 'SymbolNode: \'$\' [data={"test":true}]';
+
+        assert(chalk.stripColor(text.inspect()) === fixture);
+    });
 });
 
 describe('use(inspect, {color: false})', function () {

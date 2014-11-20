@@ -1,6 +1,34 @@
 'use strict';
 
 /**
+ * Cached methods.
+ */
+
+var has;
+
+has = Object.prototype.hasOwnProperty;
+
+/**
+ * Get the keys in an object.
+ *
+ * @param {Object} object
+ * @return {boolean}
+ */
+
+function hasKeys(object) {
+    var key;
+
+    for (key in object) {
+        /* istanbul ignore else */
+        if (has.call(object, key)) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+/**
  * Define ANSII color functions.
  */
 
@@ -78,11 +106,21 @@ function formatNesting(before) {
  */
 
 function formatNode(node) {
+    var log;
+
+    log = node.type;
+
     if ('length' in node) {
-        return node.type + dim('[') + yellow(node.length) + dim(']');
+        log += dim('[') + yellow(node.length) + dim(']');
+    } else {
+        log += dim(': \'') + green(node.toString()) + dim('\'');
     }
 
-    return node.type + dim(': \'') + green(node.toString()) + dim('\'');
+    if (hasKeys(node.data)) {
+        log += ' [data=' + JSON.stringify(node.data) + ']';
+    }
+
+    return log;
 }
 
 /**
