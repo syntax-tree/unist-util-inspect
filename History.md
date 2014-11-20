@@ -1,4 +1,14 @@
 
+n.n.n / 2014-11-20
+==================
+
+ * Add support for data attributes
+ * Refactor useage examples in `Readme.md`
+ * Fix incorrect executive rights on `test.js`
+ * Add flat badges to `Readme.md`
+ * Refactor npm script targets in `package.json`
+ * Update retext
+
 0.3.0 / 2014-10-28
 ==================
 
