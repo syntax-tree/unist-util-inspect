@@ -22,14 +22,10 @@ $ bower install retext-inspect
 ## Usage
 
 ```js
-var Retext,
-    retext,
-    inspect;
+var Retext = require('retext');
+var inspect = require('retext-inspect');
 
-Retext = require('retext');
-inspect = require('retext-inspect');
-
-retext = new Retext().use(inspect);
+var retext = new Retext().use(inspect);
 
 retext.parse('Some simple text.', function (err, tree) {
     /* Inspect a node: */
