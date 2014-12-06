@@ -87,6 +87,15 @@ console.log(util.inspect(tree, {
 }))
 ```
 
+## Performance
+
+```
+             TextOM.Node#inspect()
+  1,062 op/s » A paragraph (5 sentences, 100 words)
+    101 op/s » A section (10 paragraphs, 50 sentences, 1,000 words)
+      9 op/s » An article (100 paragraphs, 500 sentences, 10,000 words)
+```
+
 ## License
 
 MIT © [Titus Wormer](http://wooorm.com)
