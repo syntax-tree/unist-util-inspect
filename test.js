@@ -6,7 +6,7 @@ var inspect,
     assert,
     util;
 
-/**
+/*
  * Module dependencies.
  */
 
@@ -22,7 +22,6 @@ util = require('util');
  * @param {function(string)} callback
  * @return {Function} A method to stop intercepting.
  */
-
 function intercept(callback) {
     var write;
 
@@ -35,7 +34,7 @@ function intercept(callback) {
     };
 }
 
-/**
+/*
  * Fixtures.
  */
 
@@ -43,7 +42,7 @@ var paragraph;
 
 paragraph = 'Some simple text. Other “sentence”.';
 
-/**
+/*
  * Retext.
  */
 
@@ -58,7 +57,7 @@ retextWithoutColor = new Retext().use(inspect, {
 
 TextOM = retextWithColor.TextOM;
 
-/**
+/*
  * Tests.
  */
 
@@ -84,7 +83,7 @@ describe('retext-inspect()', function () {
     });
 });
 
-/**
+/*
  * Unit tests for `Node#inspect()`.
  */
 
@@ -235,7 +234,7 @@ describe('use(inspect, {color: true})', function () {
     });
 });
 
-/**
+/*
  * Unit tests for Node.js integration.
  */
 

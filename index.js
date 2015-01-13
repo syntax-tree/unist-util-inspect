@@ -1,6 +1,6 @@
 'use strict';
 
-/**
+/*
  * Cached methods.
  */
 
@@ -9,12 +9,11 @@ var has;
 has = Object.prototype.hasOwnProperty;
 
 /**
- * Get the keys in an object.
+ * Get whether `object` has keys.
  *
  * @param {Object} object
  * @return {boolean}
  */
-
 function hasKeys(object) {
     var key;
 
@@ -28,7 +27,7 @@ function hasKeys(object) {
     return false;
 }
 
-/**
+/*
  * Define ANSII color functions.
  */
 
@@ -36,17 +35,24 @@ var dim,
     yellow,
     green;
 
-function ansiiColor(open, close) {
+/**
+ * Factory to wrap values in ANSI colours.
+ *
+ * @param {string} open
+ * @param {string} close
+ * @return {function(string): string}
+ */
+function ansiColor(open, close) {
     return function (value) {
         return '\u001b[' + open + 'm' + value + '\u001b[' + close + 'm';
     };
 }
 
-dim = ansiiColor(2, 22);
-yellow = ansiiColor(33, 39);
-green = ansiiColor(32, 39);
+dim = ansiColor(2, 22);
+yellow = ansiColor(33, 39);
+green = ansiColor(32, 39);
 
-/**
+/*
  * Define ANSII color removal functionality.
  */
 
@@ -64,11 +70,17 @@ COLOR_EXPRESSION = new RegExp(
     'g'
 );
 
+/**
+ * Remove ANSI colour from `value`.
+ *
+ * @param {string} value
+ * @return {string}
+ */
 function stripColor(value) {
     return value.replace(COLOR_EXPRESSION, '');
 }
 
-/**
+/*
  * Define constants characters.
  */
 
@@ -90,12 +102,11 @@ STOP = CHAR_SPLIT + CHAR_HORIZONTAL_LINE + ' ';
 /**
  * Colored nesting formatter.
  *
- * @param {Node} node
+ * @param {string} value
  * @return {string}
  */
-
-function formatNesting(before) {
-    return dim(before);
+function formatNesting(value) {
+    return dim(value);
 }
 
 /**
@@ -104,7 +115,6 @@ function formatNesting(before) {
  * @param {Node} node
  * @return {string}
  */
-
 function formatNode(node) {
     var log;
 
@@ -126,10 +136,9 @@ function formatNode(node) {
 /**
  * Inspects a node.
  *
- * @return {string}
  * @this {Node}
+ * @return {string}
  */
-
 function inspect(pad) {
     var self,
         node,
@@ -178,7 +187,6 @@ function inspect(pad) {
  * @return {string}
  * @this {Node}
  */
-
 function inspectWithoutColor(pad) {
     return stripColor(inspect.call(this, pad));
 }
@@ -188,14 +196,13 @@ function inspectWithoutColor(pad) {
  *
  * @param {Retext} retext
  */
-
 function plugin(retext, options) {
     var color;
 
     color = options.color;
 
     if (typeof color !== 'boolean') {
-        /**
+        /*
          * Detect if the client has a native `util.inspect`.
          * If so, turn `color` on.
          */
@@ -208,7 +215,7 @@ function plugin(retext, options) {
         }
     }
 
-    /**
+    /*
      * Expose `inspect` on `Node`s.
      */
 
@@ -216,7 +223,7 @@ function plugin(retext, options) {
         inspect : inspectWithoutColor;
 }
 
-/**
+/*
  * Expose `plugin`.
  */
 

@@ -3,14 +3,14 @@
 var Retext,
     inspect;
 
-/**
+/*
  * Dependencies.
  */
 
 Retext = require('retext');
 inspect = require('./');
 
-/**
+/*
  * Dependencies.
  */
 
@@ -18,7 +18,7 @@ var retext;
 
 retext = new Retext().use(inspect);
 
-/**
+/*
  * Test data.
  *
  * This includes:
