@@ -109,4 +109,4 @@ console.log(util.inspect(tree, {
 
 ## License
 
-MIT © [Titus Wormer](http://wooorm.com)
+[MIT](LICENSE) © [Titus Wormer](http://wooorm.com)
