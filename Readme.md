@@ -5,23 +5,26 @@
 ## Installation
 
 npm:
-```sh
+
+```bash
 $ npm install retext-inspect
 ```
 
 Component:
-```sh
+
+```bash
 $ component install wooorm/retext-inspect
 ```
 
 Bower:
-```sh
+
+```bash
 $ bower install retext-inspect
 ```
 
 ## Usage
 
-```js
+```javascript
 var Retext = require('retext');
 var inspect = require('retext-inspect');
 
@@ -67,7 +70,7 @@ retext.parse('Some simple text.', function (err, tree) {
 
 The diagram returned by `inspect` uses color to make things more awesome. Support is detected by checking if a `util.inspect` exists (it does in Node.js). To overwrite this, pass an `options` object as a second argument to `Retext#use`, with a `color` property set to `false`:
 
-```js
+```javascript
 retext = new Retext().use(inspect, {
     'color': false
 });
@@ -81,7 +84,7 @@ There’s no need to call `Node#inspect()` when in Node.js. In Node.js, `console
 
 To log the nodes as normal objects, pass `customInspect: false` to `util.inspect()`:
 
-```js
+```javascript
 console.log(util.inspect(tree, {
     'customInspect': false
 }))
@@ -89,7 +92,7 @@ console.log(util.inspect(tree, {
 
 ## Performance
 
-```
+```text
              TextOM.Node#inspect()
   1,062 op/s » A paragraph (5 sentences, 100 words)
     101 op/s » A section (10 paragraphs, 50 sentences, 1,000 words)
