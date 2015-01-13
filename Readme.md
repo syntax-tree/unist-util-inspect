@@ -33,7 +33,7 @@ var retext = new Retext().use(inspect);
 retext.parse('Some simple text.', function (err, tree) {
     /* Inspect a node: */
     console.log(tree.head.head.tail.inspect());
-    /**
+    /*
      * Logs:
      *
      * PunctuationNode[1]
@@ -42,7 +42,7 @@ retext.parse('Some simple text.', function (err, tree) {
 
     /* Inspect a node in Node.js: */
     console.log(tree);
-    /**
+    /*
      * Logs:
      *
      * RootNode[1]
