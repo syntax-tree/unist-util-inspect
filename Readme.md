@@ -66,9 +66,7 @@ retext.parse('Some simple text.', function (err, tree) {
 
 ## API
 
-### Retext#use(inspect, options?)
-
-The diagram returned by `inspect` uses color to make things more awesome. Support is detected by checking if a `util.inspect` exists (it does in Node.js). To overwrite this, pass an `options` object as a second argument to `Retext#use`, with a `color` property set to `false`:
+### [Retext#use](https://github.com/wooorm/retext#retextuseplugin-options)(inspect, options?)
 
 ```javascript
 retext = new Retext().use(inspect, {
@@ -76,7 +74,11 @@ retext = new Retext().use(inspect, {
 });
 ```
 
-### Node#inspect()
+Options:
+
+- `color` (`boolean`, default `true`) - The diagram returned by `inspect` uses color to make things more awesome. Support is detected by checking if a `util.inspect()` exists (it does in Node.js). To overwrite this, pass an `options` object as a second argument to `Retext#use()`, with a `color` property set to `false`.
+
+### [Node](https://github.com/wooorm/textom#textomnode-nlcstnode)#inspect()
 
 Get a string representing `node`.
 
