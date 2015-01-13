@@ -22,6 +22,12 @@ $ component install wooorm/retext-inspect
 $ bower install retext-inspect
 ```
 
+[Duo](http://duojs.org/#getting-started):
+
+```javascript
+var inspect = require('wooorm/retext-inspect');
+```
+
 ## Usage
 
 ```javascript
