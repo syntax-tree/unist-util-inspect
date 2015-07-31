@@ -1,43 +1,43 @@
-# retext-inspect [![Build Status](https://img.shields.io/travis/wooorm/retext-inspect.svg)](https://travis-ci.org/wooorm/retext-inspect) [![Coverage Status](https://img.shields.io/codecov/c/github/wooorm/retext-inspect.svg)](https://codecov.io/github/wooorm/retext-inspect?branch=master)
+# unist-util-inspect [![Build Status](https://img.shields.io/travis/wooorm/unist-util-inspect.svg)](https://travis-ci.org/wooorm/unist-util-inspect) [![Coverage Status](https://img.shields.io/codecov/c/github/wooorm/unist-util-inspect.svg)](https://codecov.io/github/wooorm/unist-util-inspect?branch=master)
 
-[**retext**](https://github.com/wooorm/retext) node inspector.
+[Unist](https://github.com/wooorm/unist) node inspector.
 
 ## Installation
 
 [npm](https://docs.npmjs.com/cli/install):
 
 ```bash
-npm install retext-inspect
+npm install unist-util-inspect
 ```
 
 [Component.js](https://github.com/componentjs/component):
 
 ```bash
-component install wooorm/retext-inspect
+component install wooorm/unist-util-inspect
 ```
 
 [Bower](http://bower.io/#install-packages):
 
 ```bash
-bower install retext-inspect
+bower install unist-util-inspect
 ```
 
 [Duo](http://duojs.org/#getting-started):
 
 ```javascript
-var inspect = require('wooorm/retext-inspect');
+var inspect = require('wooorm/unist-util-inspect');
 ```
 
-**retext-inspect** is also available for [bower](http://bower.io/#install-packages),
+**unist-util-inspect** is also available for [bower](http://bower.io/#install-packages),
 [component](https://github.com/componentjs/component), [duo](http://duojs.org/#getting-started),
-and for AMD, CommonJS, and globals ([uncompressed](retext-inspect.js) and
-[compressed](retext-inspect.min.js)).
+and for AMD, CommonJS, and globals ([uncompressed](unist-util-inspect.js) and
+[compressed](unist-util-inspect.min.js)).
 
 ## Usage
 
 ```javascript
 var retext = require('retext');
-var inspect = require('retext-inspect');
+var inspect = require('unist-util-inspect');
 
 retext().use(function (cst) {
     console.log(inspect(cst));

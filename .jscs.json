@@ -5,8 +5,8 @@
     "coverage/",
     "node_modules/",
     "build.js",
-    "retext-inspect.js",
-    "retext-inspect.min.js"
+    "unist-util-inspect.js",
+    "unist-util-inspect.min.js"
   ],
   "jsDoc": {
     "checkAnnotations": "jsdoc3",

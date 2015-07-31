@@ -1,10 +1,12 @@
 {
-  "name": "retext-inspect",
+  "name": "unist-util-inspect",
   "version": "0.4.2",
-  "description": "Retext node inspector",
+  "description": "Unist node inspector",
   "license": "MIT",
   "keywords": [
     "retext",
+    "mdast",
+    "unist",
     "inspect"
   ],
   "dependencies": {
@@ -15,7 +17,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/wooorm/retext-inspect.git"
+    "url": "https://github.com/wooorm/unist-util-inspect.git"
   },
   "author": "Titus Wormer <tituswormer@gmail.com>",
   "devDependencies": {
@@ -46,8 +48,8 @@
     "lint": "npm run lint-api && npm run lint-style",
     "make": "npm run lint && npm run test-coverage",
     "build-md": "mdast .",
-    "build-bundle": "browserify index.js --bare -s retextInspect > retext-inspect.js",
-    "postbuild-bundle": "esmangle retext-inspect.js > retext-inspect.min.js",
+    "build-bundle": "browserify index.js --bare -s unistUtilInspect > unist-util-inspect.js",
+    "postbuild-bundle": "esmangle unist-util-inspect.js > unist-util-inspect.min.js",
     "build": "npm run build-md && npm run build-bundle"
   }
 }

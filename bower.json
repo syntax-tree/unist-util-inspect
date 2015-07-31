@@ -1,15 +1,17 @@
 {
-  "name": "retext-inspect",
-  "main": "retext-inspect.js",
-  "description": "Retext node inspector",
+  "name": "unist-util-inspect",
+  "main": "unist-util-inspect.js",
+  "description": "Unist node inspector",
   "license": "MIT",
   "keywords": [
     "retext",
+    "mdast",
+    "unist",
     "inspect"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/wooorm/retext-inspect.git"
+    "url": "https://github.com/wooorm/unist-util-inspect.git"
   },
   "authors": [
     "Titus Wormer <tituswormer@gmail.com>"

@@ -1,16 +1,18 @@
 {
-  "name": "retext-inspect",
+  "name": "unist-util-inspect",
   "version": "0.4.2",
-  "description": "Retext node inspector",
+  "description": "Unist node inspector",
   "license": "MIT",
   "keywords": [
     "retext",
+    "mdast",
+    "unist",
     "inspect"
   ],
   "dependencies": {
     "ianstormtaylor/is-empty": "0.0.1"
   },
-  "repository": "wooorm/retext-inspect",
+  "repository": "wooorm/unist-util-inspect",
   "scripts": [
     "index.js"
   ]
