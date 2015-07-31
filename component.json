@@ -7,8 +7,11 @@
     "retext",
     "inspect"
   ],
+  "dependencies": {
+    "ianstormtaylor/is-empty": "0.0.1"
+  },
   "repository": "wooorm/retext-inspect",
-  "scripts" : [
+  "scripts": [
     "index.js"
   ]
 }

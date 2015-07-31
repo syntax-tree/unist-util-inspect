@@ -1,6 +1,6 @@
 {
   "name": "retext-inspect",
-  "main": "index.js",
+  "main": "retext-inspect.js",
   "description": "Retext node inspector",
   "license": "MIT",
   "keywords": [
@@ -22,9 +22,10 @@
     "components/",
     "coverage/",
     "node_modules/",
+    "build.js",
+    "index.js",
+    "test.js",
     "component.json",
-    "package.json",
-    "benchmark.js",
-    "test.js"
+    "package.json"
   ]
 }
