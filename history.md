@@ -2,6 +2,12 @@
 
 <!--lint disable no-multiple-toplevel-headings-->
 
+1.0.0 / 2015-07-31
+==================
+
+*   Rename to `unist-util-inspect` ([a070ca2](https://github.com/wooorm/unist-util-inspect/commit/a070ca2))
+*   Refactor api, purpose ([03c2de1](https://github.com/wooorm/unist-util-inspect/commit/03c2de1))
+
 0.4.2 / 2015-01-13
 ==================
 
