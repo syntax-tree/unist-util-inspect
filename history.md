@@ -2,6 +2,11 @@
 
 <!--lint disable no-multiple-toplevel-headings-->
 
+1.1.0 / 2015-09-13
+==================
+
+*   Add support for list of nodes, non-nodes ([0479a4d](https://github.com/wooorm/unist-util-inspect/commit/0479a4d))
+
 1.0.0 / 2015-07-31
 ==================
 

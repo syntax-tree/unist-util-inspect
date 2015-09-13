@@ -96,7 +96,14 @@ function formatNode(node) {
     if (node.children && node.children.length) {
         log += dim('[') + yellow(node.children.length) + dim(']');
     } else {
-        log += dim(': \'') + green(node.value) + dim('\'');
+        log += dim(': ') + green(JSON.stringify(node.value));
+    }
+
+    if (!isEmpty(node.position)) {
+        log += ' (start={l:' + node.position.start.line +
+            ', c:' + node.position.start.column + ', o:' + node.position.start.offset + '}, ' +
+            'end={l:' + node.position.end.line +
+            ', c:' + node.position.end.column + ', o:' + node.position.end.offset + '})';
     }
 
     if (!isEmpty(node.data)) {
