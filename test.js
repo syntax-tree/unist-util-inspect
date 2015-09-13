@@ -1,6 +1,14 @@
+/**
+ * @author Titus Wormer
+ * @copyright 2015 Titus Wormer
+ * @license MIT
+ * @module unist:util:inspect
+ * @fileoverview Test suite for `unist-util-inspect`.
+ */
+
 'use strict';
 
-/* eslint-env mocha */
+/* eslint-env node, mocha */
 
 /*
  * Module dependencies.
@@ -99,6 +107,33 @@ describe('inspect()', function () {
                 '└─ PunctuationNode: \'.\''
             ].join('\n')
         );
+    });
+
+    it('should work with a list of nodes', function () {
+        equal(strip(inspect([
+            {
+                'type': 'SymbolNode',
+                'value': '$'
+            },
+            {
+                'type': 'WordNode',
+                'children': [{
+                    'type': 'text',
+                    'value': '5,00'
+                }]
+            }
+        ])), [
+            'SymbolNode: \'$\'',
+            'WordNode[1]',
+            '└─ text: \'5,00\''
+        ].join('\n'));
+    });
+
+    it('should work on non-nodes', function () {
+        equal(strip(inspect('foo')), 'foo');
+        equal(strip(inspect('null')), 'null');
+        equal(strip(inspect(NaN)), 'NaN');
+        equal(strip(inspect(3)), '3');
     });
 
     it('should work with data attributes', function () {

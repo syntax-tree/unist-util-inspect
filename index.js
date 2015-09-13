@@ -113,10 +113,31 @@ function formatNode(node) {
  * @return {string}
  */
 function inspect(node, pad) {
-    var result = [formatNode(node)];
-    var children = node.children;
-    var index = -1;
-    var length = children && children.length;
+    var result;
+    var children;
+    var index;
+    var length;
+
+    if (node && node.length && typeof node !== 'string') {
+        length = node.length;
+        index = -1;
+        result = [];
+
+        while (++index < length) {
+            result[index] = inspect(node[index]);
+        }
+
+        return result.join('\n');
+    }
+
+    if (!node || !node.type) {
+        return String(node);
+    }
+
+    result = [formatNode(node)];
+    children = node.children;
+    length = children && children.length;
+    index = -1;
 
     if (!length) {
         return result[0];
