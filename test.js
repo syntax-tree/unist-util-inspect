@@ -65,28 +65,28 @@ describe('inspect()', function () {
         equal(
             strip(inspect(tree)),
             [
-                'RootNode[1] (start={l:1, c:1, o:0}, end={l:1, c:36, o:35})',
-                '└─ ParagraphNode[3] (start={l:1, c:1, o:0}, end={l:1, c:36, o:35})',
-                '   ├─ SentenceNode[6] (start={l:1, c:1, o:0}, end={l:1, c:18, o:17})',
-                '   │  ├─ WordNode[1] (start={l:1, c:1, o:0}, end={l:1, c:5, o:4})',
-                '   │  │  └─ TextNode: "Some" (start={l:1, c:1, o:0}, end={l:1, c:5, o:4})',
-                '   │  ├─ WhiteSpaceNode: " " (start={l:1, c:5, o:4}, end={l:1, c:6, o:5})',
-                '   │  ├─ WordNode[1] (start={l:1, c:6, o:5}, end={l:1, c:12, o:11})',
-                '   │  │  └─ TextNode: "simple" (start={l:1, c:6, o:5}, end={l:1, c:12, o:11})',
-                '   │  ├─ WhiteSpaceNode: " " (start={l:1, c:12, o:11}, end={l:1, c:13, o:12})',
-                '   │  ├─ WordNode[1] (start={l:1, c:13, o:12}, end={l:1, c:17, o:16})',
-                '   │  │  └─ TextNode: "text" (start={l:1, c:13, o:12}, end={l:1, c:17, o:16})',
-                '   │  └─ PunctuationNode: "." (start={l:1, c:17, o:16}, end={l:1, c:18, o:17})',
-                '   ├─ WhiteSpaceNode: " " (start={l:1, c:18, o:17}, end={l:1, c:19, o:18})',
-                '   └─ SentenceNode[6] (start={l:1, c:19, o:18}, end={l:1, c:36, o:35})',
-                '      ├─ WordNode[1] (start={l:1, c:19, o:18}, end={l:1, c:24, o:23})',
-                '      │  └─ TextNode: "Other" (start={l:1, c:19, o:18}, end={l:1, c:24, o:23})',
-                '      ├─ WhiteSpaceNode: " " (start={l:1, c:24, o:23}, end={l:1, c:25, o:24})',
-                '      ├─ PunctuationNode: "“" (start={l:1, c:25, o:24}, end={l:1, c:26, o:25})',
-                '      ├─ WordNode[1] (start={l:1, c:26, o:25}, end={l:1, c:34, o:33})',
-                '      │  └─ TextNode: "sentence" (start={l:1, c:26, o:25}, end={l:1, c:34, o:33})',
-                '      ├─ PunctuationNode: "”" (start={l:1, c:34, o:33}, end={l:1, c:35, o:34})',
-                '      └─ PunctuationNode: "." (start={l:1, c:35, o:34}, end={l:1, c:36, o:35})'
+                'RootNode[1] (1:1-1:36, 0:35)',
+                '└─ ParagraphNode[3] (1:1-1:36, 0:35)',
+                '   ├─ SentenceNode[6] (1:1-1:18, 0:17)',
+                '   │  ├─ WordNode[1] (1:1-1:5, 0:4)',
+                '   │  │  └─ TextNode: "Some" (1:1-1:5, 0:4)',
+                '   │  ├─ WhiteSpaceNode: " " (1:5-1:6, 4:5)',
+                '   │  ├─ WordNode[1] (1:6-1:12, 5:11)',
+                '   │  │  └─ TextNode: "simple" (1:6-1:12, 5:11)',
+                '   │  ├─ WhiteSpaceNode: " " (1:12-1:13, 11:12)',
+                '   │  ├─ WordNode[1] (1:13-1:17, 12:16)',
+                '   │  │  └─ TextNode: "text" (1:13-1:17, 12:16)',
+                '   │  └─ PunctuationNode: "." (1:17-1:18, 16:17)',
+                '   ├─ WhiteSpaceNode: " " (1:18-1:19, 17:18)',
+                '   └─ SentenceNode[6] (1:19-1:36, 18:35)',
+                '      ├─ WordNode[1] (1:19-1:24, 18:23)',
+                '      │  └─ TextNode: "Other" (1:19-1:24, 18:23)',
+                '      ├─ WhiteSpaceNode: " " (1:24-1:25, 23:24)',
+                '      ├─ PunctuationNode: "“" (1:25-1:26, 24:25)',
+                '      ├─ WordNode[1] (1:26-1:34, 25:33)',
+                '      │  └─ TextNode: "sentence" (1:26-1:34, 25:33)',
+                '      ├─ PunctuationNode: "”" (1:34-1:35, 33:34)',
+                '      └─ PunctuationNode: "." (1:35-1:36, 34:35)'
             ].join('\n')
         );
     });
@@ -95,16 +95,16 @@ describe('inspect()', function () {
         equal(
             strip(inspect(tree.children[0].children[0])),
             [
-                'SentenceNode[6] (start={l:1, c:1, o:0}, end={l:1, c:18, o:17})',
-                '├─ WordNode[1] (start={l:1, c:1, o:0}, end={l:1, c:5, o:4})',
-                '│  └─ TextNode: "Some" (start={l:1, c:1, o:0}, end={l:1, c:5, o:4})',
-                '├─ WhiteSpaceNode: " " (start={l:1, c:5, o:4}, end={l:1, c:6, o:5})',
-                '├─ WordNode[1] (start={l:1, c:6, o:5}, end={l:1, c:12, o:11})',
-                '│  └─ TextNode: "simple" (start={l:1, c:6, o:5}, end={l:1, c:12, o:11})',
-                '├─ WhiteSpaceNode: " " (start={l:1, c:12, o:11}, end={l:1, c:13, o:12})',
-                '├─ WordNode[1] (start={l:1, c:13, o:12}, end={l:1, c:17, o:16})',
-                '│  └─ TextNode: "text" (start={l:1, c:13, o:12}, end={l:1, c:17, o:16})',
-                '└─ PunctuationNode: "." (start={l:1, c:17, o:16}, end={l:1, c:18, o:17})'
+                'SentenceNode[6] (1:1-1:18, 0:17)',
+                '├─ WordNode[1] (1:1-1:5, 0:4)',
+                '│  └─ TextNode: "Some" (1:1-1:5, 0:4)',
+                '├─ WhiteSpaceNode: " " (1:5-1:6, 4:5)',
+                '├─ WordNode[1] (1:6-1:12, 5:11)',
+                '│  └─ TextNode: "simple" (1:6-1:12, 5:11)',
+                '├─ WhiteSpaceNode: " " (1:12-1:13, 11:12)',
+                '├─ WordNode[1] (1:13-1:17, 12:16)',
+                '│  └─ TextNode: "text" (1:13-1:17, 12:16)',
+                '└─ PunctuationNode: "." (1:17-1:18, 16:17)'
             ].join('\n')
         );
     });
@@ -152,16 +152,16 @@ describe('inspect.noColor()', function () {
         var sentence = retext().parse(paragraph).children[0].children[0];
 
         equal(inspect.noColor(sentence), [
-            'SentenceNode[6] (start={l:1, c:1, o:0}, end={l:1, c:18, o:17})',
-            '├─ WordNode[1] (start={l:1, c:1, o:0}, end={l:1, c:5, o:4})',
-            '│  └─ TextNode: "Some" (start={l:1, c:1, o:0}, end={l:1, c:5, o:4})',
-            '├─ WhiteSpaceNode: " " (start={l:1, c:5, o:4}, end={l:1, c:6, o:5})',
-            '├─ WordNode[1] (start={l:1, c:6, o:5}, end={l:1, c:12, o:11})',
-            '│  └─ TextNode: "simple" (start={l:1, c:6, o:5}, end={l:1, c:12, o:11})',
-            '├─ WhiteSpaceNode: " " (start={l:1, c:12, o:11}, end={l:1, c:13, o:12})',
-            '├─ WordNode[1] (start={l:1, c:13, o:12}, end={l:1, c:17, o:16})',
-            '│  └─ TextNode: "text" (start={l:1, c:13, o:12}, end={l:1, c:17, o:16})',
-            '└─ PunctuationNode: "." (start={l:1, c:17, o:16}, end={l:1, c:18, o:17})'
+            'SentenceNode[6] (1:1-1:18, 0:17)',
+            '├─ WordNode[1] (1:1-1:5, 0:4)',
+            '│  └─ TextNode: "Some" (1:1-1:5, 0:4)',
+            '├─ WhiteSpaceNode: " " (1:5-1:6, 4:5)',
+            '├─ WordNode[1] (1:6-1:12, 5:11)',
+            '│  └─ TextNode: "simple" (1:6-1:12, 5:11)',
+            '├─ WhiteSpaceNode: " " (1:12-1:13, 11:12)',
+            '├─ WordNode[1] (1:13-1:17, 12:16)',
+            '│  └─ TextNode: "text" (1:13-1:17, 12:16)',
+            '└─ PunctuationNode: "." (1:17-1:18, 16:17)'
         ].join('\n'));
     });
 });
@@ -172,25 +172,25 @@ describe('inspect.color()', function () {
 
         equal(inspect.color(sentence), [
             'SentenceNode' +
-                chalk.dim('[') + chalk.yellow('6') + chalk.dim(']') + ' (start={l:1, c:1, o:0}, end={l:1, c:18, o:17})',
+                chalk.dim('[') + chalk.yellow('6') + chalk.dim(']') + ' (1:1-1:18, 0:17)',
             chalk.dim('├─ ') + 'WordNode' +
-                chalk.dim('[') + chalk.yellow('1') + chalk.dim(']') + ' (start={l:1, c:1, o:0}, end={l:1, c:5, o:4})',
+                chalk.dim('[') + chalk.yellow('1') + chalk.dim(']') + ' (1:1-1:5, 0:4)',
             chalk.dim('│  └─ ') + 'TextNode' +
-                chalk.dim(': ') + chalk.green('"Some"') + ' (start={l:1, c:1, o:0}, end={l:1, c:5, o:4})',
+                chalk.dim(': ') + chalk.green('"Some"') + ' (1:1-1:5, 0:4)',
             chalk.dim('├─ ') + 'WhiteSpaceNode' +
-                chalk.dim(': ') + chalk.green('" "') + ' (start={l:1, c:5, o:4}, end={l:1, c:6, o:5})',
+                chalk.dim(': ') + chalk.green('" "') + ' (1:5-1:6, 4:5)',
             chalk.dim('├─ ') + 'WordNode' +
-                chalk.dim('[') + chalk.yellow('1') + chalk.dim(']') + ' (start={l:1, c:6, o:5}, end={l:1, c:12, o:11})',
+                chalk.dim('[') + chalk.yellow('1') + chalk.dim(']') + ' (1:6-1:12, 5:11)',
             chalk.dim('│  └─ ') + 'TextNode' +
-                chalk.dim(': ') + chalk.green('"simple"') + ' (start={l:1, c:6, o:5}, end={l:1, c:12, o:11})',
+                chalk.dim(': ') + chalk.green('"simple"') + ' (1:6-1:12, 5:11)',
             chalk.dim('├─ ') + 'WhiteSpaceNode' +
-                chalk.dim(': ') + chalk.green('" "') + ' (start={l:1, c:12, o:11}, end={l:1, c:13, o:12})',
+                chalk.dim(': ') + chalk.green('" "') + ' (1:12-1:13, 11:12)',
             chalk.dim('├─ ') + 'WordNode' +
-                chalk.dim('[') + chalk.yellow('1') + chalk.dim(']') + ' (start={l:1, c:13, o:12}, end={l:1, c:17, o:16})',
+                chalk.dim('[') + chalk.yellow('1') + chalk.dim(']') + ' (1:13-1:17, 12:16)',
             chalk.dim('│  └─ ') + 'TextNode' +
-                chalk.dim(': ') + chalk.green('"text"') + ' (start={l:1, c:13, o:12}, end={l:1, c:17, o:16})',
+                chalk.dim(': ') + chalk.green('"text"') + ' (1:13-1:17, 12:16)',
             chalk.dim('└─ ') + 'PunctuationNode' +
-                chalk.dim(': ') + chalk.green('"."') + ' (start={l:1, c:17, o:16}, end={l:1, c:18, o:17})'
+                chalk.dim(': ') + chalk.green('"."') + ' (1:17-1:18, 16:17)'
         ].join('\n'));
     });
 });

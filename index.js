@@ -100,10 +100,9 @@ function formatNode(node) {
     }
 
     if (!isEmpty(node.position)) {
-        log += ' (start={l:' + node.position.start.line +
-            ', c:' + node.position.start.column + ', o:' + node.position.start.offset + '}, ' +
-            'end={l:' + node.position.end.line +
-            ', c:' + node.position.end.column + ', o:' + node.position.end.offset + '})';
+        log += ' (' + node.position.start.line + ':' + node.position.start.column +
+            '-' + node.position.end.line + ':' + node.position.end.column +
+            ', ' + node.position.start.offset + ':' + node.position.end.offset + ')';
     }
 
     if (!isEmpty(node.data)) {
