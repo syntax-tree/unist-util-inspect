@@ -96,7 +96,13 @@ function formatNode(node) {
     if (node.children && node.children.length) {
         log += dim('[') + yellow(node.children.length) + dim(']');
     } else {
-        log += dim(': \'') + green(node.value) + dim('\'');
+        log += dim(': ') + green(JSON.stringify(node.value));
+    }
+
+    if (!isEmpty(node.position)) {
+        log += ' (' + node.position.start.line + ':' + node.position.start.column +
+            '-' + node.position.end.line + ':' + node.position.end.column +
+            ', ' + node.position.start.offset + ':' + node.position.end.offset + ')';
     }
 
     if (!isEmpty(node.data)) {
