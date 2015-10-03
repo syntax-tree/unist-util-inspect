@@ -2,6 +2,11 @@
 
 <!--lint disable no-multiple-toplevel-headings-->
 
+2.0.0 / 2015-10-03
+==================
+
+*   Add positional information, escape characters ([fc266f3](https://github.com/wooorm/unist-util-inspect/commit/fc266f3))
+
 1.1.0 / 2015-09-13
 ==================
 
