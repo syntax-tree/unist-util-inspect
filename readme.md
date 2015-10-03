@@ -39,36 +39,35 @@ and for AMD, CommonJS, and globals ([uncompressed](unist-util-inspect.js) and
 var retext = require('retext');
 var inspect = require('unist-util-inspect');
 
-retext().use(function (cst) {
-    console.log(inspect(cst));
+retext().use(function () {
+    return function (cst) {
+        console.log(inspect(cst));
+    }
 }).process('Some simple text.');
 ```
 
 Yields:
 
 ```text
-RootNode[1]
-└─ ParagraphNode[1]
-   └─ SentenceNode[6]
-      ├─ WordNode[1]
-      │  └─ TextNode: 'Some'
-      ├─ WhiteSpaceNode[1]
-      │  └─ TextNode: ' '
-      ├─ WordNode[1]
-      │  └─ TextNode: 'simple'
-      ├─ WhiteSpaceNode[1]
-      │  └─ TextNode: ' '
-      ├─ WordNode[1]
-      │  └─ TextNode: 'text'
-      └─ PunctuationNode[1]
-         └─ TextNode: '.'
+RootNode[1] (1:1-1:18, 0-17)
+└─ ParagraphNode[1] (1:1-1:18, 0-17)
+   └─ SentenceNode[6] (1:1-1:18, 0-17)
+      ├─ WordNode[1] (1:1-1:5, 0-4)
+      │  └─ TextNode: "Some" (1:1-1:5, 0-4)
+      ├─ WhiteSpaceNode: " " (1:5-1:6, 4-5)
+      ├─ WordNode[1] (1:6-1:12, 5-11)
+      │  └─ TextNode: "simple" (1:6-1:12, 5-11)
+      ├─ WhiteSpaceNode: " " (1:12-1:13, 11-12)
+      ├─ WordNode[1] (1:13-1:17, 12-16)
+      │  └─ TextNode: "text" (1:13-1:17, 12-16)
+      └─ PunctuationNode: "." (1:17-1:18, 16-17)
 ```
 
 ## API
 
 ### inspect([node](https://github.com/wooorm/unist#unist-nodes))
 
-By default, color support is enabled on node and disabled anywhere else.
+By default, color support is enabled on node and turned off anywhere else.
 See below on how to change that.
 
 **Parameters**

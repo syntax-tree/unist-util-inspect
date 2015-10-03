@@ -86,6 +86,69 @@ function formatNesting(value) {
 }
 
 /**
+ * Compile a single position.
+ *
+ * @param {Object?} pos - Single position.
+ * @return {Array.<string>?} - Compiled position.
+ */
+function compile(pos) {
+    var values = [];
+
+    if (!pos) {
+        return null;
+    }
+
+    values = [
+        [pos.line || 1, pos.column || 1].join(':')
+    ];
+
+    if ('offset' in pos) {
+        values.push(String(pos.offset || 0));
+    }
+
+    return values;
+}
+
+/**
+ * Compile a location.
+ *
+ * @param {Object?} start - Start position.
+ * @param {Object?} end - End position.
+ * @return {string} - Stringified position.
+ */
+function stringify(start, end) {
+    var values = [];
+    var positions = [];
+    var offsets = [];
+
+    /** Add a position. */
+    function add(position) {
+        var tuple = compile(position);
+
+        if (tuple) {
+            positions.push(tuple[0]);
+
+            if (tuple[1]) {
+                offsets.push(tuple[1]);
+            }
+        }
+    }
+
+    add(start);
+    add(end)
+
+    if (positions.length) {
+        values.push(positions.join('-'));
+    }
+
+    if (offsets.length) {
+        values.push(offsets.join('-'));
+    }
+
+    return values.join(', ');
+}
+
+/**
  * Colored node formatter.
  *
  * @param {Node} node
@@ -93,11 +156,17 @@ function formatNesting(value) {
  */
 function formatNode(node) {
     var log = node.type;
+    var location = node.position || {};
+    var position = stringify(location.start, location.end);
 
     if (node.children && node.children.length) {
         log += dim('[') + yellow(node.children.length) + dim(']');
     } else {
-        log += dim(': \'') + green(node.value) + dim('\'');
+        log += dim(': ') + green(JSON.stringify(node.value));
+    }
+
+    if (position) {
+        log += ' (' + position + ')';
     }
 
     if (!isEmpty(node.data)) {
