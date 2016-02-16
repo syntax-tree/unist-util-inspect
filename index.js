@@ -23,9 +23,9 @@ var isEmpty = require('is-empty');
 /**
  * Factory to wrap values in ANSI colours.
  *
- * @param {string} open
- * @param {string} close
- * @return {function(string): string}
+ * @param {string} open - Opening sequence.
+ * @param {string} close - Closing sequence.
+ * @return {function(string): string} - Bound function.
  */
 function ansiColor(open, close) {
     return function (value) {
@@ -56,8 +56,8 @@ var COLOR_EXPRESSION = new RegExp(
 /**
  * Remove ANSI colour from `value`.
  *
- * @param {string} value
- * @return {string}
+ * @param {string} value - Value to strip.
+ * @return {string} - Stripped value.
  */
 function stripColor(value) {
     return value.replace(COLOR_EXPRESSION, '');
@@ -77,8 +77,8 @@ var STOP = CHAR_SPLIT + CHAR_HORIZONTAL_LINE + ' ';
 /**
  * Colored nesting formatter.
  *
- * @param {string} value
- * @return {string}
+ * @param {string} value - Value to format as nesting.
+ * @return {string} - Formatted value.
  */
 function formatNesting(value) {
     return dim(value);
@@ -120,7 +120,11 @@ function stringify(start, end) {
     var positions = [];
     var offsets = [];
 
-    /** Add a position. */
+    /**
+     * Add a position.
+     *
+     * @param {Position} position - Position to add.
+     */
     function add(position) {
         var tuple = compile(position);
 
@@ -134,7 +138,7 @@ function stringify(start, end) {
     }
 
     add(start);
-    add(end)
+    add(end);
 
     if (positions.length) {
         values.push(positions.join('-'));
@@ -150,8 +154,8 @@ function stringify(start, end) {
 /**
  * Colored node formatter.
  *
- * @param {Node} node
- * @return {string}
+ * @param {Node} node - Node to format.
+ * @return {string} - Formatted node.
  */
 function formatNode(node) {
     var log = node.type;
@@ -178,8 +182,9 @@ function formatNode(node) {
 /**
  * Inspects a node.
  *
- * @this {Node}
- * @return {string}
+ * @param {Node} node - Node to inspect.
+ * @param {string?} [pad] - Padding.
+ * @return {string} - Formatted node.
  */
 function inspect(node, pad) {
     var result;
@@ -237,8 +242,9 @@ function inspect(node, pad) {
 /**
  * Inspects a node, without using color.
  *
- * @return {string}
- * @this {Node}
+ * @param {Node} node - Node to inspect.
+ * @param {string?} [pad] - Padding.
+ * @return {string} - Formatted node.
  */
 function noColor(node, pad) {
     return stripColor(inspect(node, pad));
