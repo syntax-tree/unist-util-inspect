@@ -1,17 +1,17 @@
-# unist-util-inspect [![Build Status](https://img.shields.io/travis/wooorm/unist-util-inspect.svg)](https://travis-ci.org/wooorm/unist-util-inspect) [![Coverage Status](https://img.shields.io/codecov/c/github/wooorm/unist-util-inspect.svg)](https://codecov.io/github/wooorm/unist-util-inspect?branch=master)
+# unist-util-inspect [![Build Status][build-badge]][build-page] [![Coverage Status][coverage-badge]][coverage-page]
 
-[Unist](https://github.com/wooorm/unist) node inspector.
+[Unist][] node inspector.
 
 ## Installation
 
-[npm](https://docs.npmjs.com/cli/install):
+[npm][]:
 
 ```bash
 npm install unist-util-inspect
 ```
 
 **unist-util-inspect** is also available as an AMD, CommonJS, and
-globals module, [uncompressed and compressed](https://github.com/wooorm/unist-util-inspect/releases).
+globals module, [uncompressed and compressed][releases].
 
 ## Usage
 
@@ -45,24 +45,46 @@ RootNode[1] (1:1-1:18, 0-17)
 
 ## API
 
-### inspect([node](https://github.com/wooorm/unist#unist-nodes))
+### `inspect(node)`
 
-By default, color support is enabled on node and turned off anywhere else.
+By default, color support is enabled on Node.js and turned off anywhere else.
 See below on how to change that.
 
 **Parameters**
 
-*   `node` ([`Node`](https://github.com/wooorm/unist#unist-nodes)).
+*   `node` ([`Node`][node]).
 
 **Returns** `string` — String representing `node`.
 
-### inspect.\\&lt;style>\[.\\&lt;style>...](node)
+### `inspect.<style>[.<style>...](node)`
 
-Where `style` is either `color` or `noColor`.
+Where `<style>` is either `color` or `noColor`.
 
 To explicitly add or remove ANSI sequences, use either `inspect.color(node)`
 or `inspect.noColor(node)`.
 
 ## License
 
-[MIT](LICENSE) © [Titus Wormer](http://wooorm.com)
+[MIT][license] © [Titus Wormer][author]
+
+<!-- Definition -->
+
+[build-badge]: https://img.shields.io/travis/wooorm/unist-util-inspect.svg
+
+[build-page]: https://travis-ci.org/wooorm/unist-util-inspect
+
+[coverage-badge]: https://img.shields.io/codecov/c/github/wooorm/unist-util-inspect.svg
+
+[coverage-page]: https://codecov.io/github/wooorm/unist-util-inspect?branch=master
+
+[unist]: https://github.com/wooorm/unist
+
+[npm]: https://docs.npmjs.com/cli/install
+
+[releases]: https://github.com/wooorm/unist-util-inspect/releases
+
+[node]: https://github.com/wooorm/unist#unist-nodes
+
+[license]: LICENSE
+
+[author]: http://wooorm.com
