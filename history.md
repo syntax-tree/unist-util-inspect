@@ -2,6 +2,12 @@
 
 <!--lint disable no-multiple-toplevel-headings-->
 
+3.0.0 / 2016-02-16
+==================
+
+*   Add all non-standard attributes to output ([`6be0913`](https://github.com/wooorm/unist-util-inspect/commit/6be0913))
+*   Remove support for Bower, Component, Duo ([`30bb693`](https://github.com/wooorm/unist-util-inspect/commit/30bb693))
+
 2.0.0 / 2015-10-03
 ==================
 
