@@ -1,10 +1,7 @@
 {
   "excludeFiles": [
-    "build/",
-    "components/",
     "coverage/",
     "node_modules/",
-    "build.js",
     "unist-util-inspect.js",
     "unist-util-inspect.min.js"
   ],

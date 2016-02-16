@@ -10,28 +10,8 @@
 npm install unist-util-inspect
 ```
 
-[Component.js](https://github.com/componentjs/component):
-
-```bash
-component install wooorm/unist-util-inspect
-```
-
-[Bower](http://bower.io/#install-packages):
-
-```bash
-bower install unist-util-inspect
-```
-
-[Duo](http://duojs.org/#getting-started):
-
-```javascript
-var inspect = require('wooorm/unist-util-inspect');
-```
-
-**unist-util-inspect** is also available for [bower](http://bower.io/#install-packages),
-[component](https://github.com/componentjs/component), [duo](http://duojs.org/#getting-started),
-and for AMD, CommonJS, and globals ([uncompressed](unist-util-inspect.js) and
-[compressed](unist-util-inspect.min.js)).
+**unist-util-inspect** is also available for AMD, CommonJS, and
+globals ([uncompressed](unist-util-inspect.js) and [compressed](unist-util-inspect.min.js)).
 
 ## Usage
 
