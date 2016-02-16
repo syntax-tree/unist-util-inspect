@@ -1,9 +1,25 @@
 language: node_js
-script: npm run-script test-travis
 node_js:
 - '0.10'
 - '0.11'
 - '0.12'
-- iojs
+- '4.0'
+- '5.0'
 sudo: false
 after_script: npm install codecov.io && cat ./coverage/lcov.info | codecov
+deploy:
+  - provider: npm
+    email: tituswormer@gmail.com
+    api_key:
+      secure: L2CV9310heZFCuusDtSz7fxjHwpjrokljlMeVbyd/wiBQzy+bIr0RTMD+UxIXolxNEqjec1z9LKn5bx7B9S1oGJW6N22VmyUXBwWKJATptsV/MmO62ab68wJvefuLQKk/m2MbGe5ZwQ2BH9YC6ImKs2L1wp7oOjo1eN2q8S8KeE=
+    on:
+      tags: true
+      node: '5.0'
+  - provider: releases
+    api_key:
+      secure: gzvWsnNs268yLRD836U722pOohl51UxxUko05oEUJvjasiR0oqCKdSReF3ggStBerhSbvsiMppPOeRP/nMtzVoA8JnbvgfFJ+0otT5ouBkiIWAZIXrrYR52m2AZ4I2ICBhyZdDwiD7rtRwfA3k9UNc6X2IG0KGgYVOiElOZiwDE=
+    file:
+      - "unist-util-inspect.js"
+      - "unist-util-inspect.min.js"
+    on:
+      tags: true

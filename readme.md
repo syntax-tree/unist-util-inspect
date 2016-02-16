@@ -10,8 +10,8 @@
 npm install unist-util-inspect
 ```
 
-**unist-util-inspect** is also available for AMD, CommonJS, and
-globals ([uncompressed](unist-util-inspect.js) and [compressed](unist-util-inspect.min.js)).
+**unist-util-inspect** is also available as an AMD, CommonJS, and
+globals module, [uncompressed and compressed](https://github.com/wooorm/unist-util-inspect/releases).
 
 ## Usage
 
@@ -56,7 +56,7 @@ See below on how to change that.
 
 **Returns** `string` — String representing `node`.
 
-### inspect.\<style\>\[.\<style\>...\](node)
+### inspect.\\&lt;style>\[.\\&lt;style>...](node)
 
 Where `style` is either `color` or `noColor`.
 
