@@ -74,6 +74,19 @@ var CHAR_CONTINUE_AND_SPLIT = '├';
 var CONTINUE = CHAR_CONTINUE_AND_SPLIT + CHAR_HORIZONTAL_LINE + ' ';
 var STOP = CHAR_SPLIT + CHAR_HORIZONTAL_LINE + ' ';
 
+/*
+ * Standard keys defined by unist:
+ * https://github.com/wooorm/unist.
+ * We don‘t include `data` though.
+ */
+
+var ignore = [
+    'type',
+    'value',
+    'children',
+    'position'
+];
+
 /**
  * Colored nesting formatter.
  *
@@ -161,6 +174,9 @@ function formatNode(node) {
     var log = node.type;
     var location = node.position || {};
     var position = stringify(location.start, location.end);
+    var key;
+    var values = [];
+    var value;
 
     if (node.children && node.children.length) {
         log += dim('[') + yellow(node.children.length) + dim(']');
@@ -172,8 +188,23 @@ function formatNode(node) {
         log += ' (' + position + ')';
     }
 
-    if (!isEmpty(node.data)) {
-        log += ' [data=' + JSON.stringify(node.data) + ']';
+    for (key in node) {
+        value = node[key];
+
+        if (
+            ignore.indexOf(key) !== -1 ||
+            value === null ||
+            value === undefined ||
+            (typeof value === 'object' && isEmpty(value))
+        ) {
+            continue;
+        }
+
+        values.push('[' + key + '=' + JSON.stringify(value) + ']');
+    }
+
+    if (values.length) {
+        log += ' ' + values.join('');
     }
 
     return log;

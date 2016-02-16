@@ -147,6 +147,67 @@ test('inspect()', function (t) {
 
     t.equal(
         strip(inspect({
+            'type': 'table',
+            'align': ['left', 'center'],
+            'children': [
+                {
+                    'type': 'tableRow',
+                    'children': [
+                        {
+                            'type': 'tableCell',
+                            'children': [{
+                                'type': 'text',
+                                'value': 'foo'
+                            }]
+                        },
+                        {
+                            'type': 'tableCell',
+                            'children': [{
+                                'type': 'text',
+                                'value': 'bar'
+                            }]
+                        }
+                    ]
+                },
+                {
+                    'type': 'tableRow',
+                    'children': [
+                        {
+                            'type': 'tableCell',
+                            'children': [{
+                                'type': 'text',
+                                'value': 'baz'
+                            }]
+                        },
+                        {
+                            'type': 'tableCell',
+                            'children': [{
+                                'type': 'text',
+                                'value': 'qux'
+                            }]
+                        }
+                    ]
+                }
+            ]
+        })),
+        [
+            'table[2] [align=["left","center"]]',
+            '├─ tableRow[2]',
+            '│  ├─ tableCell[1]',
+            '│  │  └─ text: "foo"',
+            '│  └─ tableCell[1]',
+            '│     └─ text: "bar"',
+            '└─ tableRow[2]',
+            '   ├─ tableCell[1]',
+            '   │  └─ text: "baz"',
+            '   └─ tableCell[1]',
+            '      └─ text: "qux"'
+        ].join('\n'),
+        'should work with other attributes'
+    );
+
+    t.equal(
+        strip(inspect({
             'type': 'foo',
             'value': 'foo\nbaar',
             'position': {
