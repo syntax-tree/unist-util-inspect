@@ -208,6 +208,33 @@ test('inspect()', function (t) {
 
     t.equal(
         strip(inspect({
+            'type': 'element',
+            'tagName': 'br',
+            'children': []
+        })),
+        'element[0] [tagName="br"]',
+        'should work on parent nodes without children'
+    );
+
+    t.equal(
+        strip(inspect({
+            'type': 'text',
+            'value': ''
+        })),
+        'text: ""',
+        'should work on text nodes without value'
+    );
+
+    t.equal(
+        strip(inspect({
+            'type': 'thematicBreak'
+        })),
+        'thematicBreak',
+        'should work on void nodes'
+    );
+
+    t.equal(
+        strip(inspect({
             'type': 'foo',
             'value': 'foo\nbaar',
             'position': {

@@ -178,9 +178,9 @@ function formatNode(node) {
     var values = [];
     var value;
 
-    if (node.children && node.children.length) {
+    if (node.children) {
         log += dim('[') + yellow(node.children.length) + dim(']');
-    } else {
+    } else if (typeof node.value === 'string') {
         log += dim(': ') + green(JSON.stringify(node.value));
     }
 
