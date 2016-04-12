@@ -10,7 +10,7 @@
     "inspect"
   ],
   "dependencies": {
-    "is-empty": "0.0.1"
+    "is-empty": "1.0.0"
   },
   "files": [
     "index.js"
@@ -38,7 +38,7 @@
     "remark-lint": "^3.0.0",
     "remark-slug": "^4.0.0",
     "remark-validate-links": "^3.0.0",
-    "retext": "^1.0.0",
+    "retext": "^2.0.0",
     "tape": "^4.4.0"
   },
   "scripts": {
