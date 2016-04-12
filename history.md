@@ -2,6 +2,11 @@
 
 <!--lint disable no-multiple-toplevel-headings-->
 
+4.0.0 / 2016-04-12
+==================
+
+*   Update representation of void nodes ([`3a8d77e`](https://github.com/wooorm/unist-util-inspect/commit/3a8d77e))
+
 3.0.0 / 2016-02-16
 ==================
 
