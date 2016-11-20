@@ -10,20 +10,20 @@
 npm install unist-util-inspect
 ```
 
-**unist-util-inspect** is also available as an AMD, CommonJS, and
-globals module, [uncompressed and compressed][releases].
-
 ## Usage
 
 ```javascript
 var retext = require('retext');
 var inspect = require('unist-util-inspect');
 
-retext().use(function () {
-    return function (cst) {
-        console.log(inspect(cst));
-    }
-}).process('Some simple text.');
+retext().use(plugin).process('Some simple text.');
+
+function plugin() {
+  return transformer;
+  function transformer(tree) {
+    console.log(inspect(tree));
+  }
+}
 ```
 
 Yields:
@@ -50,11 +50,13 @@ RootNode[1] (1:1-1:18, 0-17)
 By default, color support is enabled on Node.js and turned off anywhere else.
 See below on how to change that.
 
-**Parameters**
+###### Parameters
 
 *   `node` ([`Node`][node]).
 
-**Returns** `string` — String representing `node`.
+###### Returns
+
+`string` — String representing `node`.
 
 ### `inspect.<style>[.<style>...](node)`
 
@@ -80,8 +82,6 @@ or `inspect.noColor(node)`.
 [unist]: https://github.com/wooorm/unist
 
 [npm]: https://docs.npmjs.com/cli/install
-
-[releases]: https://github.com/wooorm/unist-util-inspect/releases
 
 [node]: https://github.com/wooorm/unist#unist-nodes
 
