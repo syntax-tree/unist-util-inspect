@@ -71,19 +71,19 @@ or `inspect.noColor(node)`.
 
 <!-- Definition -->
 
-[build-badge]: https://img.shields.io/travis/wooorm/unist-util-inspect.svg
+[build-badge]: https://img.shields.io/travis/syntax-tree/unist-util-inspect.svg
 
-[build-page]: https://travis-ci.org/wooorm/unist-util-inspect
+[build-page]: https://travis-ci.org/syntax-tree/unist-util-inspect
 
-[coverage-badge]: https://img.shields.io/codecov/c/github/wooorm/unist-util-inspect.svg
+[coverage-badge]: https://img.shields.io/codecov/c/github/syntax-tree/unist-util-inspect.svg
 
-[coverage-page]: https://codecov.io/github/wooorm/unist-util-inspect?branch=master
+[coverage-page]: https://codecov.io/github/syntax-tree/unist-util-inspect?branch=master
 
-[unist]: https://github.com/wooorm/unist
+[unist]: https://github.com/syntax-tree/unist
 
 [npm]: https://docs.npmjs.com/cli/install
 
-[node]: https://github.com/wooorm/unist#unist-nodes
+[node]: https://github.com/syntax-tree/unist#node
 
 [license]: LICENSE
 

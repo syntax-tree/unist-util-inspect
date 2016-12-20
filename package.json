@@ -9,8 +9,8 @@
     "unist",
     "inspect"
   ],
-  "repository": "https://github.com/wooorm/unist-util-inspect",
-  "bugs": "https://github.com/wooorm/unist-util-inspect/issues",
+  "repository": "https://github.com/syntax-tree/unist-util-inspect",
+  "bugs": "https://github.com/syntax-tree/unist-util-inspect/issues",
   "author": "Titus Wormer <tituswormer@gmail.com> (http://wooorm.com)",
   "contributors": [
     "Titus Wormer <tituswormer@gmail.com> (http://wooorm.com)"

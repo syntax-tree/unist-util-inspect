@@ -44,7 +44,7 @@ var CONTINUE = CHAR_CONTINUE_AND_SPLIT + CHAR_HORIZONTAL_LINE + ' ';
 var STOP = CHAR_SPLIT + CHAR_HORIZONTAL_LINE + ' ';
 
 /* Standard keys defined by unist:
- * https://github.com/wooorm/unist.
+ * https://github.com/syntax-tree/unist.
  * We don‘t include `data` though. */
 var ignore = [
   'type',
