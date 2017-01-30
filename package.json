@@ -19,7 +19,7 @@
     "index.js"
   ],
   "dependencies": {
-    "is-empty": "1.0.0"
+    "is-empty": "^1.0.0"
   },
   "devDependencies": {
     "browserify": "^14.0.0",
