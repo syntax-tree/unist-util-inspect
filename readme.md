@@ -16,7 +16,7 @@ npm install unist-util-inspect
 var retext = require('retext');
 var inspect = require('unist-util-inspect');
 
-retext().use(plugin).process('Some simple text.');
+retext().use(plugin).processSync('Some simple text.');
 
 function plugin() {
   return transformer;

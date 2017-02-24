@@ -26,14 +26,14 @@
     "chalk": "^1.0.0",
     "esmangle": "^1.0.1",
     "nyc": "^10.0.0",
-    "remark-cli": "^2.0.0",
-    "remark-preset-wooorm": "^1.0.0",
-    "retext": "^4.0.0",
+    "remark-cli": "^3.0.0",
+    "remark-preset-wooorm": "^2.0.0",
+    "retext": "^5.0.0",
     "tape": "^4.4.0",
     "xo": "^0.17.1"
   },
   "scripts": {
-    "build-md": "remark . --quiet --frail --output",
+    "build-md": "remark . -qfo",
     "build-bundle": "browserify index.js --bare -s unistUtilInspect > unist-util-inspect.js",
     "build-mangle": "esmangle unist-util-inspect.js > unist-util-inspect.min.js",
     "build": "npm run build-md && npm run build-bundle && npm run build-mangle",
@@ -59,6 +59,6 @@
     "branches": 100
   },
   "remarkConfig": {
-    "presets": "wooorm"
+    "plugins": ["preset-wooorm"]
   }
 }
