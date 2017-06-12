@@ -13,34 +13,24 @@ npm install unist-util-inspect
 ## Usage
 
 ```javascript
-var retext = require('retext');
+var unified = require('unified');
 var inspect = require('unist-util-inspect');
+var parse = require('rehype-parse');
 
-retext().use(plugin).processSync('Some simple text.');
+var tree = unified().use(parse).parse('<h2>Hello, world!</h2>');
 
-function plugin() {
-  return transformer;
-  function transformer(tree) {
-    console.log(inspect(tree));
-  }
-}
+console.log(inspect(tree));
 ```
 
 Yields:
 
 ```text
-RootNode[1] (1:1-1:18, 0-17)
-└─ ParagraphNode[1] (1:1-1:18, 0-17)
-   └─ SentenceNode[6] (1:1-1:18, 0-17)
-      ├─ WordNode[1] (1:1-1:5, 0-4)
-      │  └─ TextNode: "Some" (1:1-1:5, 0-4)
-      ├─ WhiteSpaceNode: " " (1:5-1:6, 4-5)
-      ├─ WordNode[1] (1:6-1:12, 5-11)
-      │  └─ TextNode: "simple" (1:6-1:12, 5-11)
-      ├─ WhiteSpaceNode: " " (1:12-1:13, 11-12)
-      ├─ WordNode[1] (1:13-1:17, 12-16)
-      │  └─ TextNode: "text" (1:13-1:17, 12-16)
-      └─ PunctuationNode: "." (1:17-1:18, 16-17)
+root[1] (1:1-1:23, 0-22) [data={"quirksMode":true}]
+└─ element[2] [tagName="html"]
+   ├─ element[0] [tagName="head"]
+   └─ element[1] [tagName="body"]
+      └─ element[1] (1:1-1:23, 0-22) [tagName="h2"]
+         └─ text: "Hello, world!" (1:5-1:18, 4-17)
 ```
 
 ## API
