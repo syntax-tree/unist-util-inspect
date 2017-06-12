@@ -15,8 +15,10 @@ try {
 
 module.exports = color ? inspect : /* istanbul ignore next */ noColor;
 
-inspect.color = noColor.color = inspect;
-inspect.noColor = noColor.noColor = noColor;
+inspect.color = inspect;
+noColor.color = inspect;
+inspect.noColor = noColor;
+noColor.noColor = noColor;
 
 var dim = ansiColor(2, 22);
 var yellow = ansiColor(33, 39);
@@ -65,7 +67,7 @@ function inspect(node, pad) {
   var index;
   var length;
 
-  if (node && node.length && typeof node !== 'string') {
+  if (node && Boolean(node.length) && typeof node !== 'string') {
     length = node.length;
     index = -1;
     result = [];
