@@ -9,7 +9,7 @@
     "unist",
     "inspect"
   ],
-  "repository": "https://github.com/syntax-tree/unist-util-inspect",
+  "repository": "syntax-tree/unist-util-inspect",
   "bugs": "https://github.com/syntax-tree/unist-util-inspect/issues",
   "author": "Titus Wormer <tituswormer@gmail.com> (http://wooorm.com)",
   "contributors": [
