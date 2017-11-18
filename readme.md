@@ -55,6 +55,14 @@ Where `<style>` is either `color` or `noColor`.
 To explicitly add or remove ANSI sequences, use either `inspect.color(node)`
 or `inspect.noColor(node)`.
 
+## Contribute
+
+See [`contribute.md` in `syntax-tree/unist`][contribute] for ways to get
+started.
+
+This organisation has a [Code of Conduct][coc].  By interacting with this
+repository, organisation, or community you agree to abide by its terms.
+
 ## License
 
 [MIT][license] © [Titus Wormer][author]
@@ -78,3 +86,7 @@ or `inspect.noColor(node)`.
 [license]: LICENSE
 
 [author]: http://wooorm.com
+
+[contribute]: https://github.com/syntax-tree/unist/blob/master/contributing.md
+
+[coc]: https://github.com/syntax-tree/unist/blob/master/code-of-conduct.md
