@@ -1,30 +1,30 @@
-'use strict';
+'use strict'
 
-var test = require('tape');
-var chalk = require('chalk');
-var strip = require('strip-ansi');
-var retext = require('retext');
-var inspect = require('.');
+var test = require('tape')
+var chalk = require('chalk')
+var strip = require('strip-ansi')
+var retext = require('retext')
+var inspect = require('.')
 
-var paragraph = 'Some simple text. Other “sentence”.';
+var paragraph = 'Some simple text. Other “sentence”.'
 
-test('inspect', function (t) {
-  t.equal(typeof inspect, 'function', 'should be a `function`');
+test('inspect', function(t) {
+  t.equal(typeof inspect, 'function', 'should be a `function`')
 
-  t.test('should have `color` and `noColor` properties', function (st) {
-    st.equal(typeof inspect.color, 'function');
-    st.equal(typeof inspect.noColor, 'function');
+  t.test('should have `color` and `noColor` properties', function(st) {
+    st.equal(typeof inspect.color, 'function')
+    st.equal(typeof inspect.noColor, 'function')
 
-    st.equal(typeof inspect.color.noColor, 'function');
-    st.equal(typeof inspect.noColor.color, 'function');
+    st.equal(typeof inspect.color.noColor, 'function')
+    st.equal(typeof inspect.noColor.color, 'function')
 
-    st.end();
-  });
+    st.end()
+  })
 
-  t.end();
-});
+  t.end()
+})
 
-test('inspect()', function (t) {
+test('inspect()', function(t) {
   t.equal(
     strip(inspect(retext().parse(paragraph))),
     [
@@ -52,7 +52,7 @@ test('inspect()', function (t) {
       '      └─ PunctuationNode: "." (1:35-1:36, 34-35)'
     ].join('\n'),
     'should work on `RootNode`'
-  );
+  )
 
   t.equal(
     strip(inspect(retext().parse(paragraph).children[0].children[0])),
@@ -69,76 +69,78 @@ test('inspect()', function (t) {
       '└─ PunctuationNode: "." (1:17-1:18, 16-17)'
     ].join('\n'),
     'should work on `SentenceNode`'
-  );
+  )
 
   t.equal(
-    strip(inspect([
-      {type: 'SymbolNode', value: '$'},
-      {
-        type: 'WordNode',
-        children: [{type: 'text', value: '5,00'}]
-      }
-    ])),
-    [
-      'SymbolNode: "$"',
-      'WordNode[1]',
-      '└─ text: "5,00"'
-    ].join('\n'),
+    strip(
+      inspect([
+        {type: 'SymbolNode', value: '$'},
+        {
+          type: 'WordNode',
+          children: [{type: 'text', value: '5,00'}]
+        }
+      ])
+    ),
+    ['SymbolNode: "$"', 'WordNode[1]', '└─ text: "5,00"'].join('\n'),
     'should work with a list of nodes'
-  );
+  )
 
-  t.test('should work on non-nodes', function (st) {
-    st.equal(strip(inspect('foo')), 'foo');
-    st.equal(strip(inspect('null')), 'null');
-    st.equal(strip(inspect(NaN)), 'NaN');
-    st.equal(strip(inspect(3)), '3');
+  t.test('should work on non-nodes', function(st) {
+    st.equal(strip(inspect('foo')), 'foo')
+    st.equal(strip(inspect('null')), 'null')
+    st.equal(strip(inspect(NaN)), 'NaN')
+    st.equal(strip(inspect(3)), '3')
 
-    st.end();
-  });
+    st.end()
+  })
 
   t.equal(
-    strip(inspect({
-      type: 'SymbolNode',
-      value: '$',
-      data: {test: true}
-    })),
+    strip(
+      inspect({
+        type: 'SymbolNode',
+        value: '$',
+        data: {test: true}
+      })
+    ),
     'SymbolNode: "$" [data={"test":true}]',
     'should work with data attributes'
-  );
+  )
 
   t.equal(
-    strip(inspect({
-      type: 'table',
-      align: ['left', 'center'],
-      children: [
-        {
-          type: 'tableRow',
-          children: [
-            {
-              type: 'tableCell',
-              children: [{type: 'text', value: 'foo'}]
-            },
-            {
-              type: 'tableCell',
-              children: [{type: 'text', value: 'bar'}]
-            }
-          ]
-        },
-        {
-          type: 'tableRow',
-          children: [
-            {
-              type: 'tableCell',
-              children: [{type: 'text', value: 'baz'}]
-            },
-            {
-              type: 'tableCell',
-              children: [{type: 'text', value: 'qux'}]
-            }
-          ]
-        }
-      ]
-    })),
+    strip(
+      inspect({
+        type: 'table',
+        align: ['left', 'center'],
+        children: [
+          {
+            type: 'tableRow',
+            children: [
+              {
+                type: 'tableCell',
+                children: [{type: 'text', value: 'foo'}]
+              },
+              {
+                type: 'tableCell',
+                children: [{type: 'text', value: 'bar'}]
+              }
+            ]
+          },
+          {
+            type: 'tableRow',
+            children: [
+              {
+                type: 'tableCell',
+                children: [{type: 'text', value: 'baz'}]
+              },
+              {
+                type: 'tableCell',
+                children: [{type: 'text', value: 'qux'}]
+              }
+            ]
+          }
+        ]
+      })
+    ),
     [
       'table[2] [align=["left","center"]]',
       '├─ tableRow[2]',
@@ -153,70 +155,78 @@ test('inspect()', function (t) {
       '      └─ text: "qux"'
     ].join('\n'),
     'should work with other attributes'
-  );
+  )
 
   t.equal(
-    strip(inspect({
-      type: 'element',
-      tagName: 'br',
-      children: []
-    })),
+    strip(
+      inspect({
+        type: 'element',
+        tagName: 'br',
+        children: []
+      })
+    ),
     'element[0] [tagName="br"]',
     'should work on parent nodes without children'
-  );
+  )
 
   t.equal(
     strip(inspect({type: 'text', value: ''})),
     'text: ""',
     'should work on text nodes without value'
-  );
+  )
 
   t.equal(
     strip(inspect({type: 'thematicBreak'})),
     'thematicBreak',
     'should work on void nodes'
-  );
+  )
 
   t.equal(
-    strip(inspect({
-      type: 'foo',
-      value: 'foo\nbaar',
-      position: {
-        start: {line: 1, column: 1},
-        end: {line: 2, column: 5}
-      }
-    })),
+    strip(
+      inspect({
+        type: 'foo',
+        value: 'foo\nbaar',
+        position: {
+          start: {line: 1, column: 1},
+          end: {line: 2, column: 5}
+        }
+      })
+    ),
     'foo: "foo\\nbaar" (1:1-2:5)',
     'should work without `offset` in `position`'
-  );
+  )
 
   t.equal(
-    strip(inspect({
-      type: 'foo',
-      value: 'foo\nbaar',
-      position: {start: {}, end: {}}
-    })),
+    strip(
+      inspect({
+        type: 'foo',
+        value: 'foo\nbaar',
+        position: {start: {}, end: {}}
+      })
+    ),
     'foo: "foo\\nbaar" (1:1-1:1)',
     'should work without `line` and `column` in `position`'
-  );
+  )
 
   t.equal(
-    strip(inspect({
-      type: 'foo',
-      value: 'foo\nbaar',
-      position: {
-        start: {offset: 1},
-        end: {offset: 8}
-      }
-    })),
+    strip(
+      inspect({
+        type: 'foo',
+        value: 'foo\nbaar',
+        position: {
+          start: {offset: 1},
+          end: {offset: 8}
+        }
+      })
+    ),
     'foo: "foo\\nbaar" (1:1-1:1, 1-8)',
     'should work with just `offset` in `position`'
-  );
+  )
 
-  t.end();
-});
+  t.end()
+})
 
-test('inspect.noColor()', function (t) {
+test('inspect.noColor()', function(t) {
   t.equal(
     inspect.noColor(retext().parse(paragraph).children[0].children[0]),
     [
@@ -232,28 +242,71 @@ test('inspect.noColor()', function (t) {
       '└─ PunctuationNode: "." (1:17-1:18, 16-17)'
     ].join('\n'),
     'should work'
-  );
+  )
 
-  t.end();
-});
+  t.end()
+})
 
-test('inspect.color()', function (t) {
+test('inspect.color()', function(t) {
   t.equal(
     inspect.color(retext().parse(paragraph).children[0].children[0]),
     [
-      'SentenceNode' + chalk.dim('[') + chalk.yellow('6') + chalk.dim(']') + ' (1:1-1:18, 0-17)',
-      chalk.dim('├─ ') + 'WordNode' + chalk.dim('[') + chalk.yellow('1') + chalk.dim(']') + ' (1:1-1:5, 0-4)',
-      chalk.dim('│  └─ ') + 'TextNode' + chalk.dim(': ') + chalk.green('"Some"') + ' (1:1-1:5, 0-4)',
-      chalk.dim('├─ ') + 'WhiteSpaceNode' + chalk.dim(': ') + chalk.green('" "') + ' (1:5-1:6, 4-5)',
-      chalk.dim('├─ ') + 'WordNode' + chalk.dim('[') + chalk.yellow('1') + chalk.dim(']') + ' (1:6-1:12, 5-11)',
-      chalk.dim('│  └─ ') + 'TextNode' + chalk.dim(': ') + chalk.green('"simple"') + ' (1:6-1:12, 5-11)',
-      chalk.dim('├─ ') + 'WhiteSpaceNode' + chalk.dim(': ') + chalk.green('" "') + ' (1:12-1:13, 11-12)',
-      chalk.dim('├─ ') + 'WordNode' + chalk.dim('[') + chalk.yellow('1') + chalk.dim(']') + ' (1:13-1:17, 12-16)',
-      chalk.dim('│  └─ ') + 'TextNode' + chalk.dim(': ') + chalk.green('"text"') + ' (1:13-1:17, 12-16)',
-      chalk.dim('└─ ') + 'PunctuationNode' + chalk.dim(': ') + chalk.green('"."') + ' (1:17-1:18, 16-17)'
+      'SentenceNode' +
+        chalk.dim('[') +
+        chalk.yellow('6') +
+        chalk.dim(']') +
+        ' (1:1-1:18, 0-17)',
+      chalk.dim('├─ ') +
+        'WordNode' +
+        chalk.dim('[') +
+        chalk.yellow('1') +
+        chalk.dim(']') +
+        ' (1:1-1:5, 0-4)',
+      chalk.dim('│  └─ ') +
+        'TextNode' +
+        chalk.dim(': ') +
+        chalk.green('"Some"') +
+        ' (1:1-1:5, 0-4)',
+      chalk.dim('├─ ') +
+        'WhiteSpaceNode' +
+        chalk.dim(': ') +
+        chalk.green('" "') +
+        ' (1:5-1:6, 4-5)',
+      chalk.dim('├─ ') +
+        'WordNode' +
+        chalk.dim('[') +
+        chalk.yellow('1') +
+        chalk.dim(']') +
+        ' (1:6-1:12, 5-11)',
+      chalk.dim('│  └─ ') +
+        'TextNode' +
+        chalk.dim(': ') +
+        chalk.green('"simple"') +
+        ' (1:6-1:12, 5-11)',
+      chalk.dim('├─ ') +
+        'WhiteSpaceNode' +
+        chalk.dim(': ') +
+        chalk.green('" "') +
+        ' (1:12-1:13, 11-12)',
+      chalk.dim('├─ ') +
+        'WordNode' +
+        chalk.dim('[') +
+        chalk.yellow('1') +
+        chalk.dim(']') +
+        ' (1:13-1:17, 12-16)',
+      chalk.dim('│  └─ ') +
+        'TextNode' +
+        chalk.dim(': ') +
+        chalk.green('"text"') +
+        ' (1:13-1:17, 12-16)',
+      chalk.dim('└─ ') +
+        'PunctuationNode' +
+        chalk.dim(': ') +
+        chalk.green('"."') +
+        ' (1:17-1:18, 16-17)'
     ].join('\n'),
     'should work'
-  );
+  )
 
-  t.end();
-});
+  t.end()
+})

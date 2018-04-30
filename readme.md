@@ -13,13 +13,15 @@ npm install unist-util-inspect
 ## Usage
 
 ```javascript
-var unified = require('unified');
-var inspect = require('unist-util-inspect');
-var parse = require('rehype-parse');
+var unified = require('unified')
+var inspect = require('unist-util-inspect')
+var parse = require('rehype-parse')
 
-var tree = unified().use(parse).parse('<h2>Hello, world!</h2>');
+var tree = unified()
+  .use(parse)
+  .parse('<h2>Hello, world!</h2>')
 
-console.log(inspect(tree));
+console.log(inspect(tree))
 ```
 
 Yields:
