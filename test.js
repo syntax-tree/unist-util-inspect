@@ -4,7 +4,7 @@ var test = require('tape');
 var chalk = require('chalk');
 var strip = require('strip-ansi');
 var retext = require('retext');
-var inspect = require('./');
+var inspect = require('.');
 
 var paragraph = 'Some simple text. Other “sentence”.';
 
