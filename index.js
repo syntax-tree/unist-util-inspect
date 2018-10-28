@@ -2,8 +2,7 @@
 
 var isEmpty = require('is-empty')
 
-/* Detect color support. */
-
+// Detect color support.
 var color = true
 
 try {
@@ -24,8 +23,8 @@ var dim = ansiColor(2, 22)
 var yellow = ansiColor(33, 39)
 var green = ansiColor(32, 39)
 
-/* Define ANSII color removal functionality. */
-var COLOR_EXPRESSION = new RegExp(
+// Define ANSII color removal functionality.
+var colorExpression = new RegExp(
   '(?:' +
     '(?:\\u001b\\[)|' +
     '\\u009b' +
@@ -37,17 +36,16 @@ var COLOR_EXPRESSION = new RegExp(
   'g'
 )
 
-/* Standard keys defined by unist:
- * https://github.com/syntax-tree/unist.
- * We don’t ignore `data` though. */
+// Standard keys defined by unist: https://github.com/syntax-tree/unist.
+// We don’t ignore `data` though.
 var ignore = ['type', 'value', 'children', 'position']
 
-/* Inspects a node, without using color. */
+// Inspects a node, without using color.
 function noColor(node, pad) {
   return stripColor(inspect(node, pad))
 }
 
-/* Inspects a node. */
+// Inspects a node.
 function inspect(node, pad) {
   var result
   var children
@@ -96,12 +94,12 @@ function inspect(node, pad) {
   return result.join('\n')
 }
 
-/* Colored nesting formatter. */
+// Colored nesting formatter.
 function formatNesting(value) {
   return dim(value)
 }
 
-/* Compile a single position. */
+// Compile a single position.
 function compile(pos) {
   var values = []
 
@@ -118,7 +116,7 @@ function compile(pos) {
   return values
 }
 
-/* Compile a location. */
+// Compile a location.
 function stringify(start, end) {
   var values = []
   var positions = []
@@ -137,7 +135,7 @@ function stringify(start, end) {
 
   return values.join(', ')
 
-  /* Add a position. */
+  // Add a position.
   function add(position) {
     var tuple = compile(position)
 
@@ -151,7 +149,7 @@ function stringify(start, end) {
   }
 }
 
-/* Colored node formatter. */
+// Colored node formatter.
 function formatNode(node) {
   var log = node.type
   var location = node.position || {}
@@ -192,12 +190,12 @@ function formatNode(node) {
   return log
 }
 
-/* Remove ANSI colour from `value`. */
+// Remove ANSI colour from `value`.
 function stripColor(value) {
-  return value.replace(COLOR_EXPRESSION, '')
+  return value.replace(colorExpression, '')
 }
 
-/* Factory to wrap values in ANSI colours. */
+// Factory to wrap values in ANSI colours.
 function ansiColor(open, close) {
   return color
 
