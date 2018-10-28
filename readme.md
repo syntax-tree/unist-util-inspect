@@ -85,7 +85,7 @@ repository, organisation, or community you agree to abide by its terms.
 
 [node]: https://github.com/syntax-tree/unist#node
 
-[license]: LICENSE
+[license]: license
 
 [author]: http://wooorm.com
 
