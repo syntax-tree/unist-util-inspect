@@ -7,7 +7,7 @@ var color = true
 
 try {
   color = 'inspect' in require('util')
-} catch (err) {
+} catch (error) {
   /* istanbul ignore next - browser */
   color = false
 }
