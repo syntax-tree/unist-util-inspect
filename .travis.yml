@@ -1,7 +1,7 @@
 language: node_js
 node_js:
-- lts/boron
-- node
+  - lts/dubnium
+  - node
 sudo: false
 after_script: bash <(curl -s https://codecov.io/bash)
 deploy:
@@ -10,7 +10,7 @@ deploy:
   api_key:
     secure: gzvWsnNs268yLRD836U722pOohl51UxxUko05oEUJvjasiR0oqCKdSReF3ggStBerhSbvsiMppPOeRP/nMtzVoA8JnbvgfFJ+0otT5ouBkiIWAZIXrrYR52m2AZ4I2ICBhyZdDwiD7rtRwfA3k9UNc6X2IG0KGgYVOiElOZiwDE=
   file:
-    - "unist-util-inspect.js"
-    - "unist-util-inspect.min.js"
+    - 'unist-util-inspect.js'
+    - 'unist-util-inspect.min.js'
   on:
     tags: true
