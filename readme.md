@@ -8,26 +8,30 @@
 [![Backers][backers-badge]][collective]
 [![Chat][chat-badge]][chat]
 
-[Unist][] node inspector.
+[**unist**][unist] utility to inspect nodes.
 
-## Installation
+## Install
 
 [npm][]:
 
-```bash
+```sh
 npm install unist-util-inspect
 ```
 
 ## Usage
 
-```javascript
-var unified = require('unified')
+```js
+var u = require('unist-builder')
 var inspect = require('unist-util-inspect')
-var parse = require('rehype-parse')
 
-var tree = unified()
-  .use(parse)
-  .parse('<h2>Hello, world!</h2>')
+var tree = u('root', [
+  u('literal', '1'),
+  u('parent', [
+    u('void', {id: 'a'}),
+    u('literal', '2'),
+    u('node', {id: 'b'}, [])
+  ])
+])
 
 console.log(inspect(tree))
 ```
@@ -35,12 +39,12 @@ console.log(inspect(tree))
 Yields:
 
 ```text
-root[1] (1:1-1:23, 0-22) [data={"quirksMode":true}]
-└─ element[2] [tagName="html"]
-   ├─ element[0] [tagName="head"]
-   └─ element[1] [tagName="body"]
-      └─ element[1] (1:1-1:23, 0-22) [tagName="h2"]
-         └─ text: "Hello, world!" (1:5-1:18, 4-17)
+root[2]
+├─ literal: "1"
+└─ parent[3]
+   ├─ void [id="a"]
+   ├─ literal: "2"
+   └─ node[0] [id="b"]
 ```
 
 ## API
@@ -58,7 +62,7 @@ See below on how to change that.
 
 `string` — String representing `node`.
 
-### `inspect.<style>[.<style>...](node)`
+### `inspect.<style>[.<style>…](node)`
 
 Where `<style>` is either `color` or `noColor`.
 
@@ -67,11 +71,13 @@ or `inspect.noColor(node)`.
 
 ## Contribute
 
-See [`contributing.md` in `syntax-tree/unist`][contributing] for ways to get
+See [`contributing.md` in `syntax-tree/.github`][contributing] for ways to get
 started.
+See [`support.md`][support] for ways to get help.
 
-This organisation has a [Code of Conduct][coc].  By interacting with this
-repository, organisation, or community you agree to abide by its terms.
+This project has a [Code of Conduct][coc].
+By interacting with this repository, organisation, or community you agree to
+abide by its terms.
 
 ## License
 
@@ -115,6 +121,8 @@ repository, organisation, or community you agree to abide by its terms.
 
 [author]: https://wooorm.com
 
-[contributing]: https://github.com/syntax-tree/unist/blob/master/contributing.md
+[contributing]: https://github.com/syntax-tree/.github/blob/master/contributing.md
 
-[coc]: https://github.com/syntax-tree/unist/blob/master/code-of-conduct.md
+[support]: https://github.com/syntax-tree/.github/blob/master/support.md
+
+[coc]: https://github.com/syntax-tree/.github/blob/master/code-of-conduct.md
