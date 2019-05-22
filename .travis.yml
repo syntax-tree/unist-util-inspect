@@ -8,7 +8,7 @@ deploy:
   provider: releases
   skip_cleanup: true
   api_key:
-    secure: gzvWsnNs268yLRD836U722pOohl51UxxUko05oEUJvjasiR0oqCKdSReF3ggStBerhSbvsiMppPOeRP/nMtzVoA8JnbvgfFJ+0otT5ouBkiIWAZIXrrYR52m2AZ4I2ICBhyZdDwiD7rtRwfA3k9UNc6X2IG0KGgYVOiElOZiwDE=
+    secure: mv8CYvzVmSK8O26ZpGUyvXSnwi+TnIfGMsOBrj+nxnPtutxJcwwnU4ULc37FPPm88wFRGLL/7yqTjXYXHWXRlBBhlfz5+0rCL3rpDEVBQ2Fcnz5KMKv0UZTc3zoOStj5IOqoVm+DstuXCpqQViSfCAEH81otcLZYE1JhmXYgKxU=
   file:
     - 'unist-util-inspect.js'
     - 'unist-util-inspect.min.js'
