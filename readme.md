@@ -1,4 +1,12 @@
-# unist-util-inspect [![Build Status][build-badge]][build-page] [![Coverage Status][coverage-badge]][coverage-page]
+# unist-util-inspect
+
+[![Build][build-badge]][build]
+[![Coverage][coverage-badge]][coverage]
+[![Downloads][downloads-badge]][downloads]
+[![Size][size-badge]][size]
+[![Sponsors][sponsors-badge]][collective]
+[![Backers][backers-badge]][collective]
+[![Chat][chat-badge]][chat]
 
 [Unist][] node inspector.
 
@@ -73,11 +81,29 @@ repository, organisation, or community you agree to abide by its terms.
 
 [build-badge]: https://img.shields.io/travis/syntax-tree/unist-util-inspect.svg
 
-[build-page]: https://travis-ci.org/syntax-tree/unist-util-inspect
+[build]: https://travis-ci.org/syntax-tree/unist-util-inspect
 
 [coverage-badge]: https://img.shields.io/codecov/c/github/syntax-tree/unist-util-inspect.svg
 
-[coverage-page]: https://codecov.io/github/syntax-tree/unist-util-inspect?branch=master
+[coverage]: https://codecov.io/github/syntax-tree/unist-util-inspect
+
+[downloads-badge]: https://img.shields.io/npm/dm/unist-util-inspect.svg
+
+[downloads]: https://www.npmjs.com/package/unist-util-inspect
+
+[size-badge]: https://img.shields.io/bundlephobia/minzip/unist-util-inspect.svg
+
+[size]: https://bundlephobia.com/result?p=unist-util-inspect
+
+[sponsors-badge]: https://opencollective.com/unified/sponsors/badge.svg
+
+[backers-badge]: https://opencollective.com/unified/backers/badge.svg
+
+[collective]: https://opencollective.com/unified
+
+[chat-badge]: https://img.shields.io/badge/join%20the%20community-on%20spectrum-7b16ff.svg
+
+[chat]: https://spectrum.chat/unified/syntax-tree
 
 [unist]: https://github.com/syntax-tree/unist
 
