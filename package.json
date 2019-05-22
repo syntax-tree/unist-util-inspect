@@ -35,7 +35,7 @@
     "xo": "^0.23.0"
   },
   "scripts": {
-    "format": "remark . -qfo && prettier --write '**/*.js' && xo --fix",
+    "format": "remark . -qfo && prettier --write \"**/*.js\" && xo --fix",
     "build-bundle": "browserify . --bare -s unistUtilInspect > unist-util-inspect.js",
     "build-mangle": "browserify . --bare -s unistUtilInspect -p tinyify > unist-util-inspect.min.js",
     "build": "npm run build-bundle && npm run build-mangle",
