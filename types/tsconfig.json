@@ -6,5 +6,5 @@
       "paths": {
           "unist-util-inspect": ["index.d.ts"]
       }
-  },
+  }
 }
