@@ -1,7 +1,3 @@
-// Type definitions for unist-util-inspect 4.1
-// Project: https://github.com/syntax-tree/unist-util-inspect/#readme
-// Definitions by: Shane Handley <https://github.com/shanehandley>
-// Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 // TypeScript Version: 3.0
 import { Node } from 'unist';
 
