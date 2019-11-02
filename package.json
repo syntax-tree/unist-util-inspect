@@ -16,14 +16,18 @@
     "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)"
   ],
   "files": [
-    "index.js"
+    "index.js",
+    "types/index.d.ts"
   ],
+  "types": "types/index.d.ts",
   "dependencies": {
     "is-empty": "^1.0.0"
   },
   "devDependencies": {
+    "@types/unist": "^2.0.3",
     "browserify": "^16.0.0",
     "chalk": "^2.3.0",
+    "dtslint": "^1.0.2",
     "nyc": "^14.0.0",
     "prettier": "^1.0.0",
     "remark-cli": "^6.0.0",
@@ -41,7 +45,8 @@
     "build": "npm run build-bundle && npm run build-mangle",
     "test-api": "node test",
     "test-coverage": "nyc --reporter lcov tape test.js",
-    "test": "npm run format && npm run build && npm run test-coverage"
+    "test": "npm run format && npm run build && npm run test-coverage",
+    "dtslint": "dtslint types"
   },
   "prettier": {
     "tabWidth": 2,
