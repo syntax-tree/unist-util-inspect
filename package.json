@@ -1,6 +1,6 @@
 {
   "name": "unist-util-inspect",
-  "version": "4.1.4",
+  "version": "5.0.0",
   "description": "Unist node inspector",
   "license": "MIT",
   "keywords": [
