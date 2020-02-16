@@ -1,13 +1,17 @@
 {
   "name": "unist-util-inspect",
   "version": "5.0.0",
-  "description": "Unist node inspector",
+  "description": "unist utility to inspect nodes",
   "license": "MIT",
   "keywords": [
-    "retext",
-    "remark",
     "unist",
-    "inspect"
+    "unist-util",
+    "util",
+    "utility",
+    "inspect",
+    "debug",
+    "log",
+    "console"
   ],
   "repository": "syntax-tree/unist-util-inspect",
   "bugs": "https://github.com/syntax-tree/unist-util-inspect/issues",
