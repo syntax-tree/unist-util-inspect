@@ -52,6 +52,7 @@
     "strip-ansi": "^6.0.0",
     "tape": "^5.0.0",
     "tinyify": "^2.0.0",
+    "xast-util-from-xml": "^1.0.0",
     "xo": "^0.29.0"
   },
   "scripts": {
