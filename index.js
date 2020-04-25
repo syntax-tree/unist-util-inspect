@@ -24,17 +24,7 @@ var yellow = ansiColor(33, 39)
 var green = ansiColor(32, 39)
 
 // Define ANSII color removal functionality.
-var colorExpression = new RegExp(
-  '(?:' +
-    '(?:\\u001b\\[)|' +
-    '\\u009b' +
-    ')' +
-    '(?:' +
-    '(?:[0-9]{1,3})?(?:(?:;[0-9]{0,3})*)?[A-M|f-m]' +
-    ')|' +
-    '\\u001b[A-M]',
-  'g'
-)
+var colorExpression = /(?:(?:\u001B\[)|\u009b)(?:\d{1,3})?(?:(?:;\d{0,3})*)?[A-M|f-m]|\u001b[A-M]/g
 
 // Standard keys defined by unist: https://github.com/syntax-tree/unist.
 // We don’t ignore `data` though.
