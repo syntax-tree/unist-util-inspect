@@ -6,6 +6,8 @@ var strip = require('strip-ansi')
 var retext = require('retext')
 var inspect = require('.')
 
+var chalkEnabled = new chalk.Instance({level: 1})
+
 var paragraph = 'Some simple text. Other “sentence”.'
 
 test('inspect', function (t) {
@@ -252,57 +254,57 @@ test('inspect.color()', function (t) {
     inspect.color(retext().parse(paragraph).children[0].children[0]),
     [
       'SentenceNode' +
-        chalk.dim('[') +
-        chalk.yellow('6') +
-        chalk.dim(']') +
+        chalkEnabled.dim('[') +
+        chalkEnabled.yellow('6') +
+        chalkEnabled.dim(']') +
         ' (1:1-1:18, 0-17)',
-      chalk.dim('├─ ') +
+      chalkEnabled.dim('├─ ') +
         'WordNode' +
-        chalk.dim('[') +
-        chalk.yellow('1') +
-        chalk.dim(']') +
+        chalkEnabled.dim('[') +
+        chalkEnabled.yellow('1') +
+        chalkEnabled.dim(']') +
         ' (1:1-1:5, 0-4)',
-      chalk.dim('│  └─ ') +
+      chalkEnabled.dim('│  └─ ') +
         'TextNode' +
-        chalk.dim(': ') +
-        chalk.green('"Some"') +
+        chalkEnabled.dim(': ') +
+        chalkEnabled.green('"Some"') +
         ' (1:1-1:5, 0-4)',
-      chalk.dim('├─ ') +
+      chalkEnabled.dim('├─ ') +
         'WhiteSpaceNode' +
-        chalk.dim(': ') +
-        chalk.green('" "') +
+        chalkEnabled.dim(': ') +
+        chalkEnabled.green('" "') +
         ' (1:5-1:6, 4-5)',
-      chalk.dim('├─ ') +
+      chalkEnabled.dim('├─ ') +
         'WordNode' +
-        chalk.dim('[') +
-        chalk.yellow('1') +
-        chalk.dim(']') +
+        chalkEnabled.dim('[') +
+        chalkEnabled.yellow('1') +
+        chalkEnabled.dim(']') +
         ' (1:6-1:12, 5-11)',
-      chalk.dim('│  └─ ') +
+      chalkEnabled.dim('│  └─ ') +
         'TextNode' +
-        chalk.dim(': ') +
-        chalk.green('"simple"') +
+        chalkEnabled.dim(': ') +
+        chalkEnabled.green('"simple"') +
         ' (1:6-1:12, 5-11)',
-      chalk.dim('├─ ') +
+      chalkEnabled.dim('├─ ') +
         'WhiteSpaceNode' +
-        chalk.dim(': ') +
-        chalk.green('" "') +
+        chalkEnabled.dim(': ') +
+        chalkEnabled.green('" "') +
         ' (1:12-1:13, 11-12)',
-      chalk.dim('├─ ') +
+      chalkEnabled.dim('├─ ') +
         'WordNode' +
-        chalk.dim('[') +
-        chalk.yellow('1') +
-        chalk.dim(']') +
+        chalkEnabled.dim('[') +
+        chalkEnabled.yellow('1') +
+        chalkEnabled.dim(']') +
         ' (1:13-1:17, 12-16)',
-      chalk.dim('│  └─ ') +
+      chalkEnabled.dim('│  └─ ') +
         'TextNode' +
-        chalk.dim(': ') +
-        chalk.green('"text"') +
+        chalkEnabled.dim(': ') +
+        chalkEnabled.green('"text"') +
         ' (1:13-1:17, 12-16)',
-      chalk.dim('└─ ') +
+      chalkEnabled.dim('└─ ') +
         'PunctuationNode' +
-        chalk.dim(': ') +
-        chalk.green('"."') +
+        chalkEnabled.dim(': ') +
+        chalkEnabled.green('"."') +
         ' (1:17-1:18, 16-17)'
     ].join('\n'),
     'should work'
