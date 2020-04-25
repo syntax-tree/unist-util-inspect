@@ -1,16 +1,7 @@
 'use strict'
 
 var isEmpty = require('is-empty')
-
-// Detect color support.
-var color = true
-
-try {
-  color = 'inspect' in require('util')
-} catch (_) {
-  /* istanbul ignore next - browser */
-  color = false
-}
+var color = require('./color')
 
 module.exports = color ? inspect : /* istanbul ignore next */ noColor
 

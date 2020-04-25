@@ -25,8 +25,16 @@
   ],
   "files": [
     "index.js",
+    "color.js",
+    "color-browser.js",
     "types/index.d.ts"
   ],
+  "browser": {
+    "./color.js": "./color-browser.js"
+  },
+  "react-native": {
+    "./color.js": "./color-browser.js"
+  },
   "types": "types/index.d.ts",
   "dependencies": {
     "is-empty": "^1.0.0"
@@ -48,8 +56,8 @@
   },
   "scripts": {
     "format": "remark . -qfo && prettier --write \"**/*.{js,ts}\" && xo --fix",
-    "build-bundle": "browserify . --bare -s unistUtilInspect > unist-util-inspect.js",
-    "build-mangle": "browserify . --bare -s unistUtilInspect -p tinyify > unist-util-inspect.min.js",
+    "build-bundle": "browserify . -s unistUtilInspect > unist-util-inspect.js",
+    "build-mangle": "browserify . -s unistUtilInspect -p tinyify > unist-util-inspect.min.js",
     "build": "npm run build-bundle && npm run build-mangle",
     "test-api": "node test",
     "test-coverage": "nyc --reporter lcov tape test.js",
