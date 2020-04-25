@@ -225,6 +225,35 @@ test('inspect()', function (t) {
     'should work with just `offset` in `position`'
   )
 
+  t.equal(
+    strip(inspect(retext().parse(paragraph), {showPositions: false})),
+    [
+      'RootNode[1]',
+      '└─ ParagraphNode[3]',
+      '   ├─ SentenceNode[6]',
+      '   │  ├─ WordNode[1]',
+      '   │  │  └─ TextNode: "Some"',
+      '   │  ├─ WhiteSpaceNode: " "',
+      '   │  ├─ WordNode[1]',
+      '   │  │  └─ TextNode: "simple"',
+      '   │  ├─ WhiteSpaceNode: " "',
+      '   │  ├─ WordNode[1]',
+      '   │  │  └─ TextNode: "text"',
+      '   │  └─ PunctuationNode: "."',
+      '   ├─ WhiteSpaceNode: " "',
+      '   └─ SentenceNode[6]',
+      '      ├─ WordNode[1]',
+      '      │  └─ TextNode: "Other"',
+      '      ├─ WhiteSpaceNode: " "',
+      '      ├─ PunctuationNode: "“"',
+      '      ├─ WordNode[1]',
+      '      │  └─ TextNode: "sentence"',
+      '      ├─ PunctuationNode: "”"',
+      '      └─ PunctuationNode: "."'
+    ].join('\n'),
+    'should support `showPositions: false`'
+  )
+
   t.end()
 })
 
