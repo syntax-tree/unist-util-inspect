@@ -81,7 +81,7 @@ test('inspect()', function (t) {
         }
       ])
     ),
-    ['SymbolNode: "$"', 'WordNode[1]', '└─ text: "5,00"'].join('\n'),
+    ['├─ SymbolNode: "$"', '└─ WordNode[1]', '   └─ text: "5,00"'].join('\n'),
     'should work with a list of nodes'
   )
 

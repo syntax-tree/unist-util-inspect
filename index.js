@@ -15,91 +15,114 @@ var yellow = ansiColor(33, 39)
 var green = ansiColor(32, 39)
 
 // Define ANSII color removal functionality.
-var colorExpression = /(?:(?:\u001B\[)|\u009b)(?:\d{1,3})?(?:(?:;\d{0,3})*)?[A-M|f-m]|\u001b[A-M]/g
+var colorExpression = /(?:(?:\u001B\[)|\u009B)(?:\d{1,3})?(?:(?:;\d{0,3})*)?[A-M|f-m]|\u001B[A-M]/g
 
 // Standard keys defined by unist: https://github.com/syntax-tree/unist.
 // We don’t ignore `data` though.
 var ignore = ['type', 'value', 'children', 'position']
 
 // Inspects a node, without using color.
-function noColor(node, pad) {
-  return stripColor(inspect(node, pad))
+function noColor(node) {
+  return stripColor(inspect(node))
 }
 
 // Inspects a node.
-function inspect(node, pad) {
-  var result
-  var children
-  var index
-  var length
+function inspect(node) {
+  return inspectValue(node, '')
 
-  if (node && Boolean(node.length) && typeof node !== 'string') {
-    length = node.length
-    index = -1
-    result = []
+  function inspectValue(node, pad) {
+    if (node && Boolean(node.length) && typeof node === 'object') {
+      return inspectAll(node, pad)
+    }
+
+    if (node && node.type) {
+      return inspectTree(node, pad)
+    }
+
+    return inspectNonTree(node, pad)
+  }
+
+  function inspectNonTree(value, pad) {
+    return formatNesting(pad) + String(value)
+  }
+
+  function inspectAll(nodes, pad) {
+    var length = nodes.length
+    var index = -1
+    var result = []
+    var node
+    var tail
 
     while (++index < length) {
-      result[index] = inspect(node[index])
+      node = nodes[index]
+      tail = index === length - 1
+
+      result.push(
+        formatNesting(pad + (tail ? '└' : '├') + '─ '),
+        inspectValue(node, pad + (tail ? ' ' : '│') + '  '),
+        tail ? '' : '\n'
+      )
     }
 
-    return result.join('\n')
+    return result.join('')
   }
 
-  if (!node || !node.type) {
-    return String(node)
+  function inspectTree(node, pad) {
+    var result = formatNode(node, pad)
+    var content = inspectAll(node.children || [], pad)
+    return content ? result + '\n' + content : result
   }
 
-  result = [formatNode(node)]
-  children = node.children
-  length = children && children.length
-  index = -1
-
-  if (!length) {
-    return result[0]
+  // Colored nesting formatter.
+  function formatNesting(value) {
+    return value ? dim(value) : ''
   }
 
-  if (!pad || typeof pad === 'number') {
-    pad = ''
-  }
+  // Colored node formatter.
+  function formatNode(node) {
+    var result = [node.type]
+    var position = node.position || {}
+    var location = stringifyPosition(position.start, position.end)
+    var attributes = []
+    var key
+    var value
 
-  while (++index < length) {
-    node = children[index]
-
-    if (index === length - 1) {
-      result.push(formatNesting(pad + '└─ ') + inspect(node, pad + '   '))
-    } else {
-      result.push(formatNesting(pad + '├─ ') + inspect(node, pad + '│  '))
+    if (node.children) {
+      result.push(dim('['), yellow(node.children.length), dim(']'))
+    } else if (typeof node.value === 'string') {
+      result.push(dim(': '), green(JSON.stringify(node.value)))
     }
-  }
 
-  return result.join('\n')
+    if (location) {
+      result.push(' (', location, ')')
+    }
+
+    for (key in node) {
+      value = node[key]
+
+      if (
+        ignore.indexOf(key) !== -1 ||
+        value === null ||
+        value === undefined ||
+        (typeof value === 'object' && isEmpty(value))
+      ) {
+        continue
+      }
+
+      attributes.push('[' + key + '=' + JSON.stringify(value) + ']')
+    }
+
+    if (attributes.length !== 0) {
+      result = result.concat(' ', attributes)
+    }
+
+    return result.join('')
+  }
 }
 
-// Colored nesting formatter.
-function formatNesting(value) {
-  return dim(value)
-}
-
-// Compile a single position.
-function compile(pos) {
-  var values = []
-
-  if (!pos) {
-    return null
-  }
-
-  values = [[pos.line || 1, pos.column || 1].join(':')]
-
-  if ('offset' in pos) {
-    values.push(String(pos.offset || 0))
-  }
-
-  return values
-}
-
-// Compile a location.
-function stringify(start, end) {
-  var values = []
+// Compile a position.
+function stringifyPosition(start, end) {
+  var result = []
   var positions = []
   var offsets = []
 
@@ -107,18 +130,18 @@ function stringify(start, end) {
   add(end)
 
   if (positions.length !== 0) {
-    values.push(positions.join('-'))
+    result.push(positions.join('-'))
   }
 
   if (offsets.length !== 0) {
-    values.push(offsets.join('-'))
+    result.push(offsets.join('-'))
   }
 
-  return values.join(', ')
+  return result.join(', ')
 
   // Add a position.
   function add(position) {
-    var tuple = compile(position)
+    var tuple = stringifyPoint(position)
 
     if (tuple) {
       positions.push(tuple[0])
@@ -130,48 +153,24 @@ function stringify(start, end) {
   }
 }
 
-// Colored node formatter.
-function formatNode(node) {
-  var log = node.type
-  var location = node.position || {}
-  var position = stringify(location.start, location.end)
-  var key
-  var values = []
-  var value
+// Compile a point.
+function stringifyPoint(value) {
+  var result = []
 
-  if (node.children) {
-    log += dim('[') + yellow(node.children.length) + dim(']')
-  } else if (typeof node.value === 'string') {
-    log += dim(': ') + green(JSON.stringify(node.value))
+  if (!value) {
+    return null
   }
 
-  if (position) {
-    log += ' (' + position + ')'
+  result = [[value.line || 1, value.column || 1].join(':')]
+
+  if ('offset' in value) {
+    result.push(String(value.offset || 0))
   }
 
-  for (key in node) {
-    value = node[key]
-
-    if (
-      ignore.indexOf(key) !== -1 ||
-      value === null ||
-      value === undefined ||
-      (typeof value === 'object' && isEmpty(value))
-    ) {
-      continue
-    }
-
-    values.push('[' + key + '=' + JSON.stringify(value) + ']')
-  }
-
-  if (values.length !== 0) {
-    log += ' ' + values.join('')
-  }
-
-  return log
+  return result
 }
 
-// Remove ANSI colour from `value`.
+// Remove ANSI color from `value`.
 function stripColor(value) {
   return value.replace(colorExpression, '')
 }
