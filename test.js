@@ -8,10 +8,10 @@ var inspect = require('.')
 
 var paragraph = 'Some simple text. Other “sentence”.'
 
-test('inspect', function(t) {
+test('inspect', function (t) {
   t.equal(typeof inspect, 'function', 'should be a `function`')
 
-  t.test('should have `color` and `noColor` properties', function(st) {
+  t.test('should have `color` and `noColor` properties', function (st) {
     st.equal(typeof inspect.color, 'function')
     st.equal(typeof inspect.noColor, 'function')
 
@@ -24,7 +24,7 @@ test('inspect', function(t) {
   t.end()
 })
 
-test('inspect()', function(t) {
+test('inspect()', function (t) {
   t.equal(
     strip(inspect(retext().parse(paragraph))),
     [
@@ -85,7 +85,7 @@ test('inspect()', function(t) {
     'should work with a list of nodes'
   )
 
-  t.test('should work on non-nodes', function(st) {
+  t.test('should work on non-nodes', function (st) {
     st.equal(strip(inspect('foo')), 'foo')
     st.equal(strip(inspect('null')), 'null')
     st.equal(strip(inspect(NaN)), 'NaN')
@@ -226,7 +226,7 @@ test('inspect()', function(t) {
   t.end()
 })
 
-test('inspect.noColor()', function(t) {
+test('inspect.noColor()', function (t) {
   t.equal(
     inspect.noColor(retext().parse(paragraph).children[0].children[0]),
     [
@@ -247,7 +247,7 @@ test('inspect.noColor()', function(t) {
   t.end()
 })
 
-test('inspect.color()', function(t) {
+test('inspect.color()', function (t) {
   t.equal(
     inspect.color(retext().parse(paragraph).children[0].children[0]),
     [
