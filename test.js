@@ -4,6 +4,7 @@ var test = require('tape')
 var chalk = require('chalk')
 var strip = require('strip-ansi')
 var retext = require('retext')
+var fromXml = require('xast-util-from-xml')
 var inspect = require('.')
 
 var chalkEnabled = new chalk.Instance({level: 1})
@@ -167,7 +168,7 @@ test('inspect()', function (t) {
         children: []
       })
     ),
-    'element[0] [tagName="br"]',
+    'element<br>[0]',
     'should work on parent nodes without children'
   )
 
@@ -181,6 +182,15 @@ test('inspect()', function (t) {
     strip(inspect({type: 'thematicBreak'})),
     'thematicBreak',
     'should work on void nodes'
+  )
+
+  t.equal(
+    strip(inspect(fromXml('<album id="123" />'))),
+    [
+      'root[1]',
+      '└─ element<album>[0] (1:1-1:19, 0-18) [attributes={"id":"123"}]'
+    ].join('\n'),
+    'should work nodes of a certain kind (xast, hast)'
   )
 
   t.equal(

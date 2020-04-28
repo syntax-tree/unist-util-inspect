@@ -17,9 +17,11 @@ var green = ansiColor(32, 39)
 // Define ANSII color removal functionality.
 var colorExpression = /(?:(?:\u001B\[)|\u009B)(?:\d{1,3})?(?:(?:;\d{0,3})*)?[A-M|f-m]|\u001B[A-M]/g
 
-// Standard keys defined by unist: https://github.com/syntax-tree/unist.
+// Standard keys defined by unist (<https://github.com/syntax-tree/unist>) that
+// we format differently.
 // We don’t ignore `data` though.
-var ignore = ['type', 'value', 'children', 'position']
+// Also includes `name` (from xast) and `tagName` (from `hast`).
+var ignore = ['type', 'value', 'children', 'position', 'name', 'tagName']
 
 // Inspects a node, without using color.
 function noColor(node) {
@@ -81,11 +83,16 @@ function inspect(node) {
   // Colored node formatter.
   function formatNode(node) {
     var result = [node.type]
+    var kind = node.tagName || node.name
     var position = node.position || {}
     var location = stringifyPosition(position.start, position.end)
     var attributes = []
     var key
     var value
+
+    if (kind) {
+      result.push('<', kind, '>')
+    }
 
     if (node.children) {
       result.push(dim('['), yellow(node.children.length), dim(']'))
