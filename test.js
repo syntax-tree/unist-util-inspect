@@ -7,6 +7,7 @@ var u = require('unist-builder')
 var h = require('hastscript')
 var x = require('xastscript')
 var retext = require('retext')
+var fromXml = require('xast-util-from-xml')
 var inspect = require('.')
 
 var chalkEnabled = new chalk.Instance({level: 1})
@@ -146,7 +147,7 @@ test('inspect()', function (t) {
         children: []
       })
     ),
-    'element[0]\n  tagName: "br"',
+    'element<br>[0]',
     'should work on parent nodes without children'
   )
 
@@ -165,8 +166,7 @@ test('inspect()', function (t) {
   t.equal(
     strip(inspect(h('button', {type: 'submit', value: 'Send'}))),
     [
-      'element[0]',
-      '  tagName: "button"',
+      'element<button>[0]',
       '  properties: {"type":"submit","value":"Send"}'
     ].join('\n'),
     'should see properties as data'
@@ -174,8 +174,7 @@ test('inspect()', function (t) {
   t.equal(
     strip(inspect(x('album', {type: 'vinyl', id: '123'}))),
     [
-      'element[0]',
-      '  name: "album"',
+      'element<album>[0]',
       '  attributes: {"type":"vinyl","id":"123"}'
     ].join('\n'),
     'should see attributes as data'
@@ -261,6 +260,15 @@ test('inspect()', function (t) {
   )
 
   t.equal(
+    strip(inspect(fromXml('<album id="123" />'))),
+    [
+      'root[1]',
+      '└─ element<album>[0] (1:1-1:19, 0-18) [attributes={"id":"123"}]'
+    ].join('\n'),
+    'should work nodes of a certain kind (xast, hast)'
+  )
+
+  t.equal(
     strip(
       inspect({
         type: 'foo',
@@ -300,6 +308,35 @@ test('inspect()', function (t) {
     ),
     'foo "foo\\nbaar" (1:1-1:1, 1-8)',
     'should work with just `offset` in `position`'
+  )
+
+  t.equal(
+    strip(inspect(retext().parse(paragraph), {showPositions: false})),
+    [
+      'RootNode[1]',
+      '└─ ParagraphNode[3]',
+      '   ├─ SentenceNode[6]',
+      '   │  ├─ WordNode[1]',
+      '   │  │  └─ TextNode: "Some"',
+      '   │  ├─ WhiteSpaceNode: " "',
+      '   │  ├─ WordNode[1]',
+      '   │  │  └─ TextNode: "simple"',
+      '   │  ├─ WhiteSpaceNode: " "',
+      '   │  ├─ WordNode[1]',
+      '   │  │  └─ TextNode: "text"',
+      '   │  └─ PunctuationNode: "."',
+      '   ├─ WhiteSpaceNode: " "',
+      '   └─ SentenceNode[6]',
+      '      ├─ WordNode[1]',
+      '      │  └─ TextNode: "Other"',
+      '      ├─ WhiteSpaceNode: " "',
+      '      ├─ PunctuationNode: "“"',
+      '      ├─ WordNode[1]',
+      '      │  └─ TextNode: "sentence"',
+      '      ├─ PunctuationNode: "”"',
+      '      └─ PunctuationNode: "."'
+    ].join('\n'),
+    'should support `showPositions: false`'
   )
 
   t.end()

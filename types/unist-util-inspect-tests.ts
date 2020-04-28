@@ -28,3 +28,7 @@ const node = {
 }
 
 const result: string = inspect(node)
+
+const noColor: string = inspect.noColor(node)
+
+const noPositions: string = inspect(node, {showPositions: false})

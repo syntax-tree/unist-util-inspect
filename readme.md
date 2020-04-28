@@ -51,25 +51,26 @@ root[2]
 
 ## API
 
-### `inspect(node)`
+### `inspect(node[, options])`
 
-By default, color support is enabled in Node.js and turned off anywhere else.
+Inspect the given [`node`][node].
+By default, colors are added in Node, and not in other places.
 See below on how to change that.
 
-###### Parameters
+###### `options.showPositions`
 
-*   `node` ([`Node`][node]).
+Whether to include positional information (`boolean`, default: `true`).
 
 ###### Returns
 
 `string` — String representing `node`.
 
-### `inspect.<style>[.<style>…](node)`
+### `inspect.<style>[.<style>…](node[, options])`
 
 Where `<style>` is either `color` or `noColor`.
 
-To explicitly add or remove ANSI sequences, use either `inspect.color(node)`
-or `inspect.noColor(node)`.
+To explicitly add or remove ANSI sequences, use `inspect.color(node)` or
+`inspect.noColor(node)`.
 
 ## Contribute
 
