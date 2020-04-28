@@ -29,7 +29,14 @@ function noColor(node) {
 }
 
 // Inspects a node.
-function inspect(node) {
+function inspect(node, options) {
+  var settings = options || {}
+  var showPositions = settings.showPositions
+
+  if (showPositions === null || showPositions === undefined) {
+    showPositions = true
+  }
+
   return inspectValue(node, '')
 
   function inspectValue(node, pad) {
@@ -85,7 +92,9 @@ function inspect(node) {
     var result = [node.type]
     var kind = node.tagName || node.name
     var position = node.position || {}
-    var location = stringifyPosition(position.start, position.end)
+    var location = showPositions
+      ? stringifyPosition(position.start, position.end)
+      : ''
     var attributes = []
     var key
     var value
