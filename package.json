@@ -36,14 +36,13 @@
     "./color.js": "./color-browser.js"
   },
   "types": "types/index.d.ts",
-  "dependencies": {
-    "is-empty": "^1.0.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@types/unist": "^2.0.3",
     "browserify": "^16.0.0",
     "chalk": "^4.0.0",
     "dtslint": "^3.0.0",
+    "hastscript": "^5.0.0",
     "nyc": "^15.0.0",
     "prettier": "^2.0.0",
     "remark-cli": "^8.0.0",
@@ -52,6 +51,8 @@
     "strip-ansi": "^6.0.0",
     "tape": "^5.0.0",
     "tinyify": "^2.0.0",
+    "unist-builder": "^2.0.0",
+    "xastscript": "^1.0.0",
     "xast-util-from-xml": "^1.0.0",
     "xo": "^0.29.0"
   },

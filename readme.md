@@ -40,11 +40,13 @@ Yields:
 
 ```text
 root[2]
-├─ literal: "1"
-└─ parent[3]
-   ├─ void [id="a"]
-   ├─ literal: "2"
-   └─ node[0] [id="b"]
+├─0 literal "1"
+└─1 parent[3]
+    ├─0 void
+    │     id: "a"
+    ├─1 literal "2"
+    └─2 node[0]
+          id: "b"
 ```
 
 ## API

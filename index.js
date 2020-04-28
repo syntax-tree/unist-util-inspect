@@ -1,6 +1,5 @@
 'use strict'
 
-var isEmpty = require('is-empty')
 var color = require('./color')
 
 module.exports = color ? inspect : /* istanbul ignore next */ noColor
@@ -10,6 +9,7 @@ noColor.color = inspect
 inspect.noColor = noColor
 noColor.noColor = noColor
 
+var bold = ansiColor(1, 22)
 var dim = ansiColor(2, 22)
 var yellow = ansiColor(33, 39)
 var green = ansiColor(32, 39)
@@ -21,7 +21,10 @@ var colorExpression = /(?:(?:\u001B\[)|\u009B)(?:\d{1,3})?(?:(?:;\d{0,3})*)?[A-M
 // we format differently.
 // We don’t ignore `data` though.
 // Also includes `name` (from xast) and `tagName` (from `hast`).
-var ignore = ['type', 'value', 'children', 'position', 'name', 'tagName']
+var ignore = ['type', 'value', 'children', 'position']
+var ignoreString = ['name', 'tagName']
+
+var dataOnly = ['data', 'attributes', 'properties']
 
 // Inspects a node, without using color.
 function noColor(node) {
@@ -37,103 +40,139 @@ function inspect(node, options) {
     showPositions = true
   }
 
-  return inspectValue(node, '')
+  return inspectValue(node)
 
-  function inspectValue(node, pad) {
+  function inspectValue(node) {
     if (node && Boolean(node.length) && typeof node === 'object') {
-      return inspectAll(node, pad)
+      return inspectNodes(node)
     }
 
     if (node && node.type) {
-      return inspectTree(node, pad)
+      return inspectTree(node)
     }
 
-    return inspectNonTree(node, pad)
+    return inspectNonTree(node)
   }
 
-  function inspectNonTree(value, pad) {
-    return formatNesting(pad) + String(value)
+  function inspectNonTree(value) {
+    return JSON.stringify(value)
   }
 
-  function inspectAll(nodes, pad) {
+  function inspectNodes(nodes) {
     var length = nodes.length
     var index = -1
     var result = []
     var node
     var tail
+    var value
 
     while (++index < length) {
       node = nodes[index]
       tail = index === length - 1
 
+      value =
+        dim((tail ? '└' : '├') + '─' + index) +
+        ' ' +
+        indent(inspectValue(node), (tail ? ' ' : dim('│')) + '   ', true)
+
+      result.push(value)
+    }
+
+    return result.join('\n')
+  }
+
+  function inspectFields(object) {
+    var nonEmpty = object.children && object.children.length
+    var result = []
+    var key
+    var value
+    var formatted
+
+    for (key in object) {
+      value = object[key]
+
+      if (
+        value === undefined ||
+        ignore.indexOf(key) !== -1 ||
+        (ignoreString.indexOf(key) !== -1 && typeof value === 'string')
+      ) {
+        continue
+      }
+
+      if (
+        value &&
+        typeof value === 'object' &&
+        typeof value.type === 'string' &&
+        dataOnly.indexOf(key) === -1
+      ) {
+        formatted = inspectTree(value)
+      } else if (
+        Array.isArray(value) &&
+        value[0] &&
+        typeof value[0] === 'object' &&
+        typeof value[0].type === 'string'
+      ) {
+        formatted = '\n' + inspectNodes(value)
+      } else {
+        formatted = inspectNonTree(value)
+      }
+
       result.push(
-        formatNesting(pad + (tail ? '└' : '├') + '─ '),
-        inspectValue(node, pad + (tail ? ' ' : '│') + '  '),
-        tail ? '' : '\n'
+        key + dim(':') + (/\s/.test(formatted.charAt(0)) ? '' : ' ') + formatted
       )
     }
 
-    return result.join('')
+    return indent(result.join('\n'), (nonEmpty ? dim('│') : ' ') + ' ')
   }
 
   function inspectTree(node, pad) {
-    var result = formatNode(node, pad)
-    var content = inspectAll(node.children || [], pad)
-    return content ? result + '\n' + content : result
-  }
-
-  // Colored nesting formatter.
-  function formatNesting(value) {
-    return value ? dim(value) : ''
+    var result = [formatNode(node, pad)]
+    var fields = inspectFields(node)
+    var content = inspectNodes(node.children || [])
+    if (fields) result.push(fields)
+    if (content) result.push(content)
+    return result.join('\n')
   }
 
   // Colored node formatter.
   function formatNode(node) {
-    var result = [node.type]
+    var result = [bold(node.type)]
     var kind = node.tagName || node.name
     var position = node.position || {}
     var location = showPositions
       ? stringifyPosition(position.start, position.end)
       : ''
-    var attributes = []
-    var key
-    var value
 
-    if (kind) {
+    if (typeof kind === 'string') {
       result.push('<', kind, '>')
     }
 
     if (node.children) {
       result.push(dim('['), yellow(node.children.length), dim(']'))
     } else if (typeof node.value === 'string') {
-      result.push(dim(': '), green(JSON.stringify(node.value)))
+      result.push(' ', green(inspectNonTree(node.value, '')))
     }
 
     if (location) {
-      result.push(' (', location, ')')
-    }
-
-    for (key in node) {
-      value = node[key]
-
-      if (
-        ignore.indexOf(key) !== -1 ||
-        value === null ||
-        value === undefined ||
-        (typeof value === 'object' && isEmpty(value))
-      ) {
-        continue
-      }
-
-      attributes.push('[' + key + '=' + JSON.stringify(value) + ']')
-    }
-
-    if (attributes.length !== 0) {
-      result = result.concat(' ', attributes)
+      result.push(' ', dim('('), location, dim(')'))
     }
 
     return result.join('')
   }
+}
+
+function indent(value, indentation, ignoreFirst) {
+  var lines = value.split('\n')
+  var index = ignoreFirst ? 0 : -1
+  var length = lines.length
+
+  if (value === '') return ''
+
+  while (++index < length) {
+    lines[index] = indentation + lines[index]
+  }
+
+  return lines.join('\n')
 }
 
 // Compile a position.
