@@ -173,10 +173,7 @@ test('inspect()', function (t) {
   )
   t.equal(
     strip(inspect(x('album', {type: 'vinyl', id: '123'}))),
-    [
-      'element<album>[0]',
-      '  attributes: {"type":"vinyl","id":"123"}'
-    ].join('\n'),
+    'element<album>[0]\n  attributes: {"type":"vinyl","id":"123"}',
     'should see attributes as data'
   )
   t.equal(
@@ -263,7 +260,8 @@ test('inspect()', function (t) {
     strip(inspect(fromXml('<album id="123" />'))),
     [
       'root[1]',
-      '└─ element<album>[0] (1:1-1:19, 0-18) [attributes={"id":"123"}]'
+      '└─0 element<album>[0] (1:1-1:19, 0-18)',
+      '      attributes: {"id":"123"}'
     ].join('\n'),
     'should work nodes of a certain kind (xast, hast)'
   )
@@ -314,27 +312,27 @@ test('inspect()', function (t) {
     strip(inspect(retext().parse(paragraph), {showPositions: false})),
     [
       'RootNode[1]',
-      '└─ ParagraphNode[3]',
-      '   ├─ SentenceNode[6]',
-      '   │  ├─ WordNode[1]',
-      '   │  │  └─ TextNode: "Some"',
-      '   │  ├─ WhiteSpaceNode: " "',
-      '   │  ├─ WordNode[1]',
-      '   │  │  └─ TextNode: "simple"',
-      '   │  ├─ WhiteSpaceNode: " "',
-      '   │  ├─ WordNode[1]',
-      '   │  │  └─ TextNode: "text"',
-      '   │  └─ PunctuationNode: "."',
-      '   ├─ WhiteSpaceNode: " "',
-      '   └─ SentenceNode[6]',
-      '      ├─ WordNode[1]',
-      '      │  └─ TextNode: "Other"',
-      '      ├─ WhiteSpaceNode: " "',
-      '      ├─ PunctuationNode: "“"',
-      '      ├─ WordNode[1]',
-      '      │  └─ TextNode: "sentence"',
-      '      ├─ PunctuationNode: "”"',
-      '      └─ PunctuationNode: "."'
+      '└─0 ParagraphNode[3]',
+      '    ├─0 SentenceNode[6]',
+      '    │   ├─0 WordNode[1]',
+      '    │   │   └─0 TextNode "Some"',
+      '    │   ├─1 WhiteSpaceNode " "',
+      '    │   ├─2 WordNode[1]',
+      '    │   │   └─0 TextNode "simple"',
+      '    │   ├─3 WhiteSpaceNode " "',
+      '    │   ├─4 WordNode[1]',
+      '    │   │   └─0 TextNode "text"',
+      '    │   └─5 PunctuationNode "."',
+      '    ├─1 WhiteSpaceNode " "',
+      '    └─2 SentenceNode[6]',
+      '        ├─0 WordNode[1]',
+      '        │   └─0 TextNode "Other"',
+      '        ├─1 WhiteSpaceNode " "',
+      '        ├─2 PunctuationNode "“"',
+      '        ├─3 WordNode[1]',
+      '        │   └─0 TextNode "sentence"',
+      '        ├─4 PunctuationNode "”"',
+      '        └─5 PunctuationNode "."'
     ].join('\n'),
     'should support `showPositions: false`'
   )

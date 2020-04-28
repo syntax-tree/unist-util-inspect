@@ -21,7 +21,8 @@ var colorExpression = /(?:(?:\u001B\[)|\u009B)(?:\d{1,3})?(?:(?:;\d{0,3})*)?[A-M
 // we format differently.
 // We don’t ignore `data` though.
 // Also includes `name` (from xast) and `tagName` (from `hast`).
-var ignore = ['type', 'value', 'children', 'position', 'name', 'tagName']
+var ignore = ['type', 'value', 'children', 'position']
+var ignoreString = ['name', 'tagName']
 
 var dataOnly = ['data', 'attributes', 'properties']
 
@@ -90,7 +91,11 @@ function inspect(node, options) {
     for (key in object) {
       value = object[key]
 
-      if (value === undefined || ignore.indexOf(key) !== -1) {
+      if (
+        value === undefined ||
+        ignore.indexOf(key) !== -1 ||
+        (ignoreString.indexOf(key) !== -1 && typeof value === 'string')
+      ) {
         continue
       }
 
@@ -137,9 +142,8 @@ function inspect(node, options) {
     var location = showPositions
       ? stringifyPosition(position.start, position.end)
       : ''
-    var location = stringifyPosition(position.start, position.end)
 
-    if (kind) {
+    if (typeof kind === 'string') {
       result.push('<', kind, '>')
     }
 
