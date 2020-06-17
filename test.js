@@ -337,6 +337,181 @@ test('inspect()', function (t) {
     'should support `showPositions: false`'
   )
 
+  t.equal(
+    strip(inspect(retext().parse(paragraph), {showIndex: false})),
+    [
+      'RootNode[1] (1:1-1:36, 0-35)',
+      '└─ ParagraphNode[3] (1:1-1:36, 0-35)',
+      '    ├─ SentenceNode[6] (1:1-1:18, 0-17)',
+      '    │   ├─ WordNode[1] (1:1-1:5, 0-4)',
+      '    │   │   └─ TextNode "Some" (1:1-1:5, 0-4)',
+      '    │   ├─ WhiteSpaceNode " " (1:5-1:6, 4-5)',
+      '    │   ├─ WordNode[1] (1:6-1:12, 5-11)',
+      '    │   │   └─ TextNode "simple" (1:6-1:12, 5-11)',
+      '    │   ├─ WhiteSpaceNode " " (1:12-1:13, 11-12)',
+      '    │   ├─ WordNode[1] (1:13-1:17, 12-16)',
+      '    │   │   └─ TextNode "text" (1:13-1:17, 12-16)',
+      '    │   └─ PunctuationNode "." (1:17-1:18, 16-17)',
+      '    ├─ WhiteSpaceNode " " (1:18-1:19, 17-18)',
+      '    └─ SentenceNode[6] (1:19-1:36, 18-35)',
+      '        ├─ WordNode[1] (1:19-1:24, 18-23)',
+      '        │   └─ TextNode "Other" (1:19-1:24, 18-23)',
+      '        ├─ WhiteSpaceNode " " (1:24-1:25, 23-24)',
+      '        ├─ PunctuationNode "“" (1:25-1:26, 24-25)',
+      '        ├─ WordNode[1] (1:26-1:34, 25-33)',
+      '        │   └─ TextNode "sentence" (1:26-1:34, 25-33)',
+      '        ├─ PunctuationNode "”" (1:34-1:35, 33-34)',
+      '        └─ PunctuationNode "." (1:35-1:36, 34-35)'
+    ].join('\n'),
+    'should support `showIndex: false`'
+  )
+
+  t.equal(
+    strip(inspect(retext().parse(paragraph), {showChildCount: false})),
+    [
+      'RootNode (1:1-1:36, 0-35)',
+      '└─0 ParagraphNode (1:1-1:36, 0-35)',
+      '    ├─0 SentenceNode (1:1-1:18, 0-17)',
+      '    │   ├─0 WordNode (1:1-1:5, 0-4)',
+      '    │   │   └─0 TextNode "Some" (1:1-1:5, 0-4)',
+      '    │   ├─1 WhiteSpaceNode " " (1:5-1:6, 4-5)',
+      '    │   ├─2 WordNode (1:6-1:12, 5-11)',
+      '    │   │   └─0 TextNode "simple" (1:6-1:12, 5-11)',
+      '    │   ├─3 WhiteSpaceNode " " (1:12-1:13, 11-12)',
+      '    │   ├─4 WordNode (1:13-1:17, 12-16)',
+      '    │   │   └─0 TextNode "text" (1:13-1:17, 12-16)',
+      '    │   └─5 PunctuationNode "." (1:17-1:18, 16-17)',
+      '    ├─1 WhiteSpaceNode " " (1:18-1:19, 17-18)',
+      '    └─2 SentenceNode (1:19-1:36, 18-35)',
+      '        ├─0 WordNode (1:19-1:24, 18-23)',
+      '        │   └─0 TextNode "Other" (1:19-1:24, 18-23)',
+      '        ├─1 WhiteSpaceNode " " (1:24-1:25, 23-24)',
+      '        ├─2 PunctuationNode "“" (1:25-1:26, 24-25)',
+      '        ├─3 WordNode (1:26-1:34, 25-33)',
+      '        │   └─0 TextNode "sentence" (1:26-1:34, 25-33)',
+      '        ├─4 PunctuationNode "”" (1:34-1:35, 33-34)',
+      '        └─5 PunctuationNode "." (1:35-1:36, 34-35)'
+    ].join('\n'),
+    'should support `showChildCount: false`'
+  )
+
+  t.equal(
+    strip(inspect(retext().parse(paragraph), {showPositions: false, showIndex: false})),
+    [
+      'RootNode[1]',
+      '└─ ParagraphNode[3]',
+      '    ├─ SentenceNode[6]',
+      '    │   ├─ WordNode[1]',
+      '    │   │   └─ TextNode "Some"',
+      '    │   ├─ WhiteSpaceNode " "',
+      '    │   ├─ WordNode[1]',
+      '    │   │   └─ TextNode "simple"',
+      '    │   ├─ WhiteSpaceNode " "',
+      '    │   ├─ WordNode[1]',
+      '    │   │   └─ TextNode "text"',
+      '    │   └─ PunctuationNode "."',
+      '    ├─ WhiteSpaceNode " "',
+      '    └─ SentenceNode[6]',
+      '        ├─ WordNode[1]',
+      '        │   └─ TextNode "Other"',
+      '        ├─ WhiteSpaceNode " "',
+      '        ├─ PunctuationNode "“"',
+      '        ├─ WordNode[1]',
+      '        │   └─ TextNode "sentence"',
+      '        ├─ PunctuationNode "”"',
+      '        └─ PunctuationNode "."'
+    ].join('\n'),
+    'should support `showPositions: false, showIndex: false`'
+  )
+
+  t.equal(
+    strip(inspect(retext().parse(paragraph), {showPositions: false, showChildCount: false})),
+    [
+      'RootNode',
+      '└─0 ParagraphNode',
+      '    ├─0 SentenceNode',
+      '    │   ├─0 WordNode',
+      '    │   │   └─0 TextNode "Some"',
+      '    │   ├─1 WhiteSpaceNode " "',
+      '    │   ├─2 WordNode',
+      '    │   │   └─0 TextNode "simple"',
+      '    │   ├─3 WhiteSpaceNode " "',
+      '    │   ├─4 WordNode',
+      '    │   │   └─0 TextNode "text"',
+      '    │   └─5 PunctuationNode "."',
+      '    ├─1 WhiteSpaceNode " "',
+      '    └─2 SentenceNode',
+      '        ├─0 WordNode',
+      '        │   └─0 TextNode "Other"',
+      '        ├─1 WhiteSpaceNode " "',
+      '        ├─2 PunctuationNode "“"',
+      '        ├─3 WordNode',
+      '        │   └─0 TextNode "sentence"',
+      '        ├─4 PunctuationNode "”"',
+      '        └─5 PunctuationNode "."'
+    ].join('\n'),
+    'should support `showPositions: false, showChildCount: false`'
+  )
+
+  t.equal(
+    strip(inspect(retext().parse(paragraph), {showIndex: false, showChildCount: false})),
+    [
+      'RootNode (1:1-1:36, 0-35)',
+      '└─ ParagraphNode (1:1-1:36, 0-35)',
+      '    ├─ SentenceNode (1:1-1:18, 0-17)',
+      '    │   ├─ WordNode (1:1-1:5, 0-4)',
+      '    │   │   └─ TextNode "Some" (1:1-1:5, 0-4)',
+      '    │   ├─ WhiteSpaceNode " " (1:5-1:6, 4-5)',
+      '    │   ├─ WordNode (1:6-1:12, 5-11)',
+      '    │   │   └─ TextNode "simple" (1:6-1:12, 5-11)',
+      '    │   ├─ WhiteSpaceNode " " (1:12-1:13, 11-12)',
+      '    │   ├─ WordNode (1:13-1:17, 12-16)',
+      '    │   │   └─ TextNode "text" (1:13-1:17, 12-16)',
+      '    │   └─ PunctuationNode "." (1:17-1:18, 16-17)',
+      '    ├─ WhiteSpaceNode " " (1:18-1:19, 17-18)',
+      '    └─ SentenceNode (1:19-1:36, 18-35)',
+      '        ├─ WordNode (1:19-1:24, 18-23)',
+      '        │   └─ TextNode "Other" (1:19-1:24, 18-23)',
+      '        ├─ WhiteSpaceNode " " (1:24-1:25, 23-24)',
+      '        ├─ PunctuationNode "“" (1:25-1:26, 24-25)',
+      '        ├─ WordNode (1:26-1:34, 25-33)',
+      '        │   └─ TextNode "sentence" (1:26-1:34, 25-33)',
+      '        ├─ PunctuationNode "”" (1:34-1:35, 33-34)',
+      '        └─ PunctuationNode "." (1:35-1:36, 34-35)'
+    ].join('\n'),
+    'should support `showIndex: false, showChildCount: false`'
+  )
+
+
+  t.equal(
+    strip(inspect(retext().parse(paragraph), {showPositions: false, showIndex: false, showChildCount: false})),
+    [
+      'RootNode',
+      '└─ ParagraphNode',
+      '    ├─ SentenceNode',
+      '    │   ├─ WordNode',
+      '    │   │   └─ TextNode "Some"',
+      '    │   ├─ WhiteSpaceNode " "',
+      '    │   ├─ WordNode',
+      '    │   │   └─ TextNode "simple"',
+      '    │   ├─ WhiteSpaceNode " "',
+      '    │   ├─ WordNode',
+      '    │   │   └─ TextNode "text"',
+      '    │   └─ PunctuationNode "."',
+      '    ├─ WhiteSpaceNode " "',
+      '    └─ SentenceNode',
+      '        ├─ WordNode',
+      '        │   └─ TextNode "Other"',
+      '        ├─ WhiteSpaceNode " "',
+      '        ├─ PunctuationNode "“"',
+      '        ├─ WordNode',
+      '        │   └─ TextNode "sentence"',
+      '        ├─ PunctuationNode "”"',
+      '        └─ PunctuationNode "."'
+    ].join('\n'),
+    'should support `showPositions: false, showIndex: false, showChildCount: false`'
+  )
+
   t.end()
 })
 
