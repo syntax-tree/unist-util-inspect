@@ -57,9 +57,106 @@ Inspect the given [`node`][node].
 By default, colors are added in Node, and not in other places.
 See below on how to change that.
 
+#### Options
+
+###### no options
+
+```javascript
+var paragraph = 'Some simple.'
+console.log(inspect(retext().parse(paragraph)))
+```
+
+```text
+RootNode[1] (1:1-1:13, 0-12)
+└─0 ParagraphNode[1] (1:1-1:13, 0-12)
+    └─0 SentenceNode[4] (1:1-1:13, 0-12)
+        ├─0 WordNode[1] (1:1-1:5, 0-4)
+        │   └─0 TextNode "Some" (1:1-1:5, 0-4)
+        ├─1 WhiteSpaceNode " " (1:5-1:6, 4-5)
+        ├─2 WordNode[1] (1:6-1:12, 5-11)
+        │   └─0 TextNode "simple" (1:6-1:12, 5-11)
+        └─3 PunctuationNode "." (1:12-1:13, 11-12)
+```
 ###### `options.showPositions`
 
 Whether to include positional information (`boolean`, default: `true`).
+
+```javascript
+var paragraph = 'Some simple.'
+console.log(inspect(retext().parse(paragraph), {showPositions: false}))
+```
+
+```text
+RootNode[1]
+└─0 ParagraphNode[1]
+    └─0 SentenceNode[4]
+        ├─0 WordNode[1]
+        │   └─0 TextNode "Some"
+        ├─1 WhiteSpaceNode " "
+        ├─2 WordNode[1]
+        │   └─0 TextNode "simple"
+        └─3 PunctuationNode "."
+```
+
+###### `options.showIndex`
+
+Whether to include child index information. (`boolean`, default: `true`).
+
+```javascript
+var paragraph = 'Some simple.'
+console.log(inspect(retext().parse(paragraph), {showIndex: false}))
+```
+
+```text
+RootNode[1] (1:1-1:13, 0-12)
+└─ ParagraphNode[1] (1:1-1:13, 0-12)
+    └─ SentenceNode[4] (1:1-1:13, 0-12)
+        ├─ WordNode[1] (1:1-1:5, 0-4)
+        │   └─ TextNode "Some" (1:1-1:5, 0-4)
+        ├─ WhiteSpaceNode " " (1:5-1:6, 4-5)
+        ├─ WordNode[1] (1:6-1:12, 5-11)
+        │   └─ TextNode "simple" (1:6-1:12, 5-11)
+        └─ PunctuationNode "." (1:12-1:13, 11-12)
+```
+
+###### `options.showChildCount`
+
+Whether to include child count information. (`boolean`, default: `true`).
+
+```javascript
+var paragraph = 'Some simple.'
+console.log(inspect(retext().parse(paragraph), {showChildCount: false}))
+```
+
+```text
+RootNode (1:1-1:13, 0-12)
+└─0 ParagraphNode (1:1-1:13, 0-12)
+    └─0 SentenceNode (1:1-1:13, 0-12)
+        ├─0 WordNode (1:1-1:5, 0-4)
+        │   └─0 TextNode "Some" (1:1-1:5, 0-4)
+        ├─1 WhiteSpaceNode " " (1:5-1:6, 4-5)
+        ├─2 WordNode (1:6-1:12, 5-11)
+        │   └─0 TextNode "simple" (1:6-1:12, 5-11)
+        └─3 PunctuationNode "." (1:12-1:13, 11-12)
+```
+###### all options
+
+```javascript
+var paragraph = 'Some simple.'
+console.log(inspect(retext().parse(paragraph), {showChildCount: false}))
+```
+
+```text
+RootNode
+└─ ParagraphNode
+    └─ SentenceNode
+        ├─ WordNode
+        │   └─ TextNode "Some"
+        ├─ WhiteSpaceNode " "
+        ├─ WordNode
+        │   └─ TextNode "simple"
+        └─ PunctuationNode "."
+```
 
 ###### Returns
 
