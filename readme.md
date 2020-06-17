@@ -57,9 +57,13 @@ Inspect the given [`node`][node].
 By default, colors are added in Node, and not in other places.
 See below on how to change that.
 
+#### Returns
+
+`string` — String representing `node`.
+
 #### Options
 
-###### no options
+##### Example with no options
 
 ```javascript
 var paragraph = 'Some simple.'
@@ -77,7 +81,7 @@ RootNode[1] (1:1-1:13, 0-12)
         │   └─0 TextNode "simple" (1:6-1:12, 5-11)
         └─3 PunctuationNode "." (1:12-1:13, 11-12)
 ```
-###### `options.showPositions`
+##### Option `showPositions`
 
 Whether to include positional information (`boolean`, default: `true`).
 
@@ -98,7 +102,7 @@ RootNode[1]
         └─3 PunctuationNode "."
 ```
 
-###### `options.showIndex`
+##### Option `showIndex`
 
 Whether to include child index information. (`boolean`, default: `true`).
 
@@ -119,7 +123,7 @@ RootNode[1] (1:1-1:13, 0-12)
         └─ PunctuationNode "." (1:12-1:13, 11-12)
 ```
 
-###### `options.showChildCount`
+##### Option `showChildCount`
 
 Whether to include child count information. (`boolean`, default: `true`).
 
@@ -157,10 +161,6 @@ RootNode
         │   └─ TextNode "simple"
         └─ PunctuationNode "."
 ```
-
-###### Returns
-
-`string` — String representing `node`.
 
 ### `inspect.<style>[.<style>…](node[, options])`
 
