@@ -34,10 +34,20 @@ function noColor(node) {
 // Inspects a node.
 function inspect(node, options) {
   var settings = options || {}
-  var showPositions = settings.showPositions
 
+  var showPositions = settings.showPositions
   if (showPositions === null || showPositions === undefined) {
     showPositions = true
+  }
+
+  var showIndex = settings.showIndex
+  if (showIndex === null || showIndex === undefined) {
+    showIndex = true
+  }
+
+  var showChildCount = settings.showChildCount
+  if (showChildCount === null || showChildCount === undefined) {
+    showChildCount = true
   }
 
   return inspectValue(node)
@@ -71,7 +81,7 @@ function inspect(node, options) {
       tail = index === length - 1
 
       value =
-        dim((tail ? '└' : '├') + '─' + index) +
+        dim((tail ? '└' : '├') + '─' + (showIndex ? index : '')) +
         ' ' +
         indent(inspectValue(node), (tail ? ' ' : dim('│')) + '   ', true)
 
@@ -147,7 +157,7 @@ function inspect(node, options) {
       result.push('<', kind, '>')
     }
 
-    if (node.children) {
+    if (showChildCount && node.children) {
       result.push(dim('['), yellow(node.children.length), dim(']'))
     } else if (typeof node.value === 'string') {
       result.push(' ', green(inspectNonTree(node.value, '')))

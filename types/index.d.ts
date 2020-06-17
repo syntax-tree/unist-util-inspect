@@ -9,6 +9,18 @@ declare namespace unistUtilInspect {
      * @defaultValue true
      */
     showPositions?: boolean
+    /**
+     * Whether to include child index information.
+     *
+     * @defaultValue true
+     */
+    showIndex?: boolean
+    /**
+     * Whether to include child count information.
+     *
+     * @defaultValue true
+     */
+    showChildCount?: boolean
   }
 
   /**
