@@ -143,7 +143,7 @@ RootNode (1:1-1:13, 0-12)
         │   └─0 TextNode "simple" (1:6-1:12, 5-11)
         └─3 PunctuationNode "." (1:12-1:13, 11-12)
 ```
-###### all options
+###### Example with all options
 
 ```javascript
 var paragraph = 'Some simple.'
