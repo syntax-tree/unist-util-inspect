@@ -147,7 +147,7 @@ RootNode (1:1-1:13, 0-12)
 
 ```javascript
 var paragraph = 'Some simple.'
-console.log(inspect(retext().parse(paragraph), {showChildCount: false}))
+console.log(inspect(retext().parse(paragraph), {showPositions: false, showIndex: false, showChildCount: false}))
 ```
 
 ```text
