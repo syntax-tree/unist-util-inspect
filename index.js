@@ -50,7 +50,7 @@ function inspect(node, options) {
     showChildCount = true
   }
 
-  var showDataPretty = settings.showChildCount
+  var showDataPretty = settings.showDataPretty
   if (showDataPretty === null || showDataPretty === undefined) {
     showDataPretty = false
   }
