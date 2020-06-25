@@ -50,6 +50,10 @@ function inspect(node, options) {
     showChildCount = true
   }
 
+  var showDataPretty = settings.showChildCount
+  if (showDataPretty === null || showDataPretty === undefined) {
+    showDataPretty = false
+  }
   return inspectValue(node)
 
   function inspectValue(node) {
@@ -65,7 +69,7 @@ function inspect(node, options) {
   }
 
   function inspectNonTree(value) {
-    return JSON.stringify(value)
+    return showDataPretty? JSON.stringify(value, null, 2) : JSON.stringify(value)
   }
 
   function inspectNodes(nodes) {

@@ -21,6 +21,12 @@ declare namespace unistUtilInspect {
      * @defaultValue true
      */
     showChildCount?: boolean
+    /**
+     * Show data values in pretty print
+     *
+     * @defaultValue false
+     */
+    showDataPretty?: boolean
   }
 
   /**
