@@ -4,46 +4,31 @@ var color = require('./color')
 
 module.exports = color ? inspect : /* istanbul ignore next */ noColor
 
-inspect.color = inspect
-noColor.color = inspect
-inspect.noColor = noColor
-noColor.noColor = noColor
+inspect.color = noColor.color = inspect
+inspect.noColor = noColor.noColor = noColor
 
 var bold = ansiColor(1, 22)
 var dim = ansiColor(2, 22)
 var yellow = ansiColor(33, 39)
 var green = ansiColor(32, 39)
 
-// Define ANSII color removal functionality.
+// ANSI color regex.
 var colorExpression = /(?:(?:\u001B\[)|\u009B)(?:\d{1,3})?(?:(?:;\d{0,3})*)?[A-M|f-m]|\u001B[A-M]/g
-
-// Standard keys defined by unist (<https://github.com/syntax-tree/unist>) that
-// we format differently.
-// We don’t ignore `data` though.
-// Also includes `name` (from xast) and `tagName` (from `hast`).
-var ignore = ['type', 'value', 'children', 'position']
-var ignoreString = ['name', 'tagName']
-
-var dataOnly = ['data', 'attributes', 'properties']
 
 // Inspects a node, without using color.
 function noColor(node) {
-  return stripColor(inspect(node))
+  return inspect(node).replace(colorExpression, '')
 }
 
 // Inspects a node.
-function inspect(node, options) {
-  var settings = options || {}
-  var showPositions = settings.showPositions
+function inspect(tree, options) {
+  var positions =
+    !options || options.showPositions == null ? true : options.showPositions
 
-  if (showPositions === null || showPositions === undefined) {
-    showPositions = true
-  }
-
-  return inspectValue(node)
+  return inspectValue(tree)
 
   function inspectValue(node) {
-    if (node && Boolean(node.length) && typeof node === 'object') {
+    if (node && typeof node === 'object' && 'length' in node) {
       return inspectNodes(node)
     }
 
@@ -59,30 +44,25 @@ function inspect(node, options) {
   }
 
   function inspectNodes(nodes) {
-    var length = nodes.length
-    var index = -1
     var result = []
-    var node
-    var tail
-    var value
+    var index = -1
 
-    while (++index < length) {
-      node = nodes[index]
-      tail = index === length - 1
-
-      value =
-        dim((tail ? '└' : '├') + '─' + index) +
-        ' ' +
-        indent(inspectValue(node), (tail ? ' ' : dim('│')) + '   ', true)
-
-      result.push(value)
+    while (++index < nodes.length) {
+      result.push(
+        dim((index < nodes.length - 1 ? '├' : '└') + '─' + index) +
+          ' ' +
+          indent(
+            inspectValue(nodes[index]),
+            (index < nodes.length - 1 ? dim('│') : ' ') + '   ',
+            true
+          )
+      )
     }
 
     return result.join('\n')
   }
 
   function inspectFields(object) {
-    var nonEmpty = object.children && object.children.length
     var result = []
     var key
     var value
@@ -93,24 +73,36 @@ function inspect(node, options) {
 
       if (
         value === undefined ||
-        ignore.indexOf(key) !== -1 ||
-        (ignoreString.indexOf(key) !== -1 && typeof value === 'string')
+        // Standard keys defined by unist that we format differently.
+        // <https://github.com/syntax-tree/unist>
+        key === 'type' ||
+        key === 'value' ||
+        key === 'children' ||
+        key === 'position' ||
+        // Ignore `name` (from xast) and `tagName` (from `hast`) when string.
+        (typeof value === 'string' && (key === 'name' || key === 'tagName'))
       ) {
         continue
       }
 
+      // A single node.
       if (
         value &&
         typeof value === 'object' &&
-        typeof value.type === 'string' &&
-        dataOnly.indexOf(key) === -1
+        value.type &&
+        key !== 'data' &&
+        key !== 'attributes' &&
+        key !== 'properties'
       ) {
         formatted = inspectTree(value)
-      } else if (
-        Array.isArray(value) &&
+      }
+      // A list of nodes.
+      else if (
+        value &&
+        typeof value === 'object' &&
+        'length' in value &&
         value[0] &&
-        typeof value[0] === 'object' &&
-        typeof value[0].type === 'string'
+        value[0].type
       ) {
         formatted = '\n' + inspectNodes(value)
       } else {
@@ -122,7 +114,10 @@ function inspect(node, options) {
       )
     }
 
-    return indent(result.join('\n'), (nonEmpty ? dim('│') : ' ') + ' ')
+    return indent(
+      result.join('\n'),
+      (object.children && object.children.length ? dim('│') : ' ') + ' '
+    )
   }
 
   function inspectTree(node, pad) {
@@ -138,10 +133,7 @@ function inspect(node, options) {
   function formatNode(node) {
     var result = [bold(node.type)]
     var kind = node.tagName || node.name
-    var position = node.position || {}
-    var location = showPositions
-      ? stringifyPosition(position.start, position.end)
-      : ''
+    var position = positions ? stringifyPosition(node.position) : ''
 
     if (typeof kind === 'string') {
       result.push('<', kind, '>')
@@ -153,8 +145,8 @@ function inspect(node, options) {
       result.push(' ', green(inspectNonTree(node.value, '')))
     }
 
-    if (location) {
-      result.push(' ', dim('('), location, dim(')'))
+    if (position) {
+      result.push(' ', dim('('), position, dim(')'))
     }
 
     return result.join('')
@@ -164,11 +156,10 @@ function inspect(node, options) {
 function indent(value, indentation, ignoreFirst) {
   var lines = value.split('\n')
   var index = ignoreFirst ? 0 : -1
-  var length = lines.length
 
-  if (value === '') return ''
+  if (!value) return value
 
-  while (++index < length) {
+  while (++index < lines.length) {
     lines[index] = indentation + lines[index]
   }
 
@@ -176,58 +167,29 @@ function indent(value, indentation, ignoreFirst) {
 }
 
 // Compile a position.
-function stringifyPosition(start, end) {
+function stringifyPosition(value) {
+  var position = value || {}
   var result = []
   var positions = []
   var offsets = []
 
-  add(start)
-  add(end)
+  point(position.start)
+  point(position.end)
 
-  if (positions.length > 0) {
-    result.push(positions.join('-'))
-  }
-
-  if (offsets.length > 0) {
-    result.push(offsets.join('-'))
-  }
+  if (positions.length) result.push(positions.join('-'))
+  if (offsets.length) result.push(offsets.join('-'))
 
   return result.join(', ')
 
-  // Add a position.
-  function add(position) {
-    var tuple = stringifyPoint(position)
+  function point(value) {
+    if (value) {
+      positions.push((value.line || 1) + ':' + (value.column || 1))
 
-    if (tuple) {
-      positions.push(tuple[0])
-
-      if (tuple[1]) {
-        offsets.push(tuple[1])
+      if ('offset' in value) {
+        offsets.push(String(value.offset || 0))
       }
     }
   }
-}
-
-// Compile a point.
-function stringifyPoint(value) {
-  var result = []
-
-  if (!value) {
-    return null
-  }
-
-  result = [[value.line || 1, value.column || 1].join(':')]
-
-  if ('offset' in value) {
-    result.push(String(value.offset || 0))
-  }
-
-  return result
-}
-
-// Remove ANSI color from `value`.
-function stripColor(value) {
-  return value.replace(colorExpression, '')
 }
 
 // Factory to wrap values in ANSI colours.

@@ -78,10 +78,21 @@
     "prettier": true,
     "esnext": false,
     "rules": {
-      "unicorn/prefer-number-properties": "off",
-      "unicorn/prefer-includes": "off",
+      "complexity": "off",
+      "eqeqeq": [
+        "error",
+        "always",
+        {
+          "null": "ignore"
+        }
+      ],
       "guard-for-in": "off",
-      "no-control-regex": "off"
+      "no-control-regex": "off",
+      "no-eq-null": "off",
+      "no-multi-assign": "off",
+      "unicorn/explicit-length-check": "off",
+      "unicorn/prefer-number-properties": "off",
+      "unicorn/prefer-includes": "off"
     },
     "ignore": [
       "types",
