@@ -184,11 +184,11 @@ function stringifyPosition(start, end) {
   add(start)
   add(end)
 
-  if (positions.length !== 0) {
+  if (positions.length > 0) {
     result.push(positions.join('-'))
   }
 
-  if (offsets.length !== 0) {
+  if (offsets.length > 0) {
     result.push(offsets.join('-'))
   }
 
