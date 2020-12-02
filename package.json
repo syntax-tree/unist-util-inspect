@@ -54,12 +54,12 @@
     "unist-builder": "^2.0.0",
     "xastscript": "^2.0.0",
     "xast-util-from-xml": "^1.0.0",
-    "xo": "^0.34.0"
+    "xo": "^0.35.0"
   },
   "scripts": {
     "format": "remark . -qfo && prettier . -w --loglevel warn && xo --fix",
-    "build-bundle": "browserify . -s unistUtilInspect > unist-util-inspect.js",
-    "build-mangle": "browserify . -s unistUtilInspect -p tinyify > unist-util-inspect.min.js",
+    "build-bundle": "browserify . -s unistUtilInspect -o unist-util-inspect.js",
+    "build-mangle": "browserify . -s unistUtilInspect -o unist-util-inspect.min.js -p tinyify",
     "build": "npm run build-bundle && npm run build-mangle",
     "test-api": "node test",
     "test-coverage": "nyc --reporter lcov tape test.js",
@@ -90,6 +90,7 @@
       "no-control-regex": "off",
       "no-eq-null": "off",
       "no-multi-assign": "off",
+      "import/no-extraneous-dependencies": "off",
       "unicorn/explicit-length-check": "off",
       "unicorn/prefer-number-properties": "off",
       "unicorn/prefer-includes": "off"
