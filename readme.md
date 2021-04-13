@@ -12,6 +12,9 @@
 
 ## Install
 
+This package is [ESM only](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c):
+Node 12+ is needed to use it and it must be `import`ed instead of `require`d.
+
 [npm][]:
 
 ```sh
@@ -51,6 +54,10 @@ root[2]
 
 ## API
 
+This package exports the following identifiers: `inspect`, `inspectColor`, and
+`inspectNoColor`.
+There is no default export.
+
 ### `inspect(node[, options])`
 
 Inspect the given [`node`][node].
@@ -65,12 +72,13 @@ Whether to include positional information (`boolean`, default: `true`).
 
 `string` — String representing `node`.
 
-### `inspect.<style>[.<style>…](node[, options])`
+### `inspectColor(node[, options])`
 
-Where `<style>` is either `color` or `noColor`.
+Inspect, with ANSI color sequences (default in Node).
 
-To explicitly add or remove ANSI sequences, use `inspect.color(node)` or
-`inspect.noColor(node)`.
+### `inspectNoColor(node[, options])`
+
+Inspect, but without ANSI color sequences (default in browser).
 
 ## Contribute
 

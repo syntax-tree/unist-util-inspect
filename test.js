@@ -1,14 +1,12 @@
-'use strict'
-
-var test = require('tape')
-var chalk = require('chalk')
-var strip = require('strip-ansi')
-var u = require('unist-builder')
-var h = require('hastscript')
-var x = require('xastscript')
-var retext = require('retext')
-var fromXml = require('xast-util-from-xml')
-var inspect = require('.')
+import test from 'tape'
+import chalk from 'chalk'
+import strip from 'strip-ansi'
+import u from 'unist-builder'
+import h from 'hastscript'
+import x from 'xastscript'
+import retext from 'retext'
+import fromXml from 'xast-util-from-xml'
+import {inspect, inspectColor, inspectNoColor} from './index.js'
 
 var chalkEnabled = new chalk.Instance({level: 1})
 
@@ -16,16 +14,6 @@ var paragraph = 'Some simple text. Other “sentence”.'
 
 test('inspect', function (t) {
   t.equal(typeof inspect, 'function', 'should be a `function`')
-
-  t.test('should have `color` and `noColor` properties', function (st) {
-    st.equal(typeof inspect.color, 'function')
-    st.equal(typeof inspect.noColor, 'function')
-
-    st.equal(typeof inspect.color.noColor, 'function')
-    st.equal(typeof inspect.noColor.color, 'function')
-
-    st.end()
-  })
 
   t.end()
 })
@@ -69,7 +57,7 @@ test('inspect()', function (t) {
   t.test('should work on non-nodes', function (st) {
     st.equal(strip(inspect('foo')), '"foo"')
     st.equal(strip(inspect(null)), 'null')
-    st.equal(strip(inspect(NaN)), 'null')
+    st.equal(strip(inspect(Number.NaN)), 'null')
     st.equal(strip(inspect(3)), '3')
 
     st.end()
@@ -340,9 +328,9 @@ test('inspect()', function (t) {
   t.end()
 })
 
-test('inspect.noColor()', function (t) {
+test('inspectNoColor()', function (t) {
   t.equal(
-    inspect.noColor(retext().parse(paragraph).children[0].children[0]),
+    inspectNoColor(retext().parse(paragraph).children[0].children[0]),
     [
       'SentenceNode[6] (1:1-1:18, 0-17)',
       '├─0 WordNode[1] (1:1-1:5, 0-4)',
@@ -361,9 +349,9 @@ test('inspect.noColor()', function (t) {
   t.end()
 })
 
-test('inspect.color()', function (t) {
+test('inspectColor()', function (t) {
   t.equal(
-    inspect.color(retext().parse(paragraph).children[0].children[0]),
+    inspectColor(retext().parse(paragraph).children[0].children[0]),
     [
       chalkEnabled.bold('SentenceNode') +
         chalkEnabled.dim('[') +

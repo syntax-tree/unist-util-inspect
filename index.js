@@ -1,11 +1,10 @@
-'use strict'
+import {color} from './color.js'
 
-var color = require('./color')
+export var inspect = color
+  ? inspectColor
+  : /* istanbul ignore next */ inspectNoColor
 
-module.exports = color ? inspect : /* istanbul ignore next */ noColor
-
-inspect.color = noColor.color = inspect
-inspect.noColor = noColor.noColor = noColor
+var own = {}.hasOwnProperty
 
 var bold = ansiColor(1, 22)
 var dim = ansiColor(2, 22)
@@ -13,17 +12,22 @@ var yellow = ansiColor(33, 39)
 var green = ansiColor(32, 39)
 
 // ANSI color regex.
+/* eslint-disable-next-line no-control-regex */
 var colorExpression = /(?:(?:\u001B\[)|\u009B)(?:\d{1,3})?(?:(?:;\d{0,3})*)?[A-M|f-m]|\u001B[A-M]/g
 
 // Inspects a node, without using color.
-function noColor(node) {
-  return inspect(node).replace(colorExpression, '')
+export function inspectNoColor(node) {
+  return inspectColor(node).replace(colorExpression, '')
 }
 
 // Inspects a node.
-function inspect(tree, options) {
+export function inspectColor(tree, options) {
   var positions =
-    !options || options.showPositions == null ? true : options.showPositions
+    !options ||
+    options.showPositions === null ||
+    options.showPositions === undefined
+      ? true
+      : options.showPositions
 
   return inspectValue(tree)
 
@@ -69,6 +73,8 @@ function inspect(tree, options) {
     var formatted
 
     for (key in object) {
+      if (!own.call(object, key)) continue
+
       value = object[key]
 
       if (
@@ -116,7 +122,7 @@ function inspect(tree, options) {
 
     return indent(
       result.join('\n'),
-      (object.children && object.children.length ? dim('│') : ' ') + ' '
+      (object.children && object.children.length > 0 ? dim('│') : ' ') + ' '
     )
   }
 
@@ -176,8 +182,8 @@ function stringifyPosition(value) {
   point(position.start)
   point(position.end)
 
-  if (positions.length) result.push(positions.join('-'))
-  if (offsets.length) result.push(offsets.join('-'))
+  if (positions.length > 0) result.push(positions.join('-'))
+  if (offsets.length > 0) result.push(offsets.join('-'))
 
   return result.join(', ')
 

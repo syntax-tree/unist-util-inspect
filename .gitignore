@@ -1,8 +1,5 @@
 .DS_Store
 *.log
-.nyc_output/
 coverage/
 node_modules/
-unist-util-inspect.js
-unist-util-inspect.min.js
 yarn.lock

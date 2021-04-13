@@ -1,1 +1,1 @@
-module.exports = true
+export var color = true

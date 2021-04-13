@@ -1,5 +1,2 @@
 coverage/
-unist-util-inspect.js
-unist-util-inspect.min.js
-*.json
 *.md
