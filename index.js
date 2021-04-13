@@ -1,8 +1,16 @@
 import {color} from './color.js'
 
-export var inspect = color
-  ? inspectColor
-  : /* istanbul ignore next */ inspectNoColor
+/**
+ * @typedef {import('unist').Node} Node
+ * @typedef {import('unist').Position} Position
+ * @typedef {import('unist').Point} Point
+ *
+ * @typedef {Object} InspectOptions
+ * @property {boolean} [showPositions=true]
+ */
+
+/* c8 ignore next */
+export var inspect = color ? inspectColor : inspectNoColor
 
 var own = {}.hasOwnProperty
 
@@ -15,12 +23,24 @@ var green = ansiColor(32, 39)
 /* eslint-disable-next-line no-control-regex */
 var colorExpression = /(?:(?:\u001B\[)|\u009B)(?:\d{1,3})?(?:(?:;\d{0,3})*)?[A-M|f-m]|\u001B[A-M]/g
 
-// Inspects a node, without using color.
-export function inspectNoColor(node) {
-  return inspectColor(node).replace(colorExpression, '')
+/**
+ * Inspects a node, without using color.
+ *
+ * @param {unknown} node
+ * @param {InspectOptions} [options]
+ * @returns {string}
+ */
+export function inspectNoColor(node, options) {
+  return inspectColor(node, options).replace(colorExpression, '')
 }
 
-// Inspects a node.
+/**
+ * Inspects a node, using color.
+ *
+ * @param {unknown} tree
+ * @param {InspectOptions} [options]
+ * @returns {string}
+ */
 export function inspectColor(tree, options) {
   var positions =
     !options ||
@@ -31,23 +51,39 @@ export function inspectColor(tree, options) {
 
   return inspectValue(tree)
 
+  /**
+   * @param {unknown} node
+   * @returns {string}
+   */
   function inspectValue(node) {
     if (node && typeof node === 'object' && 'length' in node) {
+      // @ts-ignore looks like a list of nodes.
       return inspectNodes(node)
     }
 
+    // @ts-ignore looks like a single node.
     if (node && node.type) {
+      // @ts-ignore looks like a single node.
       return inspectTree(node)
     }
 
     return inspectNonTree(node)
   }
 
+  /**
+   * @param {unknown} value
+   * @returns {string}
+   */
   function inspectNonTree(value) {
     return JSON.stringify(value)
   }
 
+  /**
+   * @param {Node[]} nodes
+   * @returns {string}
+   */
   function inspectNodes(nodes) {
+    /** @type {Array.<string>} */
     var result = []
     var index = -1
 
@@ -66,13 +102,22 @@ export function inspectColor(tree, options) {
     return result.join('\n')
   }
 
+  /**
+   * @param {Object.<string, unknown>} object
+   * @returns {string}
+   */
   function inspectFields(object) {
+    /** @type {Array.<string>} */
     var result = []
+    /** @type {string} */
     var key
+    /** @type {unknown} */
     var value
+    /** @type {string} */
     var formatted
 
     for (key in object) {
+      /* c8 ignore next 1 */
       if (!own.call(object, key)) continue
 
       value = object[key]
@@ -95,11 +140,13 @@ export function inspectColor(tree, options) {
       if (
         value &&
         typeof value === 'object' &&
+        // @ts-ignore looks like a node.
         value.type &&
         key !== 'data' &&
         key !== 'attributes' &&
         key !== 'properties'
       ) {
+        // @ts-ignore looks like a node.
         formatted = inspectTree(value)
       }
       // A list of nodes.
@@ -110,6 +157,7 @@ export function inspectColor(tree, options) {
         value[0] &&
         value[0].type
       ) {
+        // @ts-ignore looks like a list of nodes.
         formatted = '\n' + inspectNodes(value)
       } else {
         formatted = inspectNonTree(value)
@@ -122,20 +170,31 @@ export function inspectColor(tree, options) {
 
     return indent(
       result.join('\n'),
+      // @ts-ignore looks like a parent node.
       (object.children && object.children.length > 0 ? dim('│') : ' ') + ' '
     )
   }
 
-  function inspectTree(node, pad) {
-    var result = [formatNode(node, pad)]
+  /**
+   * @param {Node} node
+   * @returns {string}
+   */
+  function inspectTree(node) {
+    var result = [formatNode(node)]
     var fields = inspectFields(node)
+    // @ts-ignore looks like a parent.
     var content = inspectNodes(node.children || [])
     if (fields) result.push(fields)
     if (content) result.push(content)
     return result.join('\n')
   }
 
-  // Colored node formatter.
+  /**
+   * Colored node formatter.
+   *
+   * @param {Node} node
+   * @returns {string}
+   */
   function formatNode(node) {
     var result = [bold(node.type)]
     var kind = node.tagName || node.name
@@ -146,9 +205,10 @@ export function inspectColor(tree, options) {
     }
 
     if (node.children) {
+      // @ts-ignore looks like a parent.
       result.push(dim('['), yellow(node.children.length), dim(']'))
     } else if (typeof node.value === 'string') {
-      result.push(' ', green(inspectNonTree(node.value, '')))
+      result.push(' ', green(inspectNonTree(node.value)))
     }
 
     if (position) {
@@ -159,6 +219,12 @@ export function inspectColor(tree, options) {
   }
 }
 
+/**
+ * @param {string} value
+ * @param {string} indentation
+ * @param {boolean} [ignoreFirst=false]
+ * @returns {string}
+ */
 function indent(value, indentation, ignoreFirst) {
   var lines = value.split('\n')
   var index = ignoreFirst ? 0 : -1
@@ -172,11 +238,19 @@ function indent(value, indentation, ignoreFirst) {
   return lines.join('\n')
 }
 
-// Compile a position.
+/**
+ * @param {Position} value
+ * @returns {string}
+ */
 function stringifyPosition(value) {
+  /** @type {Position} */
+  // @ts-ignore
   var position = value || {}
+  /** @type {Array.<string>} */
   var result = []
+  /** @type {Array.<string>} */
   var positions = []
+  /** @type {Array.<string>} */
   var offsets = []
 
   point(position.start)
@@ -187,6 +261,9 @@ function stringifyPosition(value) {
 
   return result.join(', ')
 
+  /**
+   * @param {Point} value
+   */
   function point(value) {
     if (value) {
       positions.push((value.line || 1) + ':' + (value.column || 1))
@@ -198,10 +275,20 @@ function stringifyPosition(value) {
   }
 }
 
-// Factory to wrap values in ANSI colours.
+/**
+ * Factory to wrap values in ANSI colours.
+ *
+ * @param {number} open
+ * @param {number} close
+ * @returns {function(string): string}
+ */
 function ansiColor(open, close) {
   return color
 
+  /**
+   * @param {string} value
+   * @returns {string}
+   */
   function color(value) {
     return '\u001B[' + open + 'm' + value + '\u001B[' + close + 'm'
   }
