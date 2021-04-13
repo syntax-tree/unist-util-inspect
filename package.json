@@ -36,7 +36,6 @@
     "./color.js": "./color-browser.js"
   },
   "types": "types/index.d.ts",
-  "dependencies": {},
   "devDependencies": {
     "@types/unist": "^2.0.0",
     "browserify": "^17.0.0",
@@ -52,9 +51,9 @@
     "tape": "^5.0.0",
     "tinyify": "^3.0.0",
     "unist-builder": "^2.0.0",
-    "xastscript": "^2.0.0",
     "xast-util-from-xml": "^1.0.0",
-    "xo": "^0.35.0"
+    "xastscript": "^2.0.0",
+    "xo": "^0.38.0"
   },
   "scripts": {
     "format": "remark . -qfo && prettier . -w --loglevel warn && xo --fix",
