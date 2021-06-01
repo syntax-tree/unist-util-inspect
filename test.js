@@ -1,13 +1,13 @@
 import test from 'tape'
 import chalk from 'chalk'
 import strip from 'strip-ansi'
-import u from 'unist-builder'
-import h from 'hastscript'
-import x from 'xastscript'
+import {u} from 'unist-builder'
+import {h} from 'hastscript'
+import {x} from 'xastscript'
 // @ts-ignore remove when typed.
 import retext from 'retext'
 // @ts-ignore remove when typed.
-import fromXml from 'xast-util-from-xml'
+import {fromXml} from 'xast-util-from-xml'
 import {inspect, inspectColor, inspectNoColor} from './index.js'
 
 var chalkEnabled = new chalk.Instance({level: 1})

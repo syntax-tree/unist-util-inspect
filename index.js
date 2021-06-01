@@ -20,8 +20,10 @@ var yellow = ansiColor(33, 39)
 var green = ansiColor(32, 39)
 
 // ANSI color regex.
-/* eslint-disable-next-line no-control-regex */
-var colorExpression = /(?:(?:\u001B\[)|\u009B)(?:\d{1,3})?(?:(?:;\d{0,3})*)?[A-M|f-m]|\u001B[A-M]/g
+/* eslint-disable no-control-regex */
+var colorExpression =
+  /(?:(?:\u001B\[)|\u009B)(?:\d{1,3})?(?:(?:;\d{0,3})*)?[A-M|f-m]|\u001B[A-M]/g
+/* eslint-enable no-control-regex */
 
 /**
  * Inspects a node, without using color.
