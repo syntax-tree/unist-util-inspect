@@ -4,9 +4,8 @@ import strip from 'strip-ansi'
 import {u} from 'unist-builder'
 import {h} from 'hastscript'
 import {x} from 'xastscript'
-// @ts-ignore remove when typed.
+// @ts-expect-error remove when typed.
 import retext from 'retext'
-// @ts-ignore remove when typed.
 import {fromXml} from 'xast-util-from-xml'
 import {inspect, inspectColor, inspectNoColor} from './index.js'
 

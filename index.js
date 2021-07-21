@@ -57,13 +57,13 @@ export function inspectColor(tree, options = {}) {
    */
   function inspectValue(node) {
     if (node && typeof node === 'object' && 'length' in node) {
-      // @ts-ignore looks like a list of nodes.
+      // @ts-expect-error looks like a list of nodes.
       return inspectNodes(node)
     }
 
-    // @ts-ignore looks like a single node.
+    // @ts-expect-error looks like a single node.
     if (node && node.type) {
-      // @ts-ignore looks like a single node.
+      // @ts-expect-error looks like a single node.
       return inspectTree(node)
     }
 
@@ -139,24 +139,26 @@ export function inspectColor(tree, options = {}) {
       if (
         value &&
         typeof value === 'object' &&
-        // @ts-ignore looks like a node.
+        // @ts-expect-error looks like a node.
         value.type &&
         key !== 'data' &&
         key !== 'attributes' &&
         key !== 'properties'
       ) {
-        // @ts-ignore looks like a node.
+        // @ts-expect-error looks like a node.
         formatted = inspectTree(value)
       }
       // A list of nodes.
       else if (
         value &&
-        typeof value === 'object' &&
-        'length' in value &&
+        Array.isArray(value) &&
+        // Looks like a node.
+        // type-coverage:ignore-next-line
         value[0] &&
+        // Looks like a node.
+        // type-coverage:ignore-next-line
         value[0].type
       ) {
-        // @ts-ignore looks like a list of nodes.
         formatted = '\n' + inspectNodes(value)
       } else {
         formatted = inspectNonTree(value)
@@ -169,7 +171,7 @@ export function inspectColor(tree, options = {}) {
 
     return indent(
       result.join('\n'),
-      // @ts-ignore looks like a parent node.
+      // @ts-expect-error looks like a parent node.
       (object.children && object.children.length > 0 ? dim('│') : ' ') + ' '
     )
   }
@@ -182,7 +184,7 @@ export function inspectColor(tree, options = {}) {
     const result = [formatNode(node)]
     // @ts-expect-error: looks like a record.
     const fields = inspectFields(node)
-    // @ts-ignore looks like a parent.
+    // @ts-expect-error looks like a parent.
     const content = inspectNodes(node.children || [])
     if (fields) result.push(fields)
     if (content) result.push(content)
@@ -208,7 +210,7 @@ export function inspectColor(tree, options = {}) {
 
     // @ts-expect-error: looks like a parent.
     if (node.children) {
-      // @ts-ignore looks like a parent.
+      // @ts-expect-error looks like a parent.
       result.push(dim('['), yellow(node.children.length), dim(']'))
       // @ts-expect-error: looks like a literal.
     } else if (typeof node.value === 'string') {
@@ -244,12 +246,12 @@ function indent(value, indentation, ignoreFirst) {
 }
 
 /**
- * @param {Position} value
+ * @param {Position|undefined} [value]
  * @returns {string}
  */
 function stringifyPosition(value) {
   /** @type {Position} */
-  // @ts-ignore
+  // @ts-expect-error: fine.
   const position = value || {}
   /** @type {Array.<string>} */
   const result = []
