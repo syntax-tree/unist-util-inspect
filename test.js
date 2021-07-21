@@ -4,8 +4,7 @@ import strip from 'strip-ansi'
 import {u} from 'unist-builder'
 import {h} from 'hastscript'
 import {x} from 'xastscript'
-// @ts-expect-error remove when typed.
-import retext from 'retext'
+import {retext} from 'retext'
 import {fromXml} from 'xast-util-from-xml'
 import {inspect, inspectColor, inspectNoColor} from './index.js'
 
@@ -331,18 +330,29 @@ test('inspect()', (t) => {
 
 test('inspectNoColor()', (t) => {
   t.equal(
-    inspectNoColor(retext().parse(paragraph).children[0].children[0]),
+    inspectNoColor(retext().parse(paragraph)),
     [
-      'SentenceNode[6] (1:1-1:18, 0-17)',
-      '├─0 WordNode[1] (1:1-1:5, 0-4)',
-      '│   └─0 TextNode "Some" (1:1-1:5, 0-4)',
-      '├─1 WhiteSpaceNode " " (1:5-1:6, 4-5)',
-      '├─2 WordNode[1] (1:6-1:12, 5-11)',
-      '│   └─0 TextNode "simple" (1:6-1:12, 5-11)',
-      '├─3 WhiteSpaceNode " " (1:12-1:13, 11-12)',
-      '├─4 WordNode[1] (1:13-1:17, 12-16)',
-      '│   └─0 TextNode "text" (1:13-1:17, 12-16)',
-      '└─5 PunctuationNode "." (1:17-1:18, 16-17)'
+      'RootNode[1] (1:1-1:36, 0-35)\n└─0 ParagraphNode[3] (1:1-1:36, 0-35)',
+      '    ├─0 SentenceNode[6] (1:1-1:18, 0-17)',
+      '    │   ├─0 WordNode[1] (1:1-1:5, 0-4)',
+      '    │   │   └─0 TextNode "Some" (1:1-1:5, 0-4)',
+      '    │   ├─1 WhiteSpaceNode " " (1:5-1:6, 4-5)',
+      '    │   ├─2 WordNode[1] (1:6-1:12, 5-11)',
+      '    │   │   └─0 TextNode "simple" (1:6-1:12, 5-11)',
+      '    │   ├─3 WhiteSpaceNode " " (1:12-1:13, 11-12)',
+      '    │   ├─4 WordNode[1] (1:13-1:17, 12-16)',
+      '    │   │   └─0 TextNode "text" (1:13-1:17, 12-16)',
+      '    │   └─5 PunctuationNode "." (1:17-1:18, 16-17)',
+      '    ├─1 WhiteSpaceNode " " (1:18-1:19, 17-18)',
+      '    └─2 SentenceNode[6] (1:19-1:36, 18-35)',
+      '        ├─0 WordNode[1] (1:19-1:24, 18-23)',
+      '        │   └─0 TextNode "Other" (1:19-1:24, 18-23)',
+      '        ├─1 WhiteSpaceNode " " (1:24-1:25, 23-24)',
+      '        ├─2 PunctuationNode "“" (1:25-1:26, 24-25)',
+      '        ├─3 WordNode[1] (1:26-1:34, 25-33)',
+      '        │   └─0 TextNode "sentence" (1:26-1:34, 25-33)',
+      '        ├─4 PunctuationNode "”" (1:34-1:35, 33-34)',
+      '        └─5 PunctuationNode "." (1:35-1:36, 34-35)'
     ].join('\n'),
     'should work'
   )
@@ -352,6 +362,7 @@ test('inspectNoColor()', (t) => {
 
 test('inspectColor()', (t) => {
   t.equal(
+    // @ts-expect-error: fine.
     inspectColor(retext().parse(paragraph).children[0].children[0]),
     [
       chalkEnabled.bold('SentenceNode') +
