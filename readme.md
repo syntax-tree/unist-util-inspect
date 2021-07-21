@@ -24,10 +24,10 @@ npm install unist-util-inspect
 ## Use
 
 ```js
-var u = require('unist-builder')
-var inspect = require('unist-util-inspect')
+import {u} from 'unist-builder'
+import {inspect} from 'unist-util-inspect'
 
-var tree = u('root', [
+const tree = u('root', [
   u('literal', '1'),
   u('parent', [
     u('void', {id: 'a'}),

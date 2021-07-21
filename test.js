@@ -10,17 +10,17 @@ import retext from 'retext'
 import {fromXml} from 'xast-util-from-xml'
 import {inspect, inspectColor, inspectNoColor} from './index.js'
 
-var chalkEnabled = new chalk.Instance({level: 1})
+const chalkEnabled = new chalk.Instance({level: 1})
 
-var paragraph = 'Some simple text. Other “sentence”.'
+const paragraph = 'Some simple text. Other “sentence”.'
 
-test('inspect', function (t) {
+test('inspect', (t) => {
   t.equal(typeof inspect, 'function', 'should be a `function`')
 
   t.end()
 })
 
-test('inspect()', function (t) {
+test('inspect()', (t) => {
   t.equal(
     strip(inspect(retext().parse(paragraph))),
     [
@@ -56,7 +56,7 @@ test('inspect()', function (t) {
     'should work with a list of nodes'
   )
 
-  t.test('should work on non-nodes', function (st) {
+  t.test('should work on non-nodes', (st) => {
     st.equal(strip(inspect('foo')), '"foo"')
     st.equal(strip(inspect(null)), 'null')
     st.equal(strip(inspect(Number.NaN)), 'null')
@@ -330,7 +330,7 @@ test('inspect()', function (t) {
   t.end()
 })
 
-test('inspectNoColor()', function (t) {
+test('inspectNoColor()', (t) => {
   t.equal(
     inspectNoColor(retext().parse(paragraph).children[0].children[0]),
     [
@@ -351,7 +351,7 @@ test('inspectNoColor()', function (t) {
   t.end()
 })
 
-test('inspectColor()', function (t) {
+test('inspectColor()', (t) => {
   t.equal(
     inspectColor(retext().parse(paragraph).children[0].children[0]),
     [

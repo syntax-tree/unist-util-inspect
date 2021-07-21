@@ -10,18 +10,18 @@
 import {color} from './color.js'
 
 /* c8 ignore next */
-export var inspect = color ? inspectColor : inspectNoColor
+export const inspect = color ? inspectColor : inspectNoColor
 
-var own = {}.hasOwnProperty
+const own = {}.hasOwnProperty
 
-var bold = ansiColor(1, 22)
-var dim = ansiColor(2, 22)
-var yellow = ansiColor(33, 39)
-var green = ansiColor(32, 39)
+const bold = ansiColor(1, 22)
+const dim = ansiColor(2, 22)
+const yellow = ansiColor(33, 39)
+const green = ansiColor(32, 39)
 
 // ANSI color regex.
 /* eslint-disable no-control-regex */
-var colorExpression =
+const colorExpression =
   /(?:(?:\u001B\[)|\u009B)(?:\d{1,3})?(?:(?:;\d{0,3})*)?[A-M|f-m]|\u001B[A-M]/g
 /* eslint-enable no-control-regex */
 
@@ -43,11 +43,9 @@ export function inspectNoColor(node, options) {
  * @param {InspectOptions} [options]
  * @returns {string}
  */
-export function inspectColor(tree, options) {
-  var positions =
-    !options ||
-    options.showPositions === null ||
-    options.showPositions === undefined
+export function inspectColor(tree, options = {}) {
+  const positions =
+    options.showPositions === null || options.showPositions === undefined
       ? true
       : options.showPositions
 
@@ -86,8 +84,8 @@ export function inspectColor(tree, options) {
    */
   function inspectNodes(nodes) {
     /** @type {Array.<string>} */
-    var result = []
-    var index = -1
+    const result = []
+    let index = -1
 
     while (++index < nodes.length) {
       result.push(
@@ -108,21 +106,20 @@ export function inspectColor(tree, options) {
    * @param {Object.<string, unknown>} object
    * @returns {string}
    */
+  // eslint-disable-next-line complexity
   function inspectFields(object) {
     /** @type {Array.<string>} */
-    var result = []
+    const result = []
     /** @type {string} */
-    var key
-    /** @type {unknown} */
-    var value
-    /** @type {string} */
-    var formatted
+    let key
 
     for (key in object) {
       /* c8 ignore next 1 */
       if (!own.call(object, key)) continue
 
-      value = object[key]
+      const value = object[key]
+      /** @type {string} */
+      let formatted
 
       if (
         value === undefined ||
@@ -182,11 +179,11 @@ export function inspectColor(tree, options) {
    * @returns {string}
    */
   function inspectTree(node) {
-    var result = [formatNode(node)]
+    const result = [formatNode(node)]
     // @ts-expect-error: looks like a record.
-    var fields = inspectFields(node)
+    const fields = inspectFields(node)
     // @ts-ignore looks like a parent.
-    var content = inspectNodes(node.children || [])
+    const content = inspectNodes(node.children || [])
     if (fields) result.push(fields)
     if (content) result.push(content)
     return result.join('\n')
@@ -199,11 +196,11 @@ export function inspectColor(tree, options) {
    * @returns {string}
    */
   function formatNode(node) {
-    var result = [bold(node.type)]
-    /** @type {string} */
+    const result = [bold(node.type)]
+    /** @type {string|undefined} */
     // @ts-expect-error: might be available.
-    var kind = node.tagName || node.name
-    var position = positions ? stringifyPosition(node.position) : ''
+    const kind = node.tagName || node.name
+    const position = positions ? stringifyPosition(node.position) : ''
 
     if (typeof kind === 'string') {
       result.push('<', kind, '>')
@@ -234,8 +231,8 @@ export function inspectColor(tree, options) {
  * @returns {string}
  */
 function indent(value, indentation, ignoreFirst) {
-  var lines = value.split('\n')
-  var index = ignoreFirst ? 0 : -1
+  const lines = value.split('\n')
+  let index = ignoreFirst ? 0 : -1
 
   if (!value) return value
 
@@ -253,13 +250,13 @@ function indent(value, indentation, ignoreFirst) {
 function stringifyPosition(value) {
   /** @type {Position} */
   // @ts-ignore
-  var position = value || {}
+  const position = value || {}
   /** @type {Array.<string>} */
-  var result = []
+  const result = []
   /** @type {Array.<string>} */
-  var positions = []
+  const positions = []
   /** @type {Array.<string>} */
-  var offsets = []
+  const offsets = []
 
   point(position.start)
   point(position.end)

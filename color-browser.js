@@ -1,1 +1,1 @@
-export var color = false
+export const color = false
