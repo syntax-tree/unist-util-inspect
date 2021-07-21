@@ -1,5 +1,3 @@
-import {color} from './color.js'
-
 /**
  * @typedef {import('unist').Node} Node
  * @typedef {import('unist').Position} Position
@@ -8,6 +6,8 @@ import {color} from './color.js'
  * @typedef {Object} InspectOptions
  * @property {boolean} [showPositions=true]
  */
+
+import {color} from './color.js'
 
 /* c8 ignore next */
 export var inspect = color ? inspectColor : inspectNoColor
@@ -183,6 +183,7 @@ export function inspectColor(tree, options) {
    */
   function inspectTree(node) {
     var result = [formatNode(node)]
+    // @ts-expect-error: looks like a record.
     var fields = inspectFields(node)
     // @ts-ignore looks like a parent.
     var content = inspectNodes(node.children || [])
@@ -199,6 +200,8 @@ export function inspectColor(tree, options) {
    */
   function formatNode(node) {
     var result = [bold(node.type)]
+    /** @type {string} */
+    // @ts-expect-error: might be available.
     var kind = node.tagName || node.name
     var position = positions ? stringifyPosition(node.position) : ''
 
@@ -206,10 +209,13 @@ export function inspectColor(tree, options) {
       result.push('<', kind, '>')
     }
 
+    // @ts-expect-error: looks like a parent.
     if (node.children) {
       // @ts-ignore looks like a parent.
       result.push(dim('['), yellow(node.children.length), dim(']'))
+      // @ts-expect-error: looks like a literal.
     } else if (typeof node.value === 'string') {
+      // @ts-expect-error: looks like a literal.
       result.push(' ', green(inspectNonTree(node.value)))
     }
 
