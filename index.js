@@ -3,8 +3,11 @@
  * @typedef {import('unist').Position} Position
  * @typedef {import('unist').Point} Point
  *
- * @typedef {Object} InspectOptions
+ * @typedef Options
  * @property {boolean} [showPositions=true]
+ *
+ * @typedef {Options} InspectOptions
+ *   Deprecated, use `Options`.
  */
 
 import {color} from './color.js'
@@ -79,11 +82,11 @@ export function inspectColor(tree, options = {}) {
   }
 
   /**
-   * @param {Node[]} nodes
+   * @param {Array<Node>} nodes
    * @returns {string}
    */
   function inspectNodes(nodes) {
-    /** @type {Array.<string>} */
+    /** @type {Array<string>} */
     const result = []
     let index = -1
 
@@ -103,12 +106,12 @@ export function inspectColor(tree, options = {}) {
   }
 
   /**
-   * @param {Object.<string, unknown>} object
+   * @param {Record<string, unknown>} object
    * @returns {string}
    */
   // eslint-disable-next-line complexity
   function inspectFields(object) {
-    /** @type {Array.<string>} */
+    /** @type {Array<string>} */
     const result = []
     /** @type {string} */
     let key
@@ -253,11 +256,11 @@ function stringifyPosition(value) {
   /** @type {Position} */
   // @ts-expect-error: fine.
   const position = value || {}
-  /** @type {Array.<string>} */
+  /** @type {Array<string>} */
   const result = []
-  /** @type {Array.<string>} */
+  /** @type {Array<string>} */
   const positions = []
-  /** @type {Array.<string>} */
+  /** @type {Array<string>} */
   const offsets = []
 
   point(position.start)

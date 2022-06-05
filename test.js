@@ -1,4 +1,5 @@
 import test from 'tape'
+/* eslint-disable-next-line unicorn/import-style */
 import {Chalk} from 'chalk'
 import strip from 'strip-ansi'
 import {u} from 'unist-builder'
