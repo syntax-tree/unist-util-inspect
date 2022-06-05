@@ -32,7 +32,7 @@ const colorExpression =
  * Inspects a node, without using color.
  *
  * @param {unknown} node
- * @param {InspectOptions} [options]
+ * @param {Options} [options]
  * @returns {string}
  */
 export function inspectNoColor(node, options) {
@@ -43,7 +43,7 @@ export function inspectNoColor(node, options) {
  * Inspects a node, using color.
  *
  * @param {unknown} tree
- * @param {InspectOptions} [options]
+ * @param {Options} [options]
  * @returns {string}
  */
 export function inspectColor(tree, options = {}) {
