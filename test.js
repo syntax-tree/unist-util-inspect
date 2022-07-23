@@ -66,6 +66,43 @@ test('inspect()', (t) => {
 
   t.equal(
     strip(
+      inspect(
+        Array.from({length: 11}).map((/** @type {undefined} */ d, i) => ({
+          type: 'text',
+          value: String(i),
+          data: {id: String.fromCodePoint(97 + i)}
+        }))
+      )
+    ),
+    [
+      '├─0  text "0"',
+      '│      data: {"id":"a"}',
+      '├─1  text "1"',
+      '│      data: {"id":"b"}',
+      '├─2  text "2"',
+      '│      data: {"id":"c"}',
+      '├─3  text "3"',
+      '│      data: {"id":"d"}',
+      '├─4  text "4"',
+      '│      data: {"id":"e"}',
+      '├─5  text "5"',
+      '│      data: {"id":"f"}',
+      '├─6  text "6"',
+      '│      data: {"id":"g"}',
+      '├─7  text "7"',
+      '│      data: {"id":"h"}',
+      '├─8  text "8"',
+      '│      data: {"id":"i"}',
+      '├─9  text "9"',
+      '│      data: {"id":"j"}',
+      '└─10 text "10"',
+      '       data: {"id":"k"}'
+    ].join('\n'),
+    'should align and indent large numbers'
+  )
+
+  t.equal(
+    strip(
       inspect({
         type: 'SymbolNode',
         value: '$',

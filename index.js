@@ -86,17 +86,22 @@ export function inspectColor(tree, options = {}) {
    * @returns {string}
    */
   function inspectNodes(nodes) {
+    const size = String(nodes.length - 1).length
     /** @type {Array<string>} */
     const result = []
     let index = -1
 
     while (++index < nodes.length) {
       result.push(
-        dim((index < nodes.length - 1 ? '├' : '└') + '─' + index) +
+        dim(
+          (index < nodes.length - 1 ? '├' : '└') +
+            '─' +
+            String(index).padEnd(size)
+        ) +
           ' ' +
           indent(
             inspectValue(nodes[index]),
-            (index < nodes.length - 1 ? dim('│') : ' ') + '   ',
+            (index < nodes.length - 1 ? dim('│') : ' ') + ' '.repeat(size + 2),
             true
           )
       )
