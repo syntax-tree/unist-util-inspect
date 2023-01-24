@@ -1,4 +1,5 @@
-import test from 'tape'
+import assert from 'node:assert/strict'
+import test from 'node:test'
 /* eslint-disable-next-line unicorn/import-style */
 import {Chalk} from 'chalk'
 import strip from 'strip-ansi'
@@ -13,14 +14,12 @@ const chalkEnabled = new Chalk({level: 1})
 
 const paragraph = 'Some simple text. Other “sentence”.'
 
-test('inspect', (t) => {
-  t.equal(typeof inspect, 'function', 'should be a `function`')
-
-  t.end()
+test('inspect', () => {
+  assert.equal(typeof inspect, 'function', 'should be a `function`')
 })
 
-test('inspect()', (t) => {
-  t.equal(
+test('inspect()', () => {
+  assert.equal(
     strip(inspect(retext().parse(paragraph))),
     [
       'RootNode[1] (1:1-1:36, 0-35)',
@@ -49,22 +48,20 @@ test('inspect()', (t) => {
     'should work on `RootNode`'
   )
 
-  t.equal(
+  assert.equal(
     strip(inspect([u('SymbolNode', '$'), u('WordNode', [u('text', '5,00')])])),
     '├─0 SymbolNode "$"\n└─1 WordNode[1]\n    └─0 text "5,00"',
     'should work with a list of nodes'
   )
 
-  t.test('should work on non-nodes', (st) => {
-    st.equal(strip(inspect('foo')), '"foo"')
-    st.equal(strip(inspect(null)), 'null')
-    st.equal(strip(inspect(Number.NaN)), 'null')
-    st.equal(strip(inspect(3)), '3')
+  assert.doesNotThrow(() => {
+    assert.equal(strip(inspect('foo')), '"foo"')
+    assert.equal(strip(inspect(null)), 'null')
+    assert.equal(strip(inspect(Number.NaN)), 'null')
+    assert.equal(strip(inspect(3)), '3')
+  }, 'should work on non-nodes')
 
-    st.end()
-  })
-
-  t.equal(
+  assert.equal(
     strip(
       inspect(
         Array.from({length: 11}).map((/** @type {undefined} */ d, i) => ({
@@ -101,7 +98,7 @@ test('inspect()', (t) => {
     'should align and indent large numbers'
   )
 
-  t.equal(
+  assert.equal(
     strip(
       inspect({
         type: 'SymbolNode',
@@ -113,7 +110,7 @@ test('inspect()', (t) => {
     'should work with data attributes'
   )
 
-  t.equal(
+  assert.equal(
     strip(
       inspect({
         type: 'table',
@@ -165,7 +162,7 @@ test('inspect()', (t) => {
     'should work with other attributes'
   )
 
-  t.equal(
+  assert.equal(
     strip(
       inspect({
         type: 'element',
@@ -177,19 +174,19 @@ test('inspect()', (t) => {
     'should work on parent nodes without children'
   )
 
-  t.equal(
+  assert.equal(
     strip(inspect({type: 'text', value: ''})),
     'text ""',
     'should work on text nodes without value'
   )
 
-  t.equal(
+  assert.equal(
     strip(inspect({type: 'thematicBreak'})),
     'thematicBreak',
     'should work on void nodes'
   )
 
-  t.equal(
+  assert.equal(
     strip(inspect(h('button', {type: 'submit', value: 'Send'}))),
     [
       'element<button>[0]',
@@ -197,17 +194,17 @@ test('inspect()', (t) => {
     ].join('\n'),
     'should see properties as data'
   )
-  t.equal(
+  assert.equal(
     strip(inspect(x('album', {type: 'vinyl', id: '123'}))),
     'element<album>[0]\n  attributes: {"type":"vinyl","id":"123"}',
     'should see attributes as data'
   )
-  t.equal(
+  assert.equal(
     strip(inspect({type: 'node', data: {type: 'notNode'}})),
     'node\n  data: {"type":"notNode"}',
     'should see data as data'
   )
-  t.equal(
+  assert.equal(
     strip(
       inspect(
         u(
@@ -282,7 +279,7 @@ test('inspect()', (t) => {
     'should handle nodes outside of children'
   )
 
-  t.equal(
+  assert.equal(
     strip(inspect(fromXml('<album id="123" />'))),
     [
       'root[1]',
@@ -292,7 +289,7 @@ test('inspect()', (t) => {
     'should work nodes of a certain kind (xast, hast)'
   )
 
-  t.equal(
+  assert.equal(
     strip(
       inspect({
         type: 'foo',
@@ -307,7 +304,7 @@ test('inspect()', (t) => {
     'should work without `offset` in `position`'
   )
 
-  t.equal(
+  assert.equal(
     strip(
       inspect({
         type: 'foo',
@@ -319,7 +316,7 @@ test('inspect()', (t) => {
     'should work without `start` and `end` in `position`'
   )
 
-  t.equal(
+  assert.equal(
     strip(
       inspect({
         type: 'foo',
@@ -331,7 +328,7 @@ test('inspect()', (t) => {
     'should work without `line` and `column` in `point`'
   )
 
-  t.equal(
+  assert.equal(
     strip(
       inspect({
         type: 'foo',
@@ -346,7 +343,7 @@ test('inspect()', (t) => {
     'should work with just `offset` in `position`'
   )
 
-  t.equal(
+  assert.equal(
     strip(inspect(retext().parse(paragraph), {showPositions: false})),
     [
       'RootNode[1]',
@@ -374,12 +371,10 @@ test('inspect()', (t) => {
     ].join('\n'),
     'should support `showPositions: false`'
   )
-
-  t.end()
 })
 
-test('inspectNoColor()', (t) => {
-  t.equal(
+test('inspectNoColor()', () => {
+  assert.equal(
     inspectNoColor(retext().parse(paragraph)),
     [
       'RootNode[1] (1:1-1:36, 0-35)\n└─0 ParagraphNode[3] (1:1-1:36, 0-35)',
@@ -406,12 +401,10 @@ test('inspectNoColor()', (t) => {
     ].join('\n'),
     'should work'
   )
-
-  t.end()
 })
 
-test('inspectColor()', (t) => {
-  t.equal(
+test('inspectColor()', () => {
+  assert.equal(
     // @ts-expect-error: fine.
     inspectColor(retext().parse(paragraph).children[0].children[0]),
     [
@@ -516,6 +509,4 @@ test('inspectColor()', (t) => {
     ].join('\n'),
     'should work'
   )
-
-  t.end()
 })
