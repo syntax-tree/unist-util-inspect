@@ -61,7 +61,7 @@
     "unist-builder": "^3.0.0",
     "xast-util-from-xml": "^2.0.0",
     "xastscript": "^3.0.0",
-    "xo": "^0.51.0"
+    "xo": "^0.53.0"
   },
   "scripts": {
     "prepack": "npm run build && npm run format",
