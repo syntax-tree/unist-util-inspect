@@ -9,13 +9,18 @@ import {x} from 'xastscript'
 import {retext} from 'retext'
 import {fromXml} from 'xast-util-from-xml'
 import {inspect, inspectColor, inspectNoColor} from './index.js'
+import * as mod from './index.js'
 
 const chalkEnabled = new Chalk({level: 1})
 
 const paragraph = 'Some simple text. Other “sentence”.'
 
-test('inspect', () => {
-  assert.equal(typeof inspect, 'function', 'should be a `function`')
+test('core', () => {
+  assert.deepEqual(
+    Object.keys(mod).sort(),
+    ['inspect', 'inspectColor', 'inspectNoColor'],
+    'should expose the public api'
+  )
 })
 
 test('inspect()', () => {
