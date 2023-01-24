@@ -17,9 +17,10 @@
 *   [Install](#install)
 *   [Use](#use)
 *   [API](#api)
-    *   [`inspect(node[, options])`](#inspectnode-options)
-    *   [`inspectColor(node[, options])`](#inspectcolornode-options)
-    *   [`inspectNoColor(node[, options])`](#inspectnocolornode-options)
+    *   [`inspect(tree[, options])`](#inspecttree-options)
+    *   [`inspectColor(tree[, options])`](#inspectcolortree-options)
+    *   [`inspectNoColor(tree[, options])`](#inspectnocolortree-options)
+    *   [`Options`](#options)
 *   [Types](#types)
 *   [Compatibility](#compatibility)
 *   [Contribute](#contribute)
@@ -38,7 +39,7 @@ to more easily spot bugs and see what’s going on in the tree.
 ## Install
 
 This package is [ESM only][esm].
-In Node.js (version 12.20+, 14.14+, 16.0+, 18.0+), install with [npm][]:
+In Node.js (version 14.14+ and 16.0+), install with [npm][]:
 
 ```sh
 npm install unist-util-inspect
@@ -47,14 +48,14 @@ npm install unist-util-inspect
 In Deno with [`esm.sh`][esmsh]:
 
 ```js
-import {inspect} from "https://esm.sh/unist-util-inspect@8"
+import {inspect} from 'https://esm.sh/unist-util-inspect@7'
 ```
 
 In browsers with [`esm.sh`][esmsh]:
 
 ```html
 <script type="module">
-  import {inspect} from "https://esm.sh/unist-util-inspect@7?bundle"
+  import {inspect} from 'https://esm.sh/unist-util-inspect@7?bundle'
 </script>
 ```
 
@@ -91,42 +92,54 @@ root[2]
 
 ## API
 
-This package exports the identifiers `inspect`, `inspectColor`, and
-`inspectNoColor`.
+This package exports the identifiers [`inspect`][api-inspect],
+[`inspectColor`][api-inspectcolor], and [`inspectNoColor`][api-inspectnocolor].
 There is no default export.
 
-### `inspect(node[, options])`
+### `inspect(tree[, options])`
 
-Inspect the given `node` ([`Node`][node]).
-By default, colors are added in Node, and not in other places.
-See below on how to change that.
+Inspect a tree, with color in Node, without color in browsers.
 
-###### `options.showPositions`
+###### Parameters
 
-Whether to include positional information (`boolean`, default: `true`).
+*   `tree` ([`Node`][node])
+    — tree to inspect
+*   `options` ([`Options`][api-options], optional)
+    — configuration
 
-##### Returns
+###### Returns
 
-Pretty printed `node` (`string`).
+Pretty printed `tree` (`string`).
 
-### `inspectColor(node[, options])`
+### `inspectColor(tree[, options])`
 
-Inspect with ANSI color sequences (default in Node, Deno).
+Inspect a tree, with color.
+Otherwise same as [`inspect`][api-inspect].
 
-### `inspectNoColor(node[, options])`
+### `inspectNoColor(tree[, options])`
 
-Inspect without ANSI color sequences (default in browser, `react-native`).
+Inspect a tree, without color.
+Otherwise same as [`inspect`][api-inspect].
+
+### `Options`
+
+Configuration (TypeScript type).
+
+###### Fields
+
+*   `showPositions` (`boolean`, default: `true`)
+    — whether to include positional information
 
 ## Types
 
 This package is fully typed with [TypeScript][].
-It exports the additional type `Options`.
+It exports the additional type [`Options`][api-options].
 
 ## Compatibility
 
 Projects maintained by the unified collective are compatible with all maintained
 versions of Node.js.
-As of now, that is Node.js 12.20+, 14.14+, 16.0+, and 18.0+.
+As of now, that is Node.js 14.14+ and 16.0+.
 Our projects sometimes work with older versions, but this is not guaranteed.
 
 ## Contribute
@@ -194,3 +207,11 @@ abide by its terms.
 [unist]: https://github.com/syntax-tree/unist
 
 [node]: https://github.com/syntax-tree/unist#node
+
+[api-inspect]: #inspecttree-options
+
+[api-inspectcolor]: #inspectcolortree-options
+
+[api-inspectnocolor]: #inspectnocolortree-options
+
+[api-options]: #options
