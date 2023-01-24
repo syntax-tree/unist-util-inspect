@@ -27,17 +27,14 @@
   "type": "module",
   "main": "index.js",
   "browser": {
-    "./color.js": "./color-browser.js"
+    "./lib/color.js": "./lib/color-browser.js"
   },
   "react-native": {
-    "./color.js": "./color-browser.js"
+    "./lib/color.js": "./lib/color-browser.js"
   },
   "types": "index.d.ts",
   "files": [
-    "color.d.ts",
-    "color.js",
-    "color-browser.d.ts",
-    "color-browser.js",
+    "lib/",
     "index.d.ts",
     "index.js"
   ],
