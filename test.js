@@ -312,11 +312,23 @@ test('inspect()', (t) => {
       inspect({
         type: 'foo',
         value: 'foo\nbaar',
+        position: {}
+      })
+    ),
+    'foo "foo\\nbaar"',
+    'should work without `start` and `end` in `position`'
+  )
+
+  t.equal(
+    strip(
+      inspect({
+        type: 'foo',
+        value: 'foo\nbaar',
         position: {start: {}, end: {}}
       })
     ),
     'foo "foo\\nbaar" (1:1-1:1)',
-    'should work without `line` and `column` in `position`'
+    'should work without `line` and `column` in `point`'
   )
 
   t.equal(
