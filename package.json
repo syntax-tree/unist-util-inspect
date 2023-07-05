@@ -25,14 +25,13 @@
   ],
   "sideEffects": false,
   "type": "module",
-  "main": "index.js",
-  "browser": {
-    "./lib/color.js": "./lib/color-browser.js"
+  "exports": {
+    ".": "./index.js",
+    "./do-not-use-conditional-color": {
+      "node": "./lib/color.node.js",
+      "default": "./lib/color.default.js"
+    }
   },
-  "react-native": {
-    "./lib/color.js": "./lib/color-browser.js"
-  },
-  "types": "index.d.ts",
   "files": [
     "lib/",
     "index.d.ts",

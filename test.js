@@ -6,13 +6,13 @@ import assert from 'node:assert/strict'
 import test from 'node:test'
 /* eslint-disable-next-line unicorn/import-style */
 import {Chalk} from 'chalk'
+import {h} from 'hastscript'
+import {retext} from 'retext'
 import strip from 'strip-ansi'
 import {u} from 'unist-builder'
-import {h} from 'hastscript'
+import {inspect, inspectColor, inspectNoColor} from 'unist-util-inspect'
 import {x} from 'xastscript'
-import {retext} from 'retext'
 import {fromXml} from 'xast-util-from-xml'
-import {inspect, inspectColor, inspectNoColor} from './index.js'
 
 const chalkEnabled = new Chalk({level: 1})
 
@@ -20,7 +20,7 @@ const paragraph = 'Some simple text. Other “sentence”.'
 
 test('inspect()', async function (t) {
   await t.test('should expose the public api', async function () {
-    assert.deepEqual(Object.keys(await import('./index.js')).sort(), [
+    assert.deepEqual(Object.keys(await import('unist-util-inspect')).sort(), [
       'inspect',
       'inspectColor',
       'inspectNoColor'
