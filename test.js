@@ -287,7 +287,7 @@ test('inspect()', () => {
   assert.equal(
     strip(inspect(fromXml('<album id="123" />'))),
     [
-      'root[1]',
+      'root[1] (1:1-1:19, 0-18)',
       '└─0 element<album>[0] (1:1-1:19, 0-18)',
       '      attributes: {"id":"123"}'
     ].join('\n'),
