@@ -48,14 +48,14 @@ npm install unist-util-inspect
 In Deno with [`esm.sh`][esmsh]:
 
 ```js
-import {inspect} from 'https://esm.sh/unist-util-inspect@7'
+import {inspect} from 'https://esm.sh/unist-util-inspect@8'
 ```
 
 In browsers with [`esm.sh`][esmsh]:
 
 ```html
 <script type="module">
-  import {inspect} from 'https://esm.sh/unist-util-inspect@7?bundle'
+  import {inspect} from 'https://esm.sh/unist-util-inspect@8?bundle'
 </script>
 ```
 

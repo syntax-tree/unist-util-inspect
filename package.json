@@ -1,6 +1,6 @@
 {
   "name": "unist-util-inspect",
-  "version": "7.0.2",
+  "version": "8.0.0",
   "description": "unist utility to inspect nodes",
   "license": "MIT",
   "keywords": [
