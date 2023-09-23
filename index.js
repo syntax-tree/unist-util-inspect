@@ -1,5 +1,5 @@
 /**
- * @typedef {import('./lib/index.js')} Options
+ * @typedef {import('./lib/index.js').Options} Options
  *
  * @typedef {Options} InspectOptions
  *   Deprecated, use `Options`.
