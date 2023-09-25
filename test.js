@@ -18,6 +18,16 @@ const chalkEnabled = new Chalk({level: 1})
 
 const paragraph = 'Some simple text. Other “sentence”.'
 
+/**
+ * Split `text` on newlines, keeping the first `count`.
+ *
+ * @param {string} text
+ * @param {number} count
+ * @return string
+ *   The first `count` lines of `text`.
+ */
+const lines = (text, count) => text.split('\n').slice(0, count).join('\n')
+
 test('inspect()', async function (t) {
   await t.test('should expose the public api', async function () {
     assert.deepEqual(Object.keys(await import('unist-util-inspect')).sort(), [
@@ -420,6 +430,51 @@ test('inspect()', async function (t) {
       ].join('\n')
     )
   })
+
+  await t.test('inspect(…, {colors: false})', async function () {
+    assert.equal(
+      lines(inspect(retext().parse(paragraph), {colors: false}), 2),
+      [
+        'RootNode[1] (1:1-1:36, 0-35)',
+        '└─0 ParagraphNode[3] (1:1-1:36, 0-35)'
+      ].join('\n')
+    )
+  })
+
+  await t.test(
+    'inspect(…, {colors?: true | null | undefined})',
+    async function () {
+      const expectedOutput = [
+        chalkEnabled.bold('RootNode') +
+          chalkEnabled.dim('[') +
+          chalkEnabled.yellow('1') +
+          chalkEnabled.dim(']') +
+          ' ' +
+          chalkEnabled.dim('(') +
+          '1:1-1:36, 0-35' +
+          chalkEnabled.dim(')'),
+        chalkEnabled.dim('└─0') +
+          ' ' +
+          chalkEnabled.bold('ParagraphNode') +
+          chalkEnabled.dim('[') +
+          chalkEnabled.yellow('3') +
+          chalkEnabled.dim(']') +
+          ' ' +
+          chalkEnabled.dim('(') +
+          '1:1-1:36, 0-35' +
+          chalkEnabled.dim(')')
+      ].join('\n')
+
+      const parsed = retext().parse(paragraph)
+
+      assert.equal(lines(inspect(parsed, {colors: true}), 2), expectedOutput)
+      assert.equal(lines(inspect(parsed, {colors: null}), 2), expectedOutput)
+      assert.equal(
+        lines(inspect(parsed, {colors: undefined}), 2),
+        expectedOutput
+      )
+    }
+  )
 })
 
 test('inspectNoColor()', async function () {
