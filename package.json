@@ -26,8 +26,10 @@
   "sideEffects": false,
   "type": "module",
   "exports": {
-    ".": "./index.js",
-    "./do-not-use-conditional-color": {
+    ".": "./index.js"
+  },
+  "imports": {
+    "#conditional-color": {
       "node": "./lib/color.node.js",
       "default": "./lib/color.default.js"
     }
