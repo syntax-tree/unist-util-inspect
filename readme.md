@@ -113,10 +113,14 @@ Pretty printed `tree` (`string`).
 
 ### `inspectColor(tree[, options])`
 
+> 🪦 **Deprecated**: use `color` option of `inspect`.
+
 Inspect a tree, with color.
 Otherwise same as [`inspect`][api-inspect].
 
 ### `inspectNoColor(tree[, options])`
+
+> 🪦 **Deprecated**: use `color` option of `inspect`.
 
 Inspect a tree, without color.
 Otherwise same as [`inspect`][api-inspect].
@@ -127,6 +131,8 @@ Configuration (TypeScript type).
 
 ###### Fields
 
+* `color` (`boolean`, default: `true` in Node, `false` otherwise)
+  — whether to use ANSI colors
 * `showPositions` (`boolean`, default: `true`)
   — whether to include positional information
 
