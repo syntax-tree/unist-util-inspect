@@ -1,5 +1,5 @@
 /**
- * @typedef {import('nlcst').Root} NlcstRoot
+ * @import {Root as NlcstRoot} from 'nlcst'
  */
 
 import assert from 'node:assert/strict'
