@@ -79,16 +79,15 @@ test('inspect()', async function (t) {
     assert.equal(
       strip(
         inspect(
-          Array.from({length: 11}).map(function (
-            /** @type {undefined} */ d,
-            i
-          ) {
-            return {
-              type: 'text',
-              value: String(i),
-              data: {id: String.fromCodePoint(97 + i)}
+          Array.from({length: 11}).map(
+            function (/** @type {undefined} */ d, i) {
+              return {
+                type: 'text',
+                value: String(i),
+                data: {id: String.fromCodePoint(97 + i)}
+              }
             }
-          })
+          )
         )
       ),
       [

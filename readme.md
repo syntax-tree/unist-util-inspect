@@ -12,19 +12,19 @@
 
 ## Contents
 
-*   [What is this?](#what-is-this)
-*   [When should I use this?](#when-should-i-use-this)
-*   [Install](#install)
-*   [Use](#use)
-*   [API](#api)
-    *   [`inspect(tree[, options])`](#inspecttree-options)
-    *   [`inspectColor(tree[, options])`](#inspectcolortree-options)
-    *   [`inspectNoColor(tree[, options])`](#inspectnocolortree-options)
-    *   [`Options`](#options)
-*   [Types](#types)
-*   [Compatibility](#compatibility)
-*   [Contribute](#contribute)
-*   [License](#license)
+* [What is this?](#what-is-this)
+* [When should I use this?](#when-should-i-use-this)
+* [Install](#install)
+* [Use](#use)
+* [API](#api)
+  * [`inspect(tree[, options])`](#inspecttree-options)
+  * [`inspectColor(tree[, options])`](#inspectcolortree-options)
+  * [`inspectNoColor(tree[, options])`](#inspectnocolortree-options)
+  * [`Options`](#options)
+* [Types](#types)
+* [Compatibility](#compatibility)
+* [Contribute](#contribute)
+* [License](#license)
 
 ## What is this?
 
@@ -102,10 +102,10 @@ Inspect a tree, with color in Node, without color in browsers.
 
 ###### Parameters
 
-*   `tree` ([`Node`][node])
-    — tree to inspect
-*   `options` ([`Options`][api-options], optional)
-    — configuration
+* `tree` ([`Node`][node])
+  — tree to inspect
+* `options` ([`Options`][api-options], optional)
+  — configuration
 
 ###### Returns
 
@@ -127,8 +127,8 @@ Configuration (TypeScript type).
 
 ###### Fields
 
-*   `showPositions` (`boolean`, default: `true`)
-    — whether to include positional information
+* `showPositions` (`boolean`, default: `true`)
+  — whether to include positional information
 
 ## Types
 
