@@ -98,7 +98,7 @@ There is no default export.
 
 ### `inspect(tree[, options])`
 
-Inspect a tree, with color in Node, without color in browsers.
+Inspect a tree.
 
 ###### Parameters
 
